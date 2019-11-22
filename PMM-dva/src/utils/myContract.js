@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import contractConfig from '../utils/contractConfig';
+import { message } from 'antd';
 
 export default function myContract(HttpProvider) {
 	let web3 = new Web3(new Web3.providers.HttpProvider(HttpProvider));
@@ -11,12 +12,8 @@ export default function myContract(HttpProvider) {
 
 	//通过metaMask钱包API获取用户地址
 	async function _getAddress() {
-		try {
-		  const accounts = await window.ethereum.enable();
-		  return accounts;
-		} catch (error) {
-		  console.error(error)
-		}
+		const accounts = await window.ethereum.enable().then(address => address);
+		return accounts[0];
 	}
 
 	/*
@@ -33,15 +30,20 @@ export default function myContract(HttpProvider) {
 	*/
 
 	async function getUserInfo() {
-		let address = await _getAddress().then(address => {
-		  return address[0];
-		})
-		let banlance = await web3.eth.getBalance(address).then(banlance => {
-		  return web3.utils.fromWei(banlance, 'ether');
-		})
-		return {
-			address,
-		  	banlance,
+		try {
+			let address = await _getAddress();
+			let banlance = await web3.eth.getBalance(address);
+			return {
+				address,
+			  	banlance: web3.utils.fromWei(banlance, 'ether'),
+			}
+		} catch(error) {
+			message.error('同步信息出错');
+			return {
+				address: "",
+			  	banlance: "",
+			}
+			console.log(error)
 		}
 	}
 

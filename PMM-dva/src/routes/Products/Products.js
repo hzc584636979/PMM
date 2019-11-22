@@ -39,16 +39,15 @@ class Products extends React.Component {
 	render() {
 		return (
 			<Spin spinning={ this.props.loading }>
-				<h2>交易列表</h2>
 				<Tabs defaultActiveKey="1" onChange={ this.callback } >
 				    <TabPane tab="所有投注" key="1">
 				      	<ProductList
-							products={ this.props.products }
+							products={ this.props.products.all }
 						/>
 				    </TabPane>
 				    <TabPane tab="我的投注" key="2">
 				    	<ProductList
-							products={ this.props.products }
+							products={ this.props.products.my }
 						/>
 				    </TabPane>
 				</Tabs>

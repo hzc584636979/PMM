@@ -2,13 +2,15 @@ import { getAllTransactionList, getMyTransactionList } from '../services/servera
 
 export default {
 	namespace: 'products',
-	state: [],
+	state: {},
     effects: {
     	*getAll(_, { select, call, put }) {
     		const list = yield call(getAllTransactionList);
     		yield put({
 		        type: 'save',
-        		payload: list,
+        		payload: {
+        			all: list,
+        		},
 		    });
 	    },
 	    *getMy(_, { select, call, put }) {
@@ -16,13 +18,18 @@ export default {
     		const list = yield call(getMyTransactionList, { address });
     		yield put({
 		        type: 'save',
-        		payload: list,
+        		payload: {
+        			my: list,
+        		},
 		    });
 	    },
     },
 	reducers: {
 		save(state, action) {
-			return action.payload;
+			return {
+				...state,
+				...action.payload
+			};
 		}
 	},
 };

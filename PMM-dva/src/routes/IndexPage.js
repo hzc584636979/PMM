@@ -122,32 +122,30 @@ class IndexPage extends React.Component {
       })
       const transactionHash = res.result;
       //0xbf7474f3d84b49124ecb2ce4f6fcafc5160f75d4d7ee9501a393eded5f0bf1a3
-      this.myContract.getTransactionReceipt(transactionHash)
-        .then(receipt => {
-          this.setState({
-            betLoading: false,
-          })
-          console.log(receipt)
-          receipt.status ? 
-            notification.success({
-              message: '交易成功',
-              description: '',
-            }) 
-            : 
-            notification.error({
-              message: '交易失败',
-              description: (
-                <dl>
-                  <dt>投注失败的原因：</dt>
-                  <dd>1：被邀请码不存在。（测试网络的第一个邀请码是first）</dd>
-                  <dd>2：自己的邀请码不能为空。</dd>
-                  <dd>3：投注额必须是1～25。（测试网络缩减了1000倍）</dd>
-                  <dd>4：该账号还在游戏中未结束。（测试网络中以1小时当作了一天）</dd>
-                  <dd>5：新账号所使用的邀请码已经存在了，需要更换为新的邀请码</dd>
-                  <dd>6：投注的可用余额不足</dd>
-                </dl>
-              ),
-            })
+      return this.myContract.getTransactionReceipt(transactionHash)
+    }).then(receipt => {
+      this.setState({
+        betLoading: false,
+      })
+      receipt.status ? 
+        notification.success({
+          message: '交易成功',
+          description: '',
+        }) 
+        : 
+        notification.error({
+          message: '交易失败',
+          description: (
+            <dl>
+              <dt>投注失败的原因：</dt>
+              <dd>1：被邀请码不存在。（测试网络的第一个邀请码是first）</dd>
+              <dd>2：自己的邀请码不能为空。</dd>
+              <dd>3：投注额必须是1～25。（测试网络缩减了1000倍）</dd>
+              <dd>4：该账号还在游戏中未结束。（测试网络中以1小时当作了一天）</dd>
+              <dd>5：新账号所使用的邀请码已经存在了，需要更换为新的邀请码</dd>
+              <dd>6：投注的可用余额不足</dd>
+            </dl>
+          ),
         })
     }).catch(err => {
       this.setState({
