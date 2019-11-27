@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Popconfirm, Button } from 'antd';
 
-const ProductList = ({ products }) => {
+const RecordList = ({ products }) => {
 	const columns = [{
 	    title: '投注金额',
 	    dataIndex: 'eth',
@@ -22,4 +22,4 @@ const ProductList = ({ products }) => {
 	);
 }
 
-export default ProductList;
+export default RecordList;

@@ -1,0 +1,103 @@
+@import '../index.less';
+
+body {
+	background: #000 url('../assets/progress_bg.png') center center no-repeat;
+}
+
+.wrap {
+	.px2rem(width, 750);
+	.px2rem(margin-top, 90);
+	margin: 0 auto;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.title {
+	text-align: center;
+	.px2rem(margin-bottom, 10);
+
+	img {
+		.px2rem(width, 540);
+	}
+}
+
+.context {
+	background: url('../assets/progress_cont.png') no-repeat;
+	.px2rem(height, 871);
+	.px2rem(width, 731);
+	background-size: 100% 100%;
+	.px2rem(padding-top, 50);
+	.padding2rem(50, 68, 80, 68);
+	margin: 0 auto;
+
+	.t {
+		text-align: center;
+		position: relative;
+		.px2rem(height, 110);
+
+		.txt {
+			.px2rem(font-size, 36);
+			color: #fff;
+			text-shadow: 0 0 10 / @baseMix #1d4fa4;
+		}
+
+		.toPage {
+			.px2rem(font-size, 30);
+			color: #f9dd6e;
+			position: absolute;
+			right: 0;
+			top: 0.07rem;
+		}
+	}
+
+	.desc {
+		.padding2rem(0, 25, 0, 25);
+		.px2rem(font-size, 28);
+		color: #ffffff;
+		.px2rem(height, 605);
+
+		p {
+			.px2rem(margin-top, 25);
+		}
+	}
+}
+
+.bottom {
+	.px2rem(margin-top, 30);
+	position: relative;
+
+	.desc {
+		position: absolute;
+		.px2rem(top, -20);
+		left: 0;
+		right: 0;
+		color: #ffffff;
+		.px2rem(font-size, 24);
+		text-align: center;
+	}
+
+	.number {
+		position: absolute;
+		.px2rem(top, 20);
+		.px2rem(right, 38);
+		color: #ffffff;
+		.px2rem(font-size, 28);
+	}
+
+	.progress {
+		margin: 0 auto;
+		background: url('../assets/progress_1.png');
+		.px2rem(height, 91);
+		.px2rem(width, 714);
+		background-size: 100% 100%;
+
+		.inner {
+			background: url('../assets/progress_2.png') left top no-repeat;
+			transition: all .5s;
+			width: 0%;
+			.px2rem(height, 91);
+			background-size: 100% 100%;
+		}
+	}
+}

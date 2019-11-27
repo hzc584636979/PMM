@@ -2,7 +2,7 @@ import stringify from 'qs-stringify';
 import request from '../utils/request';
 import * as moment from 'moment';
 
-const apiAddress = 'http://47.56.168.254';
+const apiAddress = '/api';//'http://47.56.168.254'
 //const apiAddress = '/mock';
 
 export async function testAPI(params) {

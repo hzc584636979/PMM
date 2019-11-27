@@ -5,21 +5,29 @@ export default {
   namespace: 'index',
 
   state: {
-    
+    lang: 'cn'
   },
 
   effects: {
     *inviteCode({ payload }, { call }) {
-      const inviteCode = yield call(getIC, payload);
-      return inviteCode;
+      const data = yield call(getIC, payload);
+      return data.data;
     },
     *address({ payload }, { put }) {
       yield put({
         type: 'save',
         payload: {
-          address: payload.address
+          ...payload,
         }
       })
+    },
+    *lang({ payload }, { call, put }) { 
+      yield put({ 
+        type: 'save', 
+        payload: {
+          lang: payload.lang
+        }
+      });
     },
   },
 

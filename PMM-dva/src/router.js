@@ -7,15 +7,33 @@ const { ConnectedRouter } = routerRedux;
 const routes = [
 	{
 	  path: '/',
+	  name: 'loading',
+	  models: () => [],
+	  component: () => import('./routes/progress'),
+	},
+	{
+	  path: '/indexPage',
 	  name: '首页',
 	  models: () => [import('./models/index')],
 	  component: () => import('./routes/IndexPage'),
 	},
 	{
-	  path: '/products',
-	  name: '列表页',
-	  models: () => [import('./models/products')],
-	  component: () => import('./routes/Products/Products'),
+	  path: '/Develop',
+	  name: '研发室',
+	  models: () => [import('./models/develop')],
+	  component: () => import('./routes/Develop'),
+	},
+	{
+	  path: '/statistics',
+	  name: '统计室',
+	  models: () => [import('./models/statistics')],
+	  component: () => import('./routes/Statistics'),
+	},
+	{
+	  path: '/Record',
+	  name: '财务室',
+	  models: () => [import('./models/record')],
+	  component: () => import('./routes/Record'),
 	},
 ];
 

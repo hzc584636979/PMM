@@ -1,0 +1,408 @@
+@import '../index.less';
+
+body {
+	background: #07116c;
+}
+
+.modalBox {
+
+	:global {
+
+		.ant-modal {
+			width: 731 / @baseMix!important;
+		}
+
+		.ant-modal-content {
+			width: 731 / @baseMix;
+			background: none;
+		}
+
+		.ant-modal-body {
+			.px2rem(height, 950);
+			.padding2rem(24, 24, 0, 24);
+		}
+	}
+
+	.title {
+		.px2rem(height, 100);
+	    width: 100%;
+	    text-align: center;
+	    .px2rem(font-size, 36);
+	    color: #fff;
+	    .px2rem(line-height, 100);
+	    position: relative;
+
+	    .btn {
+	    	position: absolute;
+	    	.px2rem(right, 40);
+	    	.px2rem(font-size, 30);
+	    	top: 0;
+	    	color: #f9dd6e;
+	    	@pointer();
+	    }
+	}
+
+	.modalWrap {
+		.px2rem(padding-bottom, 20);
+
+		.close {
+			.px2rem(width, 74);
+			.px2rem(height, 74);
+			background: url('../assets/modal_close.png') no-repeat;
+			margin: 0 auto;
+			@pointer();
+			background-size: 100% 100%;
+		}
+
+		.inner {
+			.px2rem(height, 926);		
+		}
+
+		.cont {
+			.padding2rem(36, 45, 0, 45);
+		}
+	}
+
+	.walletModal {
+		
+		.ethBox {
+			text-align: center;
+			.px2rem(height, 329);
+
+			.icon {
+				.px2rem(width, 100);
+				.px2rem(height, 97);
+				background: url('../assets/index_icon4.png') no-repeat;
+				background-size: 100% 100%;
+				margin: 0 auto;
+			}
+
+			.num {
+				color: #f9dd6e;
+				.px2rem(font-size, 60);
+			}
+
+			.txt {
+				color: #fff;
+				.px2rem(font-size, 26);
+			}
+		}
+
+		.contractInfo {
+			.px2rem(font-size, 28);
+			color: #fff;
+			.px2rem(margin-top, 35);
+
+			.item {
+				.px2rem(margin-bottom, 12);
+				.px2rem(padding-left, 12);
+				display: inline-block;
+				width: 50%;
+			}
+		}
+
+		.desc {
+			.px2rem(font-size, 28);
+			color: #fff;
+		}
+	}
+
+	.invitationModal {
+
+		.topBox {
+			text-align: center;
+			.px2rem(height, 329);
+			.px2rem(padding-top, 54);
+
+			.icon {
+				.px2rem(width, 100);
+				.px2rem(height, 97);
+				background: url('../assets/index_icon8.png') no-repeat;
+				background-size: 100% 100%;
+				margin: 0 auto;
+				.px2rem(margin-bottom, 30);
+			}
+
+			.num {
+				color: #f9dd6e;
+				.px2rem(font-size, 60);
+			}
+
+			.txt {
+				color: #fff;
+				.px2rem(font-size, 26);
+			}
+		}
+
+		.desc {
+			.padding2rem(35, 0, 20, 0);
+			.px2rem(font-size, 28);
+			color: #fff;
+		}
+
+		.copy {
+			background: url('../assets/index_icon9.png') no-repeat;
+			.px2rem(width, 462);
+			.px2rem(height, 163);
+			background-size: 100% 100%;
+			margin: 0 auto;
+			@pointer();
+		}
+	}
+
+	.messageModal {
+		.px2rem(font-size, 30);
+		color: #fff;
+
+		.t {
+			.px2rem(height, 58);
+			.px2rem(line-height, 58);
+		}
+
+		.c {
+			.padding2rem(15, 20, 15, 20);
+			.px2rem(height, 676);
+		}
+	}
+}
+
+.walletModalBg {
+		
+	:global {
+		.ant-modal-content {
+			background: url('../assets/modal_bg.png') no-repeat;
+			background-size: 100% 100%;
+		}
+	}
+}
+
+.messageModalBg {
+		
+	:global {
+		.ant-modal-content {
+			background: url('../assets/message_bg.png') no-repeat;
+			background-size: 100% 100%;
+		}
+	}
+
+	.modalWrap {
+
+		.cont {
+			.padding2rem(0, 45, 0, 45);
+		}
+	}
+}
+
+.wrap {
+	.px2rem(width, 750);
+	margin: 0 auto;
+	background: url('../assets/index_bg.png') center top no-repeat;
+	background-size: 100% 100%;
+
+	.top {
+		position: relative;
+		text-align: center;
+		.px2rem(height, 145);
+		.px2rem(line-height, 145);
+		
+		.lang {
+			position: absolute;
+			.px2rem(left, 43);
+			top: 0;
+			color: #f9dd6e;
+			.px2rem(font-size, 38);
+			cursor: pointer;
+		}
+
+		.txt {
+			color: #ffffff;
+			.px2rem(font-size, 42);
+		}
+
+		.move {
+			position: absolute;
+			.px2rem(right, 43);
+			.px2rem(top, 57);
+			.px2rem(font-size, 38);
+			color: #f9dd6e;
+		}
+	}
+
+	.info {
+		text-align: center;
+
+		.level {
+			.px2rem(font-size, 36);
+			color: #bec2fa;
+		}
+
+		.box {
+			.px2rem(margin-top, 61);
+			display: flex;
+			justify-content : center;
+
+			.txt {
+				.px2rem(width, 260);
+				color: #fff;
+
+				dt {
+					.px2rem(font-size, 42);
+				}
+
+				dd {
+					.px2rem(font-size, 26);
+				}
+			}
+
+			.icon {
+				.px2rem(width, 116);
+				.px2rem(height, 112);
+				cursor: pointer;
+				background: url(../assets/index_icon1.png);
+				background-size: 100% 100%;
+			}
+		}
+	}
+
+	.initMessage {
+		.px2rem(margin-top, 66);
+		.px2rem(height, 417);
+		position: relative;
+		.padding2rem(110, 0, 0, 270);
+
+		.man {
+			position: absolute;
+			.px2rem(left, 50);
+			top: 0;
+			.px2rem(width, 271);
+			.px2rem(height, 417);
+			background: url(../assets/index_icon7.png) center center no-repeat;
+			background-size: 100% 100%;
+			z-index: 2;
+		}
+
+		.bg {
+			position: absolute;
+			.px2rem(left, 50);
+			.px2rem(top, 80);
+			.px2rem(width, 634);
+			.px2rem(height, 290);
+			background: url(../assets/index_icon6.png) center center no-repeat;
+			background-size: 100% 100%;
+		}
+
+		dl {
+			position: relative;
+			z-index: 1;
+			.px2rem(width, 285);
+
+			dt {
+				.px2rem(font-size, 30);
+				color: #fff;
+			}
+
+			dd {
+				p {
+					color: #ece05c;
+				}
+				.px2rem(font-size, 26);
+				color: #fff;
+			}
+		}
+
+		.move {
+			position: absolute;
+			.px2rem(right, 170);
+			.px2rem(top, 233);
+			.px2rem(font-size, 26);
+			color: #70dcff;
+			text-decoration: underline;
+			z-index: 1;
+		}
+	}
+
+	.bottom {
+		.px2rem(height, 320);
+		.px2rem(margin-top, 159);
+		position: relative;
+
+		.timeBox {
+			text-align: center;
+			color: #fff;
+
+			.t {
+				color: #56b9f2;
+				.px2rem(font-size, 26);
+			}
+
+			.b {
+				.px2rem(margin-top, 15);
+				.px2rem(font-size, 36);
+			}
+		}
+
+		.buttons {
+			position: absolute;
+			left: 0;
+			.px2rem(bottom, 63);
+			right: 0;
+
+			.recordIcon {
+				position: absolute;
+				.px2rem(left, 63);
+				.px2rem(top, 64);
+				@pointer();
+				color: #fff;
+				.px2rem(font-size, 26);
+
+				.icon {
+					.background(116, 112, 'index_icon2.png');
+				}
+
+				.txt {
+					position: absolute;
+					.px2rem(left, 0);
+					.px2rem(top, 95);
+					.px2rem(right, 0);
+					text-align: center;
+				}
+			}
+
+			.developIcon {
+				.background(462, 163, 'index_icon5.png');
+				margin: 0 auto;
+				@pointer();
+			}
+
+			.etherIcon {
+				.background(90, 87, 'index_icon4.png');
+				position: absolute;
+				.px2rem(left, 330);
+				.px2rem(bottom, -57);
+				z-index: 1;
+				@pointer();
+			}
+
+			.invitationIcon {
+				position: absolute;
+				.px2rem(right, 63);
+				.px2rem(top, 64);
+				@pointer();
+				color: #fff;
+				.px2rem(font-size, 26);
+
+				.icon {
+					.background(116, 112, 'index_icon3.png');
+				}
+
+				.txt {
+					position: absolute;
+					.px2rem(left, 0);
+					.px2rem(top, 95);
+					.px2rem(right, 0);
+					text-align: center;
+				}
+			}
+		}
+	}
+}

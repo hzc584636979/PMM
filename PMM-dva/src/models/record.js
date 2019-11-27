@@ -1,7 +1,7 @@
 import { getAllTransactionList, getMyTransactionList } from '../services/serverapi';
 
 export default {
-	namespace: 'products',
+	namespace: 'record',
 	state: {},
     effects: {
     	*getAll(_, { select, call, put }) {

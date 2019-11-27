@@ -1,4 +1,4 @@
-export default {
+const config = {
     ABI: [
         {
             "constant": false,
@@ -95,6 +95,27 @@ export default {
             "stateMutability": "view",
             "type": "function"
         },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "drawBalance",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "drawTutorBless",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
     ],
     address: "0x11d448e765a8e2781054ea94a9fb58e4b7bbe182",
-}
+};
+
+
+export default config;

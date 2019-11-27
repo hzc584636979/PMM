@@ -1,0 +1,29 @@
+@import '../../index.less';
+
+.header {
+	.background(750, 159, 'sub_top.png');
+	position: relative;
+	text-align: center;
+	.px2rem(line-height, 159);
+
+	.back {
+		position: absolute;
+		.px2rem(left, 43);
+		.px2rem(top, 60);
+		@pointer();
+		.background(68, 50, 'sub_back.png');
+	}
+
+	.txt {
+		color: #fff;
+		.px2rem(font-size, 42);
+	}
+
+	.FAQ {
+		position: absolute;
+		.px2rem(right, 43);
+		.px2rem(top, 0);
+		color: #f9dd6e;
+		.px2rem(font-size, 36);
+	}
+}

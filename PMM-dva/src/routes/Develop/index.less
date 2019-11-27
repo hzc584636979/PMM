@@ -1,0 +1,153 @@
+@import '../../index.less';
+
+.wrap {
+	.px2rem(width, 750);
+	margin: 0 auto;
+	background: url('../../assets/develop_bg.png') center top no-repeat;
+	background-size: 100%;
+
+	.top {
+		position: relative;
+		text-align: center;
+		.px2rem(height, 145);
+		.px2rem(line-height, 145);
+		
+		.back {
+			position: absolute;
+			.px2rem(left, 43);
+			.px2rem(top, 60);
+			@pointer();
+			.background(68, 50, 'sub_back.png');
+		}
+
+		.txt {
+			color: #fff;
+			.px2rem(font-size, 42);
+		}
+
+		.FAQ {
+			position: absolute;
+			.px2rem(right, 43);
+			.px2rem(top, 0);
+			color: #f9dd6e;
+			.px2rem(font-size, 36);
+		}
+	}
+
+	.level {
+		text-align: center;
+		.px2rem(font-size, 36);
+		color: #bec2fa;
+	}
+
+	.selectInfo {
+		display: flex;
+		justify-content: center;
+		.px2rem(margin-top, 320);
+
+		dl {
+			color: #fff;
+			text-align: center;
+			.padding2rem(0, 15, 0, 15);
+
+			dt {
+				.px2rem(font-size, 30);
+			}
+
+			dd {
+				color: #a7a3b8;
+				.px2rem(font-size, 26);
+			}
+		}
+	}
+
+	.inputBox {
+		display: flex;
+		justify-content: center;
+		.background(384, 68, 'develop_3.png');
+		margin: 0 auto;
+		color: #fff;
+		.px2rem(font-size, 26);
+		.px2rem(line-height, 68);
+		.px2rem(margin-top, 457);
+
+		.input {
+			.px2rem(width, 200);
+			color: #fff;
+			text-align:center;
+			background: none;
+			border: none;
+			.px2rem(font-size, 36);
+			.px2rem(margin-top, 10);
+		}
+	}
+
+	.bottom {
+		.px2rem(height, 200);
+		position: relative;
+
+		.buttons {
+			position: absolute;
+			left: 0;
+			.px2rem(bottom, 63);
+			right: 0;
+
+			.recordIcon {
+				position: absolute;
+				.px2rem(left, 63);
+				.px2rem(top, 64);
+				@pointer();
+				color: #fff;
+				.px2rem(font-size, 26);
+
+				.icon {
+					.background(116, 112, 'develop_2.png');
+				}
+
+				.txt {
+					position: absolute;
+					.px2rem(left, 0);
+					.px2rem(top, 95);
+					.px2rem(right, 0);
+					text-align: center;
+				}
+			}
+
+			.developIcon {
+				.background(462, 163, 'develop_1.png');
+				margin: 0 auto;
+				@pointer();
+			}
+
+			.etherIcon {
+				.background(90, 87, 'index_icon4.png');
+				position: absolute;
+				.px2rem(left, 330);
+				.px2rem(bottom, -57);
+				z-index: 1;
+				@pointer();
+			}
+
+			.invitationIcon {
+				position: absolute;
+				.px2rem(right, 63);
+				.px2rem(top, 64);
+				@pointer();
+				color: #fff;
+				.px2rem(font-size, 26);
+
+				.icon {
+					.background(116, 112, 'index_icon3.png');
+				}
+
+				.txt {
+					position: absolute;
+					.px2rem(left, 0);
+					.px2rem(top, 95);
+					.px2rem(right, 0);
+					text-align: center;
+				}
+			}
+		}
+	}
+}

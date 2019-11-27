@@ -16,12 +16,14 @@
     "dva": "^2.4.1",
     "dva-loading": "^3.0.18",
     "ethereumjs-tx": "^2.1.1",
+    "lib-flexible": "^0.3.2",
     "moment": "^2.24.0",
     "qs-stringify": "^1.1.0",
     "react": "^16.2.0",
     "react-copy-to-clipboard": "^5.0.2",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.2.0",
+    "react-flexible": "^1.0.7",
     "web3": "^1.2.4"
   },
   "devDependencies": {

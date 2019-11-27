@@ -7,7 +7,7 @@ export default function myContract(HttpProvider) {
 	let myContract = new web3.eth.Contract(contractConfig.ABI,contractConfig.address);
 
 	function fromWei(number) {
-		return web3.utils.fromWei(number);
+		return web3.utils.fromWei(number, 'ether');
 	}
 
 	//通过metaMask钱包API获取用户地址
@@ -72,7 +72,7 @@ export default function myContract(HttpProvider) {
 		let data = await myContract.methods.againBet(betValue).encodeABI();
 		const raw = await _configTransaction({
 			myAddress,
-			betValue,
+			betValue: 0,
 			data,
 		}).then(data => {
 			return data;
@@ -110,8 +110,12 @@ export default function myContract(HttpProvider) {
 	}
 
 	//查询交易hash状态
-	function getTransactionReceipt(hash) {
-		return web3.eth.getTransactionReceipt(hash);
+	async function getTransactionReceipt(hash) {
+		let data = await web3.eth.getTransactionReceipt(hash).then(receipt => {
+			console.log(receipt)
+			return (receipt ? receipt : getTransactionReceipt(hash));
+		})
+		return data;
 	}
 
 	//配置交易
@@ -126,7 +130,8 @@ export default function myContract(HttpProvider) {
 			data: arg.data,
 			nonce: nonce.toString(),
 		};
-		let gas = 21000/*await web3.eth.estimateGas(opt)*/;
+		console.log(opt)
+		let gas = await web3.eth.estimateGas(opt);
 		opt.gas = web3.utils.toHex(gas);
 		return opt;
 	}

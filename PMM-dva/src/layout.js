@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react-flexible';
 import { connect } from 'dva';
 import { Link, withRouter } from 'dva/router';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -85,6 +86,7 @@ class App extends React.Component {
     let { children, location } = this.props;
     const Lang = this.props.app.lang;
     return (
+      /*location.pathname != '/' ?
       <Layout>
         <Header className={styles.header} type="flex" justify="space-around" align="middle">
           <Col span={4} style={{ textAlign: 'left' }}>
@@ -126,9 +128,9 @@ class App extends React.Component {
           visible={this.state.moveVisible}
         >
           <ul className={ styles.drawerList }>
-            { location.pathname != '/' &&
+            { location.pathname != '/indexPage' &&
               <li>
-                <Link to="/">
+                <Link to="/indexPage">
                   <Button type="link" onClick={ this.closeMoveDrawer }>
                     <Icon type="pay-circle" />
                     {langConfig[Lang].home}
@@ -145,7 +147,7 @@ class App extends React.Component {
               </Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="/indexPage">
                 <Button type="link" onClick={ () => this.showModal('rule') }>
                   <Icon type="file-done" />
                   {langConfig[Lang].rule}
@@ -153,7 +155,7 @@ class App extends React.Component {
               </Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="/indexPage">
                 <Button type="link" onClick={ () => this.showModal('about') }>
                   <Icon type="alert" />
                   {langConfig[Lang].about}
@@ -163,6 +165,8 @@ class App extends React.Component {
           </ul>
         </Drawer>
       </Layout>
+      :*/
+      children
     )
   }
 }
