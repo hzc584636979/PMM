@@ -18,12 +18,12 @@ class Statistics extends React.Component {
 	}
 
 	render() {
-		const { index={userByContract: {}} } = this.props;
+		const { userByContract } = window.getUserInfo(this.props.app);
 		return (
 			<SubLayout title="统计室"> 
 				<div className={styles.item}>
 					<div className={styles.l}>总注入（ETH）</div>
-					<div className={styles.r}>{ index.userByContract['充值总额'] }</div>
+					<div className={styles.r}>{ userByContract['充值总额'] }</div>
 				</div>
 			</SubLayout>
 		);

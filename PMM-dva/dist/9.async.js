@@ -1,0 +1,1 @@
+webpackJsonp([9],{"RS/S":function(e,t,a){"use strict";var s=a("ouCL");Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=s(a("+TWC")),c={namespace:"statistics",state:{},effects:{},reducers:{save:function(e,t){return(0,u.default)({},e,t.payload)}}};t.default=c}});

@@ -11,7 +11,7 @@ class SubContent extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className={styles.wrap}>
 				<SubHeader 
 					title={this.props.title}
 				/>
