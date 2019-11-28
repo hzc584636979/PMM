@@ -17,21 +17,11 @@ class Progress extends React.Component {
 	}
 
 	componentDidMount() {
-		this.progressFunc(this.getRandom(1000, 200));
-		window.addEventListener('load', this.loadFunc, false)
+		this.progressFunc(this.getRandom(500, 50));
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('load', this.loadFunc, false);
-  	}
-
-  	loadFunc = () => {
-  		clearTimeout(this.pg);
-		this.setState({
-			progressPCT: 100,
-			toPageState: true,
-			txt: '加载完成',
-		})
+		
   	}
 
   	getRandom = (m, n) => {
@@ -41,7 +31,7 @@ class Progress extends React.Component {
   	progressFunc = (dely) => {
   		clearTimeout(this.pg);
   		let { progressPCT } = this.state;
-  		let random = this.getRandom(5, 0);
+  		let random = this.getRandom(15, 5);
   		random = 80 - random > 0 ? random : 80 - random;
 		this.pg = setTimeout(() => {
 			if(progressPCT < 80){
@@ -49,7 +39,14 @@ class Progress extends React.Component {
 				this.setState({
 					progressPCT: value
 				})
-				this.progressFunc(this.getRandom(1000, 200));
+				this.progressFunc(this.getRandom(500, 50));
+			}else{
+				clearTimeout(this.pg);
+				this.setState({
+					progressPCT: 100,
+					toPageState: true,
+					txt: '加载完成',
+				})
 			}
 		}, dely)
   	}
