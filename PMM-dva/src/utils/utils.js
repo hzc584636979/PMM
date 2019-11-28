@@ -56,4 +56,16 @@ function getUrlOptions(url = window.location.href) {
     return urlEle(url);
 }
 
+function getUserInfo(dvaIndex) {
+    return {
+        userByContract: {}, 
+        address: '', 
+        banlance: 0, 
+        ...JSON.parse(window.g_getLocalStorage()),
+        ...dvaIndex,
+    };
+};
+
+window.getUserInfo = getUserInfo;
+
 export { langConfig, getUrlOptions };

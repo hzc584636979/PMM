@@ -14,7 +14,6 @@ class IndexPage extends React.Component {
     super(props);
   
     this.state = {
-      betState: false,
       betLoading: false,
       betLoadingText: '同步用户信息中...',
       address: '',
@@ -40,6 +39,14 @@ class IndexPage extends React.Component {
       betLoadingText: '同步用户信息中...',
       betLoading: true,
     })
+
+    let beInvitedCode='first';
+    if(!window.getUserInfo(this.props.app).beInvitedCode){
+      beInvitedCode = getUrlOptions().beInvitedCode;
+    }else{
+      beInvitedCode = window.getUserInfo(this.props.app).beInvitedCode;
+    }
+
     //获取用户信息
     this.myContract.getUserInfo().then(({ address, banlance }) => {
       //获取用户在合约上的信息
@@ -54,11 +61,12 @@ class IndexPage extends React.Component {
           }
         })
         this.props.dispatch({
-          type: 'index/address',
+          type: 'app/saveUserInfo',
           payload: {
             address,
             banlance,
             userByContract,
+            beInvitedCode,
           }
         })
         this.setState({
@@ -74,9 +82,9 @@ class IndexPage extends React.Component {
 
   handleLanguageChange = (v) => {
     this.props.dispatch({
-      type: 'index/lang',
+      type: 'app/lang',
       payload: {
-        lang: this.props.index.lang == 'cn' ? 'en' : 'cn',
+        lang: this.props.app.lang == 'cn' ? 'en' : 'cn',
       }
     })
   }
@@ -250,7 +258,7 @@ class IndexPage extends React.Component {
       level = 2;
     }else if(lockCoin >= 11 && lockCoin <= 15){
       level = 3;
-    }else if(lockCoin >= 16 && lockCoin <= 10){
+    }else if(lockCoin >= 16){
       level = 'MAX';
     }
     return level;
@@ -275,7 +283,7 @@ class IndexPage extends React.Component {
   }
 
   render() {
-    const Lang = this.props.index.lang;
+    const Lang = this.props.app.lang;
     const { userByContract, modalBoxBg } = this.state;
     return (
       <Spin size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
@@ -311,8 +319,8 @@ class IndexPage extends React.Component {
           </div>
           <div className={styles.bottom}>
             <div className={styles.timeBox}>
-              <div className={styles.t}>重新注入星痕倒计时</div>
-              <div className={styles.b}>78:36:57</div>
+              <div className={styles.t}>重新注入星痕</div>
+              <div className={styles.b}>{ userByContract['状态'] == 2 ? '游戏结束' : '游戏中' }</div>
             </div>
             <div className={styles.buttons}>
               <div className={styles.recordIcon}>
@@ -365,4 +373,4 @@ class IndexPage extends React.Component {
   }
 }
 
-export default connect(({ index }) => ({ index }))(IndexPage);
+export default connect(({ app, index }) => ({ app, index }))(IndexPage);

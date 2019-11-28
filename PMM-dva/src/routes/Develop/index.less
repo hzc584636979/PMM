@@ -160,6 +160,52 @@
 			.px2rem(height, 676);
 		}
 	}
+
+	.yebzModal {
+		.px2rem(font-size, 30);
+		color: #fff;
+
+		.icon {
+			.background(78, 72, 'warning_3.png');
+			margin: 30/@baseMix auto;
+		}
+
+		.num {
+			color: #f9dd6e;
+			.px2rem(font-size, 60);
+		}
+
+		p {
+			margin: 20/@baseMix 0;
+		}
+	}
+
+	.zcqrModal {
+		.yebzModal;
+
+		.icon {
+			.background(78, 72, 'warning_2.png');
+			margin: 30/@baseMix auto;
+		}
+
+		.but {
+			.background(462, 163, 'index_icon17.png');
+			margin: 0 auto;
+			@pointer();
+		}
+
+		p {
+			margin: 5/@baseMix 0;
+		}
+	}
+
+	.tzcgModal {
+		.yebzModal;
+		.icon {
+			.background(136, 136, 'warning_1.png');
+			margin: 30/@baseMix auto;
+		}
+	}
 }
 
 .walletModalBg {
@@ -172,11 +218,34 @@
 	}
 }
 
+.warningModalBg {
+		
+	:global {
+		.ant-modal-content {
+			background: url('../../assets/warning_bg.png') no-repeat;
+			background-size: 100% 100%;
+		}
+
+		.ant-modal-body {
+			.px2rem(height, 765);
+			.padding2rem(24, 24, 0, 24);
+		}
+	}
+
+	.modalWrap {
+
+		.inner {
+			.px2rem(height, 765);		
+		}
+	}
+}
+
 .wrap {
 	.px2rem(width, 750);
 	margin: 0 auto;
 	background: url('../../assets/develop_bg.png') center top no-repeat;
 	background-size: 100%;
+	position: relative;
 
 	.top {
 		position: relative;
@@ -233,6 +302,53 @@
 		}
 	}
 
+	.selectWrap {
+		display: flex;
+		justify-content: center;
+		position: absolute;
+		.px2rem(left, 28);
+		.px2rem(bottom, 300);
+
+		.item1 {
+			@pointer();
+			.background(233, 536, 's_1_1.png');
+		}
+
+		.item1.on {
+			.background(233, 536, 's_1_2.png');
+		}
+
+		.item1.lock {
+			.background(233, 536, 's_1_3.png');
+		}
+
+		.item2 {
+			@pointer();
+			.background(233, 536, 's_2_1.png');
+		}
+
+		.item2.on {
+			.background(233, 536, 's_2_2.png');
+		}
+
+		.item2.lock {
+			.background(233, 536, 's_2_3.png');
+		}
+
+		.item3 {
+			@pointer();
+			.background(233, 536, 's_3_1.png');
+		}
+
+		.item3.on {
+			.background(233, 536, 's_3_2.png');
+		}
+
+		.item3.lock {
+			.background(233, 536, 's_3_3.png');
+		}
+	}
+
 	.inputBox {
 		display: flex;
 		justify-content: center;
@@ -242,6 +358,8 @@
 		.px2rem(font-size, 26);
 		.px2rem(line-height, 68);
 		.px2rem(margin-top, 457);
+		position: relative;
+    	z-index: 1;
 
 		.input {
 			.px2rem(width, 200);
@@ -250,7 +368,8 @@
 			background: none;
 			border: none;
 			.px2rem(font-size, 36);
-			.px2rem(margin-top, 10);
+			.px2rem(height, 63);
+			padding: 0;
 		}
 	}
 

@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Spin, Tabs } from 'antd';
+import { Spin } from 'antd';
 import SubLayout from '../../components/SubLayout';
-import RecordList from '../../components/RecordList';
 import { routerRedux } from 'dva/router';
 import styles from './index.less';
 
-const { TabPane } = Tabs;
 class Record extends React.Component {
 	constructor(props) {
 	  super(props);
@@ -17,12 +15,11 @@ class Record extends React.Component {
 	}
 
 	componentDidMount() {
-		if(!this.props.index) {
-			this.props.dispatch(routerRedux.push('/'));
-			return;
-		};
+		if(window.getUserInfo(this.props.app).address == "") {
+			this.props.dispatch(routerRedux.push('/indexPage'))
+		}
         this.props.dispatch({
-			type: 'products/getMy'
+			type: 'record/getMy'
 		})
     }
 
@@ -31,7 +28,7 @@ class Record extends React.Component {
 			tabKey,
 		})
 		this.props.dispatch({
-			type: 'products/getMy'
+			type: 'record/getMy'
 		})
 	}
 
@@ -144,8 +141,8 @@ class Record extends React.Component {
 	}
 };
 
-export default connect(({ index, record, loading }) => ({
-	index,
+export default connect(({ app, record, loading }) => ({
+	app,
 	record,
 	loading: loading.models.record
 }))(Record);

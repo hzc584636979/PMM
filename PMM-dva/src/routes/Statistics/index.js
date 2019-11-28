@@ -12,7 +12,7 @@ class Statistics extends React.Component {
 	}
 
 	componentDidMount() {
-		if(!this.props.index) {
+		if(window.getUserInfo(this.props.app).address == "") {
 			this.props.dispatch(routerRedux.push('/indexPage'))
 		}
 	}
@@ -30,4 +30,4 @@ class Statistics extends React.Component {
 	}
 }
 
-export default connect(({ index, statistics }) => ({ index, statistics }))(Statistics);
+export default connect(({ app, statistics }) => ({ app, statistics }))(Statistics);

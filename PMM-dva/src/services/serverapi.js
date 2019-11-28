@@ -33,7 +33,30 @@ export async function getMyTransactionList(params) {
 	return data;
 }
 
+export async function getAdminList(params) {
+	const data = {
+		sup: [
+			{ name: 'Mydva', lv: 1 },
+		],
+		sub: [
+			{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+	   		{ name: 'Mydva', lv: 1 },
+		],
+	}
+	return data;
+}
+
 export async function getIC(params) {
+	return {
+		data: 'a1111'
+	}
 	let qstr = stringify(params);
   	return request(`${apiAddress}/inviteCode?${qstr}`);
 }

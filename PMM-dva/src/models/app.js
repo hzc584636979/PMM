@@ -8,6 +8,15 @@ export default {
   },
 
   effects: {
+    *saveUserInfo({ payload={} }, { put }) {
+      window.g_setLocalStorage(JSON.stringify(payload))
+      yield put({
+        type: 'save',
+        payload: {
+          ...payload,
+        }
+      })
+    },
     *lang({ payload }, { call, put }) { 
       yield put({ 
         type: 'save', 

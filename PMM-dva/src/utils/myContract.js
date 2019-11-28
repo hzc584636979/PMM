@@ -55,6 +55,7 @@ export default function myContract(HttpProvider) {
 
 	//投注
 	async function bet(myAddress, betValue, inviteCode, beInvitedCode) {
+		console.log(inviteCode, beInvitedCode)
 		let data = await myContract.methods.bet(inviteCode, beInvitedCode).encodeABI();
 		const raw = await _configTransaction({
 			myAddress,
@@ -121,6 +122,7 @@ export default function myContract(HttpProvider) {
 	//配置交易
 	async function _configTransaction(arg) {
 		let gasPrice = await web3.eth.getGasPrice();
+		console.log(web3.utils.fromWei(gasPrice, 'ether'))
 		let nonce = await web3.eth.getTransactionCount(arg.myAddress);
 		let opt = {
 			from: arg.myAddress,
@@ -132,6 +134,7 @@ export default function myContract(HttpProvider) {
 		};
 		console.log(opt)
 		let gas = await web3.eth.estimateGas(opt);
+		console.log(gas)
 		opt.gas = web3.utils.toHex(gas);
 		return opt;
 	}

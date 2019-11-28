@@ -18,10 +18,16 @@ const routes = [
 	  component: () => import('./routes/IndexPage'),
 	},
 	{
-	  path: '/Develop',
+	  path: '/develop',
 	  name: '研发室',
 	  models: () => [import('./models/develop')],
 	  component: () => import('./routes/Develop'),
+	},
+	{
+	  path: '/admin',
+	  name: '行政室',
+	  models: () => [import('./models/admin')],
+	  component: () => import('./routes/Admin'),
 	},
 	{
 	  path: '/statistics',
@@ -30,7 +36,7 @@ const routes = [
 	  component: () => import('./routes/Statistics'),
 	},
 	{
-	  path: '/Record',
+	  path: '/record',
 	  name: '财务室',
 	  models: () => [import('./models/record')],
 	  component: () => import('./routes/Record'),

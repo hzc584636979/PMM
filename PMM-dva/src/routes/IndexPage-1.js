@@ -53,9 +53,11 @@ class IndexPage extends React.Component {
           }
         })
         this.props.dispatch({
-          type: 'index/address',
+          type: 'index/saveUserInfo',
           payload: {
-            address
+            address,
+            banlance,
+            userByContract,
           }
         })
         this.setState({

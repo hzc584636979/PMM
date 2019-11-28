@@ -7,6 +7,14 @@ const app = dva();
 
 window.g_app = app;
 
+window.g_getLocalStorage = () => {
+  return localStorage.getItem('PMM-dva');
+};
+
+window.g_setLocalStorage = (params) => {
+  return localStorage.setItem('PMM-dva', params);
+};
+
 // 2. Plugins
 app.use(createLoading());
 
