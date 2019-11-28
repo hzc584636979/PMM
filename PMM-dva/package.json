@@ -16,6 +16,7 @@
     "dva": "^2.4.1",
     "dva-loading": "^3.0.18",
     "ethereumjs-tx": "^2.1.1",
+    "history": "^4.10.1",
     "lib-flexible": "^0.3.2",
     "moment": "^2.24.0",
     "qs-stringify": "^1.1.0",

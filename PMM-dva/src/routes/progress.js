@@ -4,6 +4,7 @@ import { Link } from 'dva/router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import styles from './progress.less';
 import Logo from '../assets/progress_logo.png';
+import { getUrlOptions } from '../utils/utils';
 
 class Progress extends React.Component {
 	constructor(props) {
@@ -52,6 +53,7 @@ class Progress extends React.Component {
   	}
 
 	render() {
+		const beInvitedCode = getUrlOptions().beInvitedCode;
 		return (
 			<div className={styles.wrap}>
 				<div className={styles.title}>
@@ -61,7 +63,7 @@ class Progress extends React.Component {
 					<div className={styles.t}>
 						<span className={styles.txt}>事件</span> 
 						{this.state.toPageState && 
-							<Link className={styles.toPage} to="/indexPage">跳过</Link>
+							<Link className={styles.toPage} to={`/indexPage${beInvitedCode ? `?beInvitedCode=${beInvitedCode}` : ``}`}>跳过</Link>
 						}
 					</div>
 					<div className={styles.desc}>

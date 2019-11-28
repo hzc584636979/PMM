@@ -40,9 +40,9 @@ class IndexPage extends React.Component {
       betLoading: true,
     })
 
-    let beInvitedCode='first';
+    let beInvitedCode='';
     if(!window.getUserInfo(this.props.app).beInvitedCode){
-      beInvitedCode = getUrlOptions().beInvitedCode;
+      beInvitedCode = getUrlOptions().beInvitedCode || 'first';
     }else{
       beInvitedCode = window.getUserInfo(this.props.app).beInvitedCode;
     }
