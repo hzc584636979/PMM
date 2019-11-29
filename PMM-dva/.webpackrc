@@ -9,10 +9,16 @@
 	   "node_modules/ethereum-bloom-filters"
 	],
 	"proxy": {
-      "/api": {
-        "target": "http://192.168.1.18",
-        "changeOrigin":true,
-        "pathRewrite": { "^/api" : "" }
-      }
+    "/api": {
+      "target": "http://192.168.1.18",
+      "changeOrigin":true,
+      "pathRewrite": { "^/api" : "" }
     }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
 }

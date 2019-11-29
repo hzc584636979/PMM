@@ -77,7 +77,10 @@ class Progress extends React.Component {
 					<div className={styles.desc}>{ this.state.txt }</div>
 					<div className={styles.number}>{ this.state.progressPCT }%</div>
 					<div className={styles.progress}>
-						<div className={styles.inner} style={{width: this.state.progressPCT+'%'}}></div>
+						<div className={styles.inner} style={{
+							WebkitClipPath: `polygon(0% 0%, ${this.state.progressPCT}% 0%, ${this.state.progressPCT}% 100%, 0% 100%)`,
+							clipPath: `polygon(0% 0%, ${this.state.progressPCT}% 0%, ${this.state.progressPCT}% 100%, 0% 100%)`
+						}}></div>
 					</div>
 				</div>
 			</div>

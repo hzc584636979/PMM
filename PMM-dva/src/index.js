@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 import dva from 'dva';
 import createLoading from 'dva-loading';
 import { createBrowserHistory as createHistory } from 'history';
