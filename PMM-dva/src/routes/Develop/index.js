@@ -266,11 +266,16 @@ class Develop extends React.Component {
 
 	handleKeyup = (e) => {
 		const { banlance } = window.getUserInfo(this.props.app);
-	    const { best } = this.state;
+	    const { selectDesc, best } = this.state;
 	    const value = Number(e.target.value);
-	    if(Number.isInteger(value) && value <= 25 && banlance*best >= value){
+	    if(value == 0) {
+	    	this.setState({
+	        	betValue: "",
+	        	betState: false,
+	      	})
+	    }else if(Number.isInteger(value) && value <= 25 && banlance*best >= value){
 	      this.setState({
-	        betValue: Number(e.target.value),
+	        betValue: value,
 	        betState: true,
 	      })
 	    }else{
@@ -279,6 +284,19 @@ class Develop extends React.Component {
 	        betState: false,
 	      })
 	    }
+
+	    let selectKey = 3;
+	    Object.keys(selectDesc).map(k => {
+	    	if(selectDesc[k].max >= value && selectDesc[k].min <= value) {
+	    		selectKey = k;
+	    	}
+	    })
+
+	    this.setState({
+			selectKey,
+		},() => {
+			this.getSelectDesc();
+		})
 	}
 
 	getDrawBalance = () => {

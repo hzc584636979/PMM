@@ -294,7 +294,7 @@ body {
 		dl {
 			position: relative;
 			z-index: 1;
-			.px2rem(width, 285);
+			.px2rem(width, 260);
 
 			dt {
 				.px2rem(font-size, 30);
@@ -302,11 +302,18 @@ body {
 			}
 
 			dd {
-				p {
-					color: #ece05c;
-				}
 				.px2rem(font-size, 26);
 				color: #fff;
+
+				.desc {
+					overflow : hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 2;
+					/* autoprefixer: off */
+					-webkit-box-orient: vertical;
+					/* autoprefixer: on */
+				}
 			}
 		}
 

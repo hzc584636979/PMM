@@ -320,7 +320,9 @@ class IndexPage extends React.Component {
             <div className={styles.bg}></div>
             <dl>
               <dt>副舰长：</dt>
-              <dd><p>A365列兵</p>你从冬眠中苏醒了啊？了解下战舰的变化吧...
+              <dd>
+                <p style={{color: '#ece05c'}}>A365列兵</p>
+                <p className={styles.desc}>你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧...</p>
               </dd>
             </dl>
             <a className={styles.move} onClick={ () => this.showModal('message') }>详情</a>
