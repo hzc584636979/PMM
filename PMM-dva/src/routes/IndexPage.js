@@ -68,7 +68,7 @@ class IndexPage extends React.Component {
             userByContract,
             beInvitedCode,
           }
-        })
+        });
         this.setState({
           address,
           banlance,
@@ -93,6 +93,7 @@ class IndexPage extends React.Component {
     this.setState({
         betLoading: true,
         betLoadingText: '提取中...',
+        spinZindex: 1001,
     })
     this.myContract.drawBalance(this.state.address)
     .then(res => {
@@ -136,16 +137,40 @@ class IndexPage extends React.Component {
     });
   };
 
-  showModal = (type) => {
-    const { banlance, userByContract } = this.state;
+  showModal = (modalType) => {
+    let modalBoxBg = '';
+
+    if(modalType == 'ether') {
+      modalBoxBg = styles.walletModalBg;
+    }else if(modalType == 'invitation') {
+      modalBoxBg = styles.walletModalBg;
+    }else if(modalType == 'message') {
+      modalBoxBg = styles.messageModalBg;
+    }
+
+    this.setState({
+      modalBoxBg,
+      modalType,
+      modalVisible: true,
+      moveVisible: false,
+    });
+  };
+
+  hideModal = () => {
+    this.setState({
+      modalVisible: false,
+    });
+  };
+
+  getModalRender = () => {
+    const { banlance, userByContract, modalType } = this.state;
     let other = {};
-    if(type == 'ether') {
+    if(modalType == 'ether') {
       other = {
-        modalBoxBg: styles.walletModalBg,
         modalTitle: (
           <div>
             钱包
-            <div className={styles.btn} onClick={ this.getDrawBalance }>提取</div>
+            {userByContract['可用余额'] > 0 && <div className={styles.btn} onClick={ this.getDrawBalance }>提取</div>}
           </div>
         ),
         modalDesc: (
@@ -178,9 +203,8 @@ class IndexPage extends React.Component {
           </div>
         ),
       };
-    }else if(type == 'invitation') {
+    }else if(modalType == 'invitation') {
       other = {
-        modalBoxBg: styles.walletModalBg,
         modalTitle: "邀请",
         modalDesc: (
           <div className={styles.invitationModal}>
@@ -201,9 +225,8 @@ class IndexPage extends React.Component {
           </div>
         ),
       };
-    }else if(type == 'message') {
+    }else if(modalType == 'message') {
       other = {
-        modalBoxBg: styles.messageModalBg,
         modalTitle: "消息详情",
         modalDesc: (
           <div className={styles.messageModal}>
@@ -218,29 +241,14 @@ class IndexPage extends React.Component {
       };
     }
 
-    this.setState({
-      ...other,
-      modalVisible: true,
-      moveVisible: false,
-    });
-  };
-
-  hideModal = () => {
-    this.setState({
-      modalVisible: false,
-    });
-  };
-
-  getModalRender = () => {
-    const { modalTitle, modalDesc } = this.state;
     return (
       <div className={styles.modalWrap}>
         <div className={styles.inner}>
           <div className={styles.title}>
-            { modalTitle }
+            { other.modalTitle }
           </div>
           <div className={styles.cont}>
-            { modalDesc }
+            { other.modalDesc }
           </div>
         </div>
         <div className={styles.close} onClick={ this.hideModal }></div>
@@ -286,7 +294,7 @@ class IndexPage extends React.Component {
     const Lang = this.props.app.lang;
     const { userByContract, modalBoxBg } = this.state;
     return (
-      <Spin size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
+      <Spin wrapperClassName={`spinZindex ${this.state.betLoading ? `on` : ``}`} size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
         <div className={styles.wrap}>
           <div className={styles.top}>
             <div className={styles.lang} onClick={ this.handleLanguageChange }>{ Lang == 'cn' ? '中' : 'En' }</div>
@@ -315,7 +323,7 @@ class IndexPage extends React.Component {
               <dd><p>A365列兵</p>你从冬眠中苏醒了啊？了解下战舰的变化吧...
               </dd>
             </dl>
-            <a className={styles.move} href="javascript:;" onClick={ () => this.showModal('message') }>详情</a>
+            <a className={styles.move} onClick={ () => this.showModal('message') }>详情</a>
           </div>
           <div className={styles.bottom}>
             <div className={styles.timeBox}>
@@ -373,4 +381,4 @@ class IndexPage extends React.Component {
   }
 }
 
-export default connect(({ app, index }) => ({ app, index }))(IndexPage);
+export default connect(({ app, index, loading }) => ({ app, index, loading: loading.models.index }))(IndexPage);

@@ -14,7 +14,7 @@ export default {
 		    });
 	    },
 	    *getMy(_, { select, call, put }) {
-    		const address = yield select(({ index }) => index.address)
+    		const address = yield select(({ index }) => window.getUserInfo(index).address);
     		const list = yield call(getMyTransactionList, { address });
     		yield put({
 		        type: 'save',

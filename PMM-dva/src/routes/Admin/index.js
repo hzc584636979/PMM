@@ -59,10 +59,10 @@ class Admin extends React.Component {
 
 	render() {
 		const { userByContract } = window.getUserInfo(this.props.app);
-		const { sup, sub } = this.props.admin;
+		const { admin: {sup, sub}, loading } = this.props;
 		const { supClass, supItem, subClass, subItem } = this.state;
 		return (
-			<Spin spinning={ false }>
+			<Spin spinning={ loading }>
 				<SubLayout title="行政室">
 					<div className={styles.level}>LV.{ this.getLv(userByContract) }</div>
 					<ul className={styles.list}>
@@ -113,4 +113,4 @@ class Admin extends React.Component {
 	}
 }
 
-export default connect(({ app, admin }) => ({ app, admin }))(Admin);
+export default connect(({ app, admin, loading }) => ({ app, admin, loading: loading.models.admin }))(Admin);

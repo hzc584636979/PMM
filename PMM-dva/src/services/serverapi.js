@@ -33,6 +33,14 @@ export async function getMyTransactionList(params) {
 	return data;
 }
 
+export async function getStaticticsList(params) {
+	const data = [
+		{ hash: 'Mydva', eth: 1 },
+   		{ hash: 'Myantd', eth: 2 },
+   	]
+	return data;
+}
+
 export async function getAdminList(params) {
 	const data = {
 		sup: [

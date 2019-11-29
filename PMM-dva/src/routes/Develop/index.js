@@ -317,17 +317,49 @@ class Develop extends React.Component {
 	    })
 	}
 
-	showModal = (type) => {
-		const { betValue, best, selectDesc } = this.state;
+	showModal = (modalType) => {
+		let modalBoxBg = '';
+
+	    if(modalType == 'ether') {
+	    	modalBoxBg = styles.walletModalBg;
+	    }else if(modalType == 'invitation') {
+	        modalBoxBg = styles.walletModalBg;
+	    }else if(modalType == 'yebz'){
+		    modalBoxBg = styles.warningModalBg;
+	    }else if(modalType == 'yxz'){
+		    modalBoxBg = styles.warningModalBg;
+	    }else if(modalType == 'zcqr'){
+		    modalBoxBg = styles.warningModalBg;
+	    }else if(modalType == 'zjbz'){
+		    modalBoxBg = styles.warningModalBg;
+	    }else if(modalType == 'tzcg'){
+		    modalBoxBg = styles.warningModalBg;
+	    }
+
+	    this.setState({
+	      	modalBoxBg,
+			modalType,
+	      	modalVisible: true,
+	      	moveVisible: false,
+	    });
+	};
+
+	hideModal = () => {
+	    this.setState({
+	      modalVisible: false,
+	    });
+	};
+
+	getModalRender = () => {
+	    const { betValue, best, selectDesc, modalType } = this.state;
 		const { userByContract, banlance } = window.getUserInfo(this.props.app);
 	    let other = {};
-	    if(type == 'ether') {
+	    if(modalType == 'ether') {
 	      other = {
-	        modalBoxBg: styles.walletModalBg,
 	        modalTitle: (
 	          <div>
 	            钱包
-	            <div className={styles.btn} onClick={ this.getDrawBalance }>提取</div>
+	            {userByContract['可用余额'] > 0 && <div className={styles.btn} onClick={ this.getDrawBalance }>提取</div>}
 	          </div>
 	        ),
 	        modalDesc: (
@@ -360,9 +392,8 @@ class Develop extends React.Component {
 	          </div>
 	        ),
 	      };
-	    }else if(type == 'invitation') {
+	    }else if(modalType == 'invitation') {
 	      other = {
-	        modalBoxBg: styles.walletModalBg,
 	        modalTitle: "邀请",
 	        modalDesc: (
 	          <div className={styles.invitationModal}>
@@ -383,9 +414,8 @@ class Develop extends React.Component {
 	          </div>
 	        ),
 	      };
-	    }else if(type == 'yebz'){
+	    }else if(modalType == 'yebz'){
 	    	other = {
-		        modalBoxBg: styles.warningModalBg,
 		        modalTitle: "警告",
 		        modalDesc: (
 		          <div className={styles.yebzModal}>
@@ -398,9 +428,8 @@ class Develop extends React.Component {
 		          </div>
 		        ),
 		    };
-	    }else if(type == 'yxz'){
+	    }else if(modalType == 'yxz'){
 	    	other = {
-		        modalBoxBg: styles.warningModalBg,
 		        modalTitle: "警告",
 		        modalDesc: (
 		          <div className={styles.yebzModal}>
@@ -412,7 +441,7 @@ class Develop extends React.Component {
 		          </div>
 		        ),
 		    };
-	    }else if(type == 'zcqr'){
+	    }else if(modalType == 'zcqr'){
 	    	let d = {};
 	    	Object.keys(selectDesc).map(k => {
 				if(betValue >= selectDesc[k].min &&  betValue >= selectDesc[k].max) {
@@ -422,7 +451,6 @@ class Develop extends React.Component {
 				}
 			});
 	    	other = {
-		        modalBoxBg: styles.warningModalBg,
 		        modalTitle: "提醒",
 		        modalDesc: (
 		          <div className={styles.zcqrModal}>
@@ -436,9 +464,8 @@ class Develop extends React.Component {
 		          </div>
 		        ),
 		    };
-	    }else if(type == 'zjbz'){
+	    }else if(modalType == 'zjbz'){
 	    	other = {
-		        modalBoxBg: styles.warningModalBg,
 		        modalTitle: "提醒",
 		        modalDesc: (
 		          <div className={styles.zcqrModal}>
@@ -449,7 +476,7 @@ class Develop extends React.Component {
 		          </div>
 		        ),
 		    };
-	    }else if(type == 'tzcg'){
+	    }else if(modalType == 'tzcg'){
 	    	let d = {};
 	    	Object.keys(selectDesc).map(k => {
 				if(betValue >= selectDesc[k].min &&  betValue >= selectDesc[k].max) {
@@ -459,7 +486,6 @@ class Develop extends React.Component {
 				}
 			});
 	    	other = {
-		        modalBoxBg: styles.warningModalBg,
 		        modalTitle: "提醒",
 		        modalDesc: (
 		          <div className={styles.tzcgModal}>
@@ -473,30 +499,14 @@ class Develop extends React.Component {
 		        ),
 		    };
 	    }
-
-	    this.setState({
-	      ...other,
-	      modalVisible: true,
-	      moveVisible: false,
-	    });
-	};
-
-	hideModal = () => {
-	    this.setState({
-	      modalVisible: false,
-	    });
-	};
-
-	getModalRender = () => {
-	    const { modalTitle, modalDesc } = this.state;
 	    return (
 	      <div className={styles.modalWrap}>
 	        <div className={styles.inner}>
 	          <div className={styles.title}>
-	            { modalTitle }
+	            { other.modalTitle }
 	          </div>
 	          <div className={styles.cont}>
-	            { modalDesc }
+	            { other.modalDesc }
 	          </div>
 	        </div>
 	        <div className={styles.close} onClick={ this.hideModal }></div>
@@ -614,7 +624,7 @@ class Develop extends React.Component {
 		const { address, userByContract, banlance } = window.getUserInfo(this.props.app);
 		const { betValue, best, modalBoxBg, selectInfo } = this.state;
 		return (
-			<Spin size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
+			<Spin wrapperClassName={`spinZindex ${this.state.betLoading ? `on` : ``}`} size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
 				<div className={styles.wrap}>
 					<div className={styles.top}>
 						<Link to="/indexPage"><div className={styles.back}></div></Link>

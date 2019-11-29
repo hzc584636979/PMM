@@ -21,3 +21,18 @@
     margin: @top / @baseFontSize * 1rem @right / @baseFontSize * 1rem @bottom / @baseFontSize * 1rem @left / @baseFontSize * 1rem;
 }
 
+:global {
+	.spinZindex {
+		z-index: 1000,
+	}
+
+	.spinZindex.on {
+		z-index: 1001,
+	}
+
+	.ant-spin-container {
+		height: 100vh;
+	}
+}
+
+
