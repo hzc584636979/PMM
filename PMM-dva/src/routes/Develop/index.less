@@ -256,7 +256,7 @@
 		.back {
 			position: absolute;
 			.px2rem(left, 43);
-			.px2rem(top, 60);
+			.px2rem(top, 50);
 			@pointer();
 			.background(68, 50, 'sub_back.png');
 		}
@@ -371,6 +371,10 @@
 			.px2rem(height, 63);
 			padding: 0;
 		}
+
+		.min, .max {
+			@pointer();
+		}
 	}
 
 	.bottom {
@@ -441,4 +445,15 @@
 			}
 		}
 	}
+}
+
+.gray { 
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    
+    filter: grayscale(100%);
+	
+    filter: gray;
 }

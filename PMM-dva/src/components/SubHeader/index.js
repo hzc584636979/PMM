@@ -14,7 +14,7 @@ class SubHeader extends React.Component {
 			<div className={styles.header}>
 				<Link to="/indexPage"><div className={styles.back}></div></Link>
 				<div className={styles.txt}>{ this.props.title }</div>
-				<div className={styles.FAQ}>FAQ</div>
+				<div className={styles.FAQ}><Link to="/faq" style={{color: '#f9dd6e'}}>FAQ</Link></div>
 			</div>
 		);
 	}

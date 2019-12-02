@@ -245,10 +245,15 @@ class Develop extends React.Component {
 	}
 
 	min = () => {
+		const { best } = this.state;
+		const { banlance } = window.getUserInfo(this.props.app);
+		if(banlance*best < 1){
+			return;
+		}
 		this.setState({
-	        betValue: 1,
-	        betState: true,
-	    })
+			betValue: 1,
+			betState: true,
+		})
 	}
 
 	max = (maxnum) => {
@@ -259,40 +264,41 @@ class Develop extends React.Component {
 	      max = parseInt(banlance*best);
 	    }
 		this.setState({
-	        betValue: max,
-	        betState: true,
-	    })
+			betValue: max,
+			betState: true,
+		})
 	}
 
 	handleKeyup = (e) => {
 		const { banlance } = window.getUserInfo(this.props.app);
 	    const { selectDesc, best } = this.state;
-	    const value = Number(e.target.value);
+	    const value = e.target ? Number(e.target.value) : Number(e);
+	    let betValue, betState;
+
 	    if(value == 0) {
-	    	this.setState({
-	        	betValue: "",
-	        	betState: false,
-	      	})
-	    }else if(Number.isInteger(value) && value <= 25 && banlance*best >= value){
-	      this.setState({
-	        betValue: value,
-	        betState: true,
-	      })
+	    	betValue = "";
+	    	betState = false;
+	    }else if(Number.isInteger(value) && value > 0) {
+	    	betValue = banlance*best >= value ? (value > 25 ? 25 : value) : parseInt(banlance*best);
+	    	betState = true;
 	    }else{
-	      message.error('请输入1~25之间的整数');
-	      this.setState({
-	        betState: false,
-	      })
+			message.error('请输入1~25之间的整数');
+			betValue = this.state.betValue;
+	    	betState = false;
 	    }
 
-	    let selectKey = 3;
-	    Object.keys(selectDesc).map(k => {
-	    	if(selectDesc[k].max >= value && selectDesc[k].min <= value) {
+	    let selectKey = 0;
+	    Object.keys(selectDesc).map((k, i) => {
+	    	if(selectDesc[k].max >= betValue && selectDesc[k].min <= betValue) {
 	    		selectKey = k;
+	    	}else if(i == Object.keys(selectDesc).length-1 && selectDesc[k].max < betValue) {
+	    		selectKey = Object.keys(selectDesc).length;
 	    	}
 	    })
 
 	    this.setState({
+	    	betValue,
+	    	betState,
 			selectKey,
 		},() => {
 			this.getSelectDesc();
@@ -489,7 +495,7 @@ class Develop extends React.Component {
 		          <div className={styles.zcqrModal}>
 		        	<div className={styles.icon}></div>
 		            <div className={styles.desc}>
-		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>士官长</span>您的级别暂时无法直接向跃迁引擎项目注入星痕能量。</p>
+		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>士官长</span>您的能量不足，无法直接向跃迁引擎项目注入星痕能量。</p>
 		            </div>
 		          </div>
 		        ),
@@ -535,7 +541,7 @@ class Develop extends React.Component {
 	getSelectDesc = () => {
 		const { banlance } = window.getUserInfo(this.props.app);
 		const { selectKey, selectDesc, best } = this.state;
-		let desc = selectKey ? 
+		let desc = selectDesc[selectKey] ? 
 			selectDesc[selectKey] 
 			: 
 			{
@@ -545,7 +551,7 @@ class Develop extends React.Component {
 				day: 0
 			};
 
-		if(!selectKey){
+		if(selectKey == null){
 			Object.keys(selectDesc).map(k => {
 				if(selectDesc[k].min/best <= banlance) {
 					desc = {
@@ -582,7 +588,8 @@ class Develop extends React.Component {
 
 		if(selectDesc[selectKey].min/best > banlance) {
 			this.showModal('zjbz')
-			return;
+		}else {
+			this.max(selectDesc[selectKey].max);
 		}
 
 		this.setState({
@@ -590,8 +597,6 @@ class Develop extends React.Component {
 		},() => {
 			this.getSelectDesc();
 		})
-
-		this.max(selectDesc[selectKey].max);
 	}
 
 	getSelectClass = (selectKey) => {
@@ -609,14 +614,14 @@ class Develop extends React.Component {
 		Object.keys(selectDesc).map(k => {
 			if(selectDesc[k].min/best > banlance) {
 				selectItemName[k] = `${selectItemName[k]} ${styles.lock}`;
-			}else if(!selectKey){
+			}else if(selectKey == null){
 				initOn = {
 					[k]: `${selectItemName[k]} ${styles.on}`
 				}
 			}
 		})
 
-		if(selectKey && selectDesc[selectKey].min/best <= banlance){
+		if(selectKey != null && selectDesc[selectKey] && selectDesc[selectKey].min/best <= banlance){
 			selectItemName[selectKey] = `${selectItemName[selectKey]} ${styles.on}`;
 		}
 
@@ -647,18 +652,28 @@ class Develop extends React.Component {
 					<div className={styles.top}>
 						<Link to="/indexPage"><div className={styles.back}></div></Link>
 						<div className={styles.txt}>研发室</div>
-						<div className={styles.FAQ}>FAQ</div>
+						<div className={styles.FAQ}><Link to="/faq" style={{color: '#f9dd6e'}}>FAQ</Link></div>
 					</div>
 					<div className={styles.level}>LV.{ this.getLv(userByContract) }</div>
 					{ selectInfo }
 					<div className={styles.selectWrap}>
 						{ this.getSelectItem() }
 					</div>
-					<div className={styles.inputBox}>
-						<div className={styles.min} onClick={ this.min }>MIN</div>
-						<Input className={styles.input} value={ betValue } onChange={ this.handleKeyup } placeholder="1~25" />
-						<div className={styles.max} onClick={ () => this.max() }>MAX</div>
-					</div>
+					{
+						userByContract['状态'] == 1 || banlance*best < 1 ? 
+						<div className={styles.inputBox}>
+							<div className={styles.min} style={{color: 'gray'}}>MIN</div>
+							<Input disabled={true} className={styles.input} value={ betValue } onChange={ this.handleKeyup } placeholder="1~25" />
+							<div className={styles.max} style={{color: 'gray'}}>MAX</div>
+						</div>
+						:
+						<div className={styles.inputBox}>
+							<div className={styles.min} onClick={ this.min }>MIN</div>
+							<Input className={styles.input} value={ betValue } onChange={ this.handleKeyup } placeholder="1~25" />
+							<div className={styles.max} onClick={ this.max }>MAX</div>
+						</div>
+					}
+					
 					<div className={styles.bottom}>
 			            <div className={styles.buttons}>
 			              <div className={styles.recordIcon}>
@@ -666,7 +681,7 @@ class Develop extends React.Component {
 			                <p className={styles.txt}>军衔</p>
 			              </div>
 			              <ul>
-			                <li className={styles.developIcon} onClick={ () => { userByContract['状态'] == 2 ? this.showModal('zcqr') : this.showModal('yxz')} }></li>
+			                <li className={`${styles.developIcon} ${userByContract['状态'] == 2 && banlance*best > 0 ? null : styles.gray}`} onClick={ () => { userByContract['状态'] == 2 ? this.showModal('zcqr') : (banlance*best < 1 ? this.showModal('zjbz') : this.showModal('yxz'))} }></li>
 			                <li className={styles.etherIcon} onClick={ () => this.showModal('ether') }></li>
 			              </ul>
 			              <div className={styles.invitationIcon}>

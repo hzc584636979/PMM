@@ -41,6 +41,12 @@ const routes = [
 	  models: () => [import('./models/record')],
 	  component: () => import('./routes/Record'),
 	},
+	{
+	  path: '/faq',
+	  name: '助理室',
+	  models: () => [import('./models/faq')],
+	  component: () => import('./routes/FAQ'),
+	},
 ];
 
 function RouterConfig({ history, app }) {
@@ -65,3 +71,4 @@ function RouterConfig({ history, app }) {
 }
 
 export default RouterConfig;
+export { routes };

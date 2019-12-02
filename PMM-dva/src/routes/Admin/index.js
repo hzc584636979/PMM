@@ -74,7 +74,7 @@ class Admin extends React.Component {
 							<span className={styles.l}>工资</span>
 							<span className={styles.r}>0</span>
 						</li>
-						<li className={`${styles.li} ${styles.liff5dc4} ${supClass}`} onClick={ this.toggleSupItem }>
+						<li className={`${styles.li} ${styles.liff5dc4} ${supClass}`} style={sup.length > 0 ? {cursor: 'pointer'} : {}} onClick={ this.toggleSupItem }>
 							<span className={styles.l}>上级长官</span>
 							<span className={styles.r}>{ sup.length }{sup.length > 0 && <b className={styles.arrow}></b>}</span>
 						</li>
@@ -90,7 +90,7 @@ class Admin extends React.Component {
 								</li>
 							)
 						}
-						<li className={`${styles.li} ${styles.li5ce37c} ${subClass}`} onClick={ this.toggleSubItem }>
+						<li className={`${styles.li} ${styles.li5ce37c} ${subClass}`} style={sup.length > 0 ? {cursor: 'pointer'} : {}} onClick={ this.toggleSubItem }>
 							<span className={styles.l}>下级</span>
 							<span className={styles.r}>{ sub.length }{sub.length > 0 && <b className={styles.arrow}></b>}</span>
 						</li>

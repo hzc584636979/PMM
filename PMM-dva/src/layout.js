@@ -5,6 +5,7 @@ import { Link, withRouter } from 'dva/router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Select, Button, Row, Col, Icon, Layout, Drawer, List, Modal } from 'antd';
 import { langConfig } from './utils/utils';
+import { routes as routesConfig } from './router';
 import './reset.css';
 import styles from './layout.less';
 
@@ -20,11 +21,20 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-
+    this.setTitle();
   }
 
-  componentWillUnmount() {
+  componentDidUpdate (prevProps,prevState) {
+    this.setTitle();
+  }
 
+  setTitle = () => {
+      let pathName = this.props.location.pathname;
+      routesConfig.map((v) => {
+          if(pathName == v.path){
+              document.title = `${v.name} - 永动机 - Perpetual motion machine`;
+          }
+      })
   }
 
   handleLanguageChange = (v) => {
