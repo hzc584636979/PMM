@@ -645,7 +645,7 @@ class Develop extends React.Component {
 
 	render() {
 		const { address, userByContract, banlance } = window.getUserInfo(this.props.app);
-		const { betValue, best, modalBoxBg, selectInfo } = this.state;
+		const { betValue, best, modalBoxBg, selectInfo, betState } = this.state;
 		return (
 			<Spin wrapperClassName={`spinZindex ${this.state.betLoading ? `on` : ``}`} size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
 				<div className={styles.wrap}>
@@ -670,7 +670,7 @@ class Develop extends React.Component {
 						<div className={styles.inputBox}>
 							<div className={styles.min} onClick={ this.min }>MIN</div>
 							<Input className={styles.input} value={ betValue } onChange={ this.handleKeyup } placeholder="1~25" />
-							<div className={styles.max} onClick={ this.max }>MAX</div>
+							<div className={styles.max} onClick={ () => this.max() }>MAX</div>
 						</div>
 					}
 					
@@ -681,7 +681,7 @@ class Develop extends React.Component {
 			                <p className={styles.txt}>军衔</p>
 			              </div>
 			              <ul>
-			                <li className={`${styles.developIcon} ${userByContract['状态'] == 2 && banlance*best > 0 ? null : styles.gray}`} onClick={ () => { userByContract['状态'] == 2 ? this.showModal('zcqr') : (banlance*best < 1 ? this.showModal('zjbz') : this.showModal('yxz'))} }></li>
+			                <li className={`${styles.developIcon} ${userByContract['状态'] == 2 && banlance*best > 0 && betState ? null : styles.gray}`} onClick={ () => { userByContract['状态'] == 2 ? this.showModal('zcqr') : (banlance*best < 1 ? this.showModal('zjbz') : this.showModal('yxz'))} }></li>
 			                <li className={styles.etherIcon} onClick={ () => this.showModal('ether') }></li>
 			              </ul>
 			              <div className={styles.invitationIcon}>
