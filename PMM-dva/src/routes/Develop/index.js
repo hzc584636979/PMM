@@ -13,8 +13,8 @@ class Develop extends React.Component {
 	  this.state = {
 	  	best: 1000,
 	  	betState: false,
-	  	betLoading: true,
-	  	betLoadingText: '哈哈哈哈',
+	  	betLoading: false,
+	  	betLoadingText: '',
 	  	userByContractArr: ['可用余额','冻结余额','充值总额','提现总额','邀请码','被邀请码','今日导师祝福奖励','状态','总静态收益','总团队收益','总导师祝福收益','总导师收益'],
       	userByContract: {},
       	selectItemName: {
