@@ -13,8 +13,8 @@ class Develop extends React.Component {
 	  this.state = {
 	  	best: 1000,
 	  	betState: false,
-	  	betLoading: false,
-	  	betLoadingText: '',
+	  	betLoading: true,
+	  	betLoadingText: '哈哈哈哈',
 	  	userByContractArr: ['可用余额','冻结余额','充值总额','提现总额','邀请码','被邀请码','今日导师祝福奖励','状态','总静态收益','总团队收益','总导师祝福收益','总导师收益'],
       	userByContract: {},
       	selectItemName: {
@@ -662,9 +662,9 @@ class Develop extends React.Component {
 					{
 						userByContract['状态'] == 1 || banlance*best < 1 ? 
 						<div className={styles.inputBox}>
-							<div className={styles.min} style={{color: 'gray'}}>MIN</div>
+							<div className={styles.min} style={{color: 'gray', cursor: 'default'}}>MIN</div>
 							<Input disabled={true} className={styles.input} value={ betValue } onChange={ this.handleKeyup } placeholder="1~25" />
-							<div className={styles.max} style={{color: 'gray'}}>MAX</div>
+							<div className={styles.max} style={{color: 'gray', cursor: 'default'}}>MAX</div>
 						</div>
 						:
 						<div className={styles.inputBox}>
