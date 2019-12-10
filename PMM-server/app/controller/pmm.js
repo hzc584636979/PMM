@@ -7,16 +7,22 @@ class PMMController extends Controller {
     const { ctx } = this;
     // const body = ctx.request.body;
     // const walletAddress = body.walletAddress;
-    // const invitatonCode = body.invitatonCode;
+    // const coverInvitatonCode = body.coverInvitatonCode;
     ctx.body = {
       status: 1,
-      data: "MDFEF12345",
+      data: {
+        invitationCode:"MEDDFDSFDSFSF"
+      },
       msg: 'success'
     };
   }
 
   async betSuccess() {
     const { ctx } = this;
+    const body = ctx.request.body;
+    const transactionHash = body.transactionHash;
+    const transactionAmount = body.transactionAmount;
+    const walletAddress = body.walletAddress;
     ctx.body = {
       status: 1,
       msg: 'success'
@@ -25,6 +31,8 @@ class PMMController extends Controller {
 
   async dataStatistics() {
     const { ctx } = this;
+    const body = ctx.request.body;
+    const walletAddress = body.walletAddress;
     const data = {md:0, value:1};
     ctx.body = {
       status: 1,
