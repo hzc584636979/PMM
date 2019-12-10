@@ -5,5 +5,8 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/', controller.home.index);
+  router.post("/api/v1/game/pmm/invitationCode",controller.pmm.invitationCode);
+  router.post("/api/v1/game/pmm/betSuccess",controller.pmm.betSuccess);
+  router.post("/api/v1/game/pmm/dataStatistics",controller.pmm.dataStatistics);
+  router.get("/api/v1/game/pmm/betRecord",controller.pmm.betRecord);
 };
