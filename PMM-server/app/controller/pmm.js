@@ -26,9 +26,20 @@ class PMMController extends Controller {
   async betSuccess() {
     const { ctx } = this;
     const body = ctx.request.body;
-    const transactionHash = body.transactionHash;
-    const transactionAmount = body.transactionAmount;
-    const walletAddress = body.walletAddress;
+    try {
+      const result = await ctx.service.pmm.betSuccess(body);
+      ctx.body = {
+        status: 1,
+        data: result,
+        msg: 'success'
+      };
+    }catch (e) {
+      ctx.body = {
+        status:0,
+        data:JSON.stringify(e),
+        msg:'fail'
+      }
+    }
     ctx.body = {
       status: 1,
       msg: 'success'
