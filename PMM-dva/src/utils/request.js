@@ -1,6 +1,7 @@
 import fetch from 'dva/fetch';
 import { notification } from 'antd';
 import { routerRedux } from 'dva/router';
+import md5 from 'md5';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -64,9 +65,11 @@ export default function request(url, options) {
         ...newOptions.headers,
       };
     }
+
+    newOptions.headers.signed = md5(JSON.stringify(options.body)+options.method+url);
   }
 
-  return fetch(url, options)
+  return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => {
       if (newOptions.method === 'DELETE' || response.status === 204) {

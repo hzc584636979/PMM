@@ -117,5 +117,29 @@ const config = {
     address: "0x11d448e765a8e2781054ea94a9fb58e4b7bbe182",
 };
 
+const selectDesc = {
+    1: {
+        min: 1,
+        max: 5,
+        profit: '0.6%',
+        day: 10
+    },
+    2: {
+        min: 6,
+        max: 10,
+        profit: '0.8%',
+        day: 15
+    },
+    3: {
+        min: 11,
+        max: 15,
+        profit: '1.2%',
+        day: 25
+    }
+};
+
 
 export default config;
+export { 
+    selectDesc,
+}

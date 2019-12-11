@@ -292,7 +292,7 @@ class IndexPage extends React.Component {
 
   render() {
     const Lang = this.props.app.lang;
-    const { userByContract, modalBoxBg } = this.state;
+    const { userByContract, modalBoxBg, address } = this.state;
     return (
       <Spin wrapperClassName={`spinZindex ${this.state.betLoading ? `on` : ``}`} size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
         <div className={styles.wrap}>
@@ -321,7 +321,7 @@ class IndexPage extends React.Component {
             <dl>
               <dt>副舰长：</dt>
               <dd>
-                <p style={{color: '#ece05c'}}>A365列兵</p>
+                <p style={{color: '#ece05c'}}>{ address.slice(address.length-4,address.length) }列兵</p>
                 <p className={styles.desc}>你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧你从冬眠中苏醒了啊？了解下战舰的变化吧...</p>
               </dd>
             </dl>

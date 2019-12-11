@@ -4,6 +4,7 @@ import dva from 'dva';
 import createLoading from 'dva-loading';
 import { createBrowserHistory as createHistory } from 'history';
 import './index.less';
+import './utils/flexible';
 
 // 1. Initialize
 

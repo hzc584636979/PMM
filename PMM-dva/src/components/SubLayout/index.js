@@ -9,6 +9,10 @@ class SubContent extends React.Component {
 	  this.state = {};
 	}
 
+	componentDidMount() {
+
+	}
+
 	render() {
 		return (
 			<div className={styles.wrap}>

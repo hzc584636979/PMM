@@ -1,5 +1,4 @@
 import React from 'react';
-import 'react-flexible';
 import { connect } from 'dva';
 import { Link, withRouter } from 'dva/router';
 import { Scrollbars } from 'react-custom-scrollbars';

@@ -2,8 +2,13 @@ import Web3 from 'web3';
 import contractConfig from '../utils/contractConfig';
 import { message } from 'antd';
 
-export default function myContract(HttpProvider) {
+export function createWeb3(HttpProvider) {
 	let web3 = new Web3(new Web3.providers.HttpProvider(HttpProvider));
+	return web3;
+}
+
+export default function myContract(HttpProvider) {
+	let web3 = createWeb3(HttpProvider);
 	let myContract = new web3.eth.Contract(contractConfig.ABI,contractConfig.address);
 
 	function fromWei(number) {
@@ -50,6 +55,7 @@ export default function myContract(HttpProvider) {
 	//获取用户在合同上的状态信息
 	async function getContractUserInfo(myAddress) {
 		let data = await myContract.methods.getUserByAddress(myAddress).call();
+		console.log('合约用户详情',data)
 		return data;
 	}
 

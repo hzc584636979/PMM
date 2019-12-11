@@ -23,13 +23,37 @@ class Statistics extends React.Component {
 
 	render() {
 		const { userByContract } = window.getUserInfo(this.props.app);
-		const { loading } = this.props;
+		const { statistics, loading } = this.props;
 		return (
 			<Spin spinning={ loading }>
 				<SubLayout title="统计室"> 
 					<div className={styles.item}>
 						<div className={styles.l}>总注入（ETH）</div>
-						<div className={styles.r}>{ userByContract['充值总额'] }</div>
+						<div className={styles.r}></div>
+					</div>
+					<div className={styles.item}>
+						<div className={styles.l}>注入收益（ETH）</div>
+						<div className={styles.r}></div>
+					</div>
+					<div className={styles.item}>
+						<div className={styles.l}>团队收益</div>
+						<div className={styles.r}></div>
+					</div>
+					<div className={styles.item}>
+						<div className={styles.l}>团队奖励</div>
+						<div className={styles.r}></div>
+					</div>
+					<div className={styles.item}>
+						<div className={styles.l}>团队人数</div>
+						<div className={styles.r}></div>
+					</div>
+					<div className={styles.item}>
+						<div className={styles.l}>直属人数</div>
+						<div className={styles.r}></div>
+					</div>
+					<div className={styles.item}>
+						<div className={styles.l}>军职福利<span className={styles.time}>【01:07:05】</span></div>
+						<div className={styles.r}></div>
 					</div>
 				</SubLayout>
 			</Spin>

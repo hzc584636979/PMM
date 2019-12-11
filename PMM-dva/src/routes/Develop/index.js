@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Link, routerRedux } from 'dva/router';
 import { Spin, Drawer, Button, Icon, message, notification, Modal, Input } from 'antd';
 import myContract from '../../utils/myContract';
+import { selectDesc } from '../../utils/contractConfig';
 import copy from 'copy-to-clipboard';
 import styles from './index.less';
 
@@ -21,26 +22,6 @@ class Develop extends React.Component {
 			1: styles.item1,
 			2: styles.item2,
 			3: styles.item3
-		},
-		selectDesc: {
-			1: {
-				min: 1,
-				max: 5,
-				profit: '0.6%',
-				day: 10
-			},
-			2: {
-				min: 6,
-				max: 10,
-				profit: '0.8%',
-				day: 15
-			},
-			3: {
-				min: 11,
-				max: 15,
-				profit: '1.2%',
-				day: 25
-			}
 		},
 	  };
 
@@ -100,11 +81,11 @@ class Develop extends React.Component {
 		let inviteCode = await this.props.dispatch({
 	      type: 'develop/inviteCode',
 	      payload: {
-	        beInvitedCode: userByContract['被邀请码'] || beInvitedCode,
-	        userAddress: address
+	        coverInvitatonCode: userByContract['被邀请码'] || beInvitedCode,
+	        walletAddress: address
 	      }
 	    })
-
+		console.log(inviteCode)
 	    return inviteCode;
 	}
 
@@ -144,7 +125,7 @@ class Develop extends React.Component {
 	    .then(receipt => {
 	      this.upUserInfo();
 	      receipt.status ? 
-	        this.showModal('tzcg') 
+	        this.showModal('tzcg', receipt) 
 	        : 
 	        notification.error({
 	          message: '交易失败',
@@ -196,7 +177,7 @@ class Develop extends React.Component {
 	    .then(receipt => {
 	      this.upUserInfo();
 	      receipt.status ? 
-	        this.showModal('tzcg')
+	        this.showModal('tzcg', receipt)
 	        : 
 	        notification.error({
 	          message: '交易失败',
@@ -271,7 +252,7 @@ class Develop extends React.Component {
 
 	handleKeyup = (e) => {
 		const { banlance } = window.getUserInfo(this.props.app);
-	    const { selectDesc, best } = this.state;
+	    const { best } = this.state;
 	    const value = e.target ? Number(e.target.value) : Number(e);
 	    let betValue, betState;
 
@@ -341,7 +322,8 @@ class Develop extends React.Component {
 	    })
 	}
 
-	showModal = (modalType) => {
+	showModal = (modalType, receipt) => {
+		const { betValue, best } = this.state;
 		let modalBoxBg = '';
 
 	    if(modalType == 'ether') {
@@ -357,6 +339,15 @@ class Develop extends React.Component {
 	    }else if(modalType == 'zjbz'){
 		    modalBoxBg = styles.warningModalBg;
 	    }else if(modalType == 'tzcg'){
+			this.props.dispatch({
+		      type: 'develop/receipt',
+		      payload: {
+		        transactionHash: receipt.transactionHash,
+		        transactionAmount: betValue / best,
+		        walletAddress: receipt.from
+		      }
+		    })
+
 		    modalBoxBg = styles.warningModalBg;
 	    }
 
@@ -375,7 +366,7 @@ class Develop extends React.Component {
 	};
 
 	getModalRender = () => {
-	    const { betValue, best, selectDesc, modalType } = this.state;
+	    const { betValue, best, modalType } = this.state;
 		const { userByContract, banlance } = window.getUserInfo(this.props.app);
 	    let other = {};
 	    if(modalType == 'ether') {
@@ -540,7 +531,7 @@ class Develop extends React.Component {
 
 	getSelectDesc = () => {
 		const { banlance } = window.getUserInfo(this.props.app);
-		const { selectKey, selectDesc, best } = this.state;
+		const { selectKey, best } = this.state;
 		let desc = selectDesc[selectKey] ? 
 			selectDesc[selectKey] 
 			: 
@@ -584,7 +575,7 @@ class Develop extends React.Component {
 
 	checkItem = (selectKey) => {
 		const { banlance } = window.getUserInfo(this.props.app);
-		const { selectDesc, best } = this.state;
+		const { best } = this.state;
 
 		if(selectDesc[selectKey].min/best > banlance) {
 			this.showModal('zjbz')
@@ -601,7 +592,7 @@ class Develop extends React.Component {
 
 	getSelectClass = (selectKey) => {
 		const { banlance } = window.getUserInfo(this.props.app);
-		const { selectDesc, best } = this.state;
+		const { best } = this.state;
 
 		let selectItemName = {
 			1: styles.item1,

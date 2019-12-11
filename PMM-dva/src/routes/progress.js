@@ -4,6 +4,7 @@ import { Link } from 'dva/router';
 import { Scrollbars } from 'react-custom-scrollbars';
 import styles from './progress.less';
 import Logo from '../assets/progress_logo.png';
+import bg from '../assets/progress_bg.png';
 import { getUrlOptions } from '../utils/utils';
 
 class Progress extends React.Component {
@@ -19,10 +20,12 @@ class Progress extends React.Component {
 
 	componentDidMount() {
 		this.progressFunc(this.getRandom(500, 50));
+		document.body.style.background = `url(${bg}) center center no-repeat`;
+    	document.body.style.backgroundSize = '100% 100%';
 	}
 
 	componentWillUnmount() {
-		
+		document.body.style.background = '';
   	}
 
   	getRandom = (m, n) => {

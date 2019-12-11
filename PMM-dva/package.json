@@ -19,6 +19,7 @@
     "ethereumjs-tx": "^2.1.1",
     "history": "^4.10.1",
     "lib-flexible": "^0.3.2",
+    "md5": "^2.2.1",
     "moment": "^2.24.0",
     "qs-stringify": "^1.1.0",
     "react": "^16.2.0",

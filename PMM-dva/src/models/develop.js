@@ -1,4 +1,4 @@
-import { getIC } from '../services/serverapi';
+import { getIC, payReceipt } from '../services/serverapi';
 
 export default {
 	namespace: 'develop',
@@ -6,7 +6,10 @@ export default {
     effects: {
     	*inviteCode({ payload }, { call }) {
 	      const data = yield call(getIC, payload);
-	      return data.data;
+	      return data.data.invitationCode;
+	    },
+	    *receipt({ payload }, { call }) {
+	      yield call(payReceipt, payload);
 	    },
     },
 	reducers: {

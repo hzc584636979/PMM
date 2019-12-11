@@ -5,18 +5,6 @@ import * as moment from 'moment';
 const apiAddress = '/api';//'http://47.56.168.254'
 //const apiAddress = '/mock';
 
-export async function testAPI(params) {
-	//GET
-	let qstr = stringify(params);
-  	return request(`${apiAddress}/api/0.1/lszx/manager/devices?${qstr}`);
-
-  	//POST
-	return request(`${apiAddress}/api/0.1/lszx/userToken/rootToken`, {
-	    method: 'POST',
-	    body: params,
-	});
-}
-
 export async function getAllTransactionList() {
 	const data = [
 		{ hash: 'dva', eth: 1 },
@@ -26,19 +14,17 @@ export async function getAllTransactionList() {
 }
 
 export async function getMyTransactionList(params) {
-	const data = [
-		{ hash: 'Mydva', eth: 1 },
-   		{ hash: 'Myantd', eth: 2 },
-   	]
-	return data;
+	return request(`${apiAddress}/api/v1/game/pmm/betRecord`, {
+	    method: 'POST',
+	    body: params,
+	});
 }
 
 export async function getStaticticsList(params) {
-	const data = [
-		{ hash: 'Mydva', eth: 1 },
-   		{ hash: 'Myantd', eth: 2 },
-   	]
-	return data;
+	return request(`${apiAddress}/api/v1/game/pmm/dataStatistics`, {
+	    method: 'POST',
+	    body: params,
+	});
 }
 
 export async function getAdminList(params) {
@@ -62,9 +48,15 @@ export async function getAdminList(params) {
 }
 
 export async function getIC(params) {
-	return {
-		data: 'a1111'
-	}
-	let qstr = stringify(params);
-  	return request(`${apiAddress}/inviteCode?${qstr}`);
+	return request(`${apiAddress}/api/v1/game/pmm/invitationCode`, {
+	    method: 'POST',
+	    body: params,
+	});
+}
+
+export async function payReceipt(params) {
+	return request(`${apiAddress}/api/v1/game/pmm/betSuccess`, {
+	    method: 'POST',
+	    body: params,
+	});
 }

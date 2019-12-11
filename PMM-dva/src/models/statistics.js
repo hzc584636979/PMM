@@ -5,13 +5,11 @@ export default {
 	state: {},
     effects: {
     	*getList(_, { select, call, put }) {
-    		const address = yield select(({ index }) => window.getUserInfo(index).address);
-    		const list = yield call(getStaticticsList, { address });
+    		const walletAddress = yield select(({ index }) => window.getUserInfo(index).address);
+    		const data = yield call(getStaticticsList, { walletAddress });
     		yield put({
 		        type: 'save',
-        		payload: {
-        			list,
-        		},
+        		payload: data.data || {},
 		    });
 	    },
     },

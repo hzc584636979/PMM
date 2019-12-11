@@ -2,33 +2,50 @@ import { getAllTransactionList, getMyTransactionList } from '../services/servera
 
 export default {
 	namespace: 'record',
-	state: {},
+	state: {
+		all: [],
+		my: [],
+	},
     effects: {
-    	*getAll(_, { select, call, put }) {
-    		const list = yield call(getAllTransactionList);
+    	*getAll({ payload }, { select, call, put }) {
+    		const data = yield call(getAllTransactionList, payload);
     		yield put({
-		        type: 'save',
+		        type: 'saveAll',
         		payload: {
-        			all: list,
+        			all: data.data || [],
         		},
 		    });
+		    return data.data || [];
 	    },
-	    *getMy(_, { select, call, put }) {
-    		const address = yield select(({ index }) => window.getUserInfo(index).address);
-    		const list = yield call(getMyTransactionList, { address });
+	    *getMy({ payload }, { select, call, put }) {
+    		const walletAddress = yield select(({ index }) => window.getUserInfo(index).address);
+    		const data = yield call(getMyTransactionList, { walletAddress, ...payload });
     		yield put({
-		        type: 'save',
+		        type: 'saveMy',
         		payload: {
-        			my: list,
+        			my: data.data || [],
         		},
 		    });
+		    return data.data || [];
 	    },
     },
 	reducers: {
-		save(state, action) {
+		saveAll(state, action) {
 			return {
 				...state,
-				...action.payload
+				all: [
+					...state.all,
+					...action.payload.all,
+				]
+			};
+		},
+		saveMy(state, action) {
+			return {
+				...state,
+				my: [
+					...state.my,
+					...action.payload.my,
+				]
 			};
 		}
 	},
