@@ -16,3 +16,8 @@ exports.redis = {
   enable: true,
   package: 'egg-redis',
 };
+
+exports.joi = {
+  enable: true,
+  package: 'egg-joi',
+};

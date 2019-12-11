@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1575878441916_307';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['errorHandler'];
 
   // add your user config here
   const userConfig = {
@@ -61,6 +61,17 @@ module.exports = appInfo => {
       "password": "",
       "db": 0
     }
+  };
+
+  exports.joi = {
+    options: {},
+    locale: {
+      'zh-cn': {}
+    },
+    throw: true, // when capture exception throw immediately
+    throwHandle: (error) => { return error; }, // when throw is true the error message format
+    errorHandle: (error) => { return error; }, // when throw is false the error message format
+    resultHandle: (result) => { return result; } // fromat result
   };
 
   return {

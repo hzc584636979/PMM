@@ -10,19 +10,18 @@ module.exports.myContract = function(HttpProvider) {
 
 module.exports.getUserByAddress = async function(user_address) {
   const data = await myContract.methods.getUserByAddress(user_address).call();
-  console.log("user:", data);
   return data;
 };
 
-module.exports.getBetByIndex = async function() {
-  const data = await myContract.methods.getBetByIndex(0).call({from: "0xc804f0DaAA6EB8130648bC153D8002dd8A912451"});
-  console.log("data:", data);
+module.exports.getBetByIndex = async function(index) {
+  const data = await myContract.methods.getBetByIndex(index).call({from: "0xc804f0DaAA6EB8130648bC153D8002dd8A912451"});
+  console.log("getBetByIndex:", data);
   return data;
 };
 
 module.exports.getGlobalData = async function() {
   const data = await myContract.methods.test().call();
-  console.log("data:", data);
+  console.log("getGlobalData:", data);
   return data;
 };
 
