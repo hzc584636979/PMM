@@ -415,8 +415,15 @@ class Develop extends React.Component {
 	            <div className={styles.topBox}>
 	              <ul>
 	                <li className={styles.icon}></li>
-	                <li className={styles.num}>{ userByContract['邀请码'] }</li>
-	                <li className={styles.txt}>邀请链接</li>
+	                { 
+	                	userByContract['邀请码'] ?
+	                	<Fragment>
+	                		<li className={styles.num}>{ userByContract['邀请码'] }</li>
+	                		<li className={styles.txt}>邀请链接</li>
+	                	</Fragment>
+	                	:
+	                	<li className={styles.none}>请先注入能量获取邀请码</li>
+	                }
 	              </ul>
 	            </div>
 	            <div className={styles.desc}>
@@ -425,7 +432,12 @@ class Develop extends React.Component {
 	              试试发展更多的支持者吧！</p>
 	              <p style={{color: '#f9dd6e'}}>【注:邀请码包含在链接里】</p>
 	            </div>
-	            <div className={styles.copy} onClick={ () => this.handleClipBoard(userByContract) }></div>
+	            {
+	            	userByContract['邀请码'] ?
+	            	<div className={styles.copy} onClick={ () => this.handleClipBoard(userByContract) }></div>
+	            	:
+	            	<div className={`${styles.copy} ${styles.gray}`}></div>
+	            }
 	          </div>
 	        ),
 	      };

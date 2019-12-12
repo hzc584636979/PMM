@@ -1,6 +1,12 @@
-{
+const pxtorem = require('postcss-pxtorem');
+const pxtorem2 = _interopRequireDefault(pxtorem).default;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+export default {
   "extraBabelPlugins": [
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
+  ],
+  "extraPostCSSPlugins": [
+    pxtorem2({ rootValue: 75, propWhiteList: [], })
   ],
   "es5ImcompatibleVersions": true,
 	"extraBabelIncludes":[
