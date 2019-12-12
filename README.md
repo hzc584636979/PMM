@@ -5,6 +5,7 @@
 >>3. 修改router.js，用dva/dynamic实现按需加载
 >>4. 使用lib-flexible实现适配
 >>5. 使用postcss-pxtorem实现antd样式自动换算rem
+>>6. 使用proxy代理实现跨域请求
 
 >## PMM-server
 >>1. 
