@@ -67,10 +67,16 @@ class PMMService extends Service {
     const ctx = this.ctx;
     console.log(body);
     const walletAddress = body.walletAddress;
+    const pageNo = body.page;
+    const pageSize = body.pageSize;
 
     //不区分大小写表达式
     let regex = new RegExp(["^", walletAddress, "$"].join(""), "i");
-    const orderRecordModels = await ctx.model.Order.find({user_address:regex});
+    //分页查询
+    const orderRecordModels = await ctx.model.Order.find({user_address:regex}).
+    skip(pageNo * pageSize).
+    limit(parseInt(pageSize)||20).
+    sort({"order_index": -1});
     return orderRecordModels;
   }
 };

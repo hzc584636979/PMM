@@ -10,7 +10,11 @@ module.exports  = () => {
     console.log(ctx.request.header, '------ctx.request.header---');
     let _signed = md5(JSON.stringify(body) + method + url);
     if (_signed !== signed) {
-      ctx.body = "header check error";
+      ctx.body = {
+        status:0,
+        data:'header check error',
+        msg:'fail'
+      }
     } else {
       await next();
     }

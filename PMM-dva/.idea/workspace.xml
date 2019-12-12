@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1fb91fc-d8dc-4ee4-a541-18ebffa9e18d" name="默认的" comment="">
-      <change afterPath="$PROJECT_DIR$/../PMM-server/app/common/contractParamType.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PMM-server/app/middleware/error_handler.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PMM-server/app/middleware/req_check.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PMM-server/app/schedule/order.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../PMM-server/app/validator/pmm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/app/common/myContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/app/common/myContract.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/app/controller/pmm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/app/controller/pmm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/app/model/order.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/app/model/order.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/app/model/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/app/model/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/app/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/app/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PMM-server/app/middleware/req_check.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/app/middleware/req_check.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PMM-server/app/service/pmm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/app/service/pmm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/config/config.default.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/config/config.default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/config/plugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/config/plugin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PMM-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../PMM-server/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
