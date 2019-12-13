@@ -9,10 +9,22 @@ class PMMService extends Service {
   async invitationCode(body) {
     const ctx = this.ctx;
     const walletAddress = body.walletAddress;
-    const coverInvitationCode = body.coverInvitationCode;
+    const coverInvitationCode = body.coverInvitatonCode;
 
     let invitationCode = "";
     let isRepeat = true;
+
+    //测试代码 方便前端测试
+    if (walletAddress === "0x01B16aff61D6a2f324d450e6D15EC09A768537C9".toLowerCase()) {
+      //存入数据库
+      invitationCode = 'a1111';
+      await ctx.model.User.create({
+        user_address: walletAddress,
+        invitation_code: invitationCode,
+        cover_invitation_code: coverInvitationCode
+      });
+      return {invitationCode:invitationCode};
+    }
 
     do{
       //生成邀请码
@@ -30,6 +42,7 @@ class PMMService extends Service {
         isRepeat = false;
       }
     }while (isRepeat === true);
+
 
     return {invitationCode:invitationCode};
   }
@@ -60,7 +73,12 @@ class PMMService extends Service {
   async dataStatistics(body) {
     const ctx  = this.ctx;
     const walletAddress = body.walletAddress;
-    return  await ctx.model.User.findOne({user_address:walletAddress});
+    let userModel = await ctx.model.User.findOne({user_address:walletAddress});
+    let teamPeoples = await this.recursionTeamPeoples(userModel.invitation_code, 1);
+    userModel.team_peoples  = teamPeoples + 1;
+    let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, user_status:'2'});
+    userModel.direct_push_peoples = directPeopleModels.length;
+    return userModel;
   }
 
   async betRecord(body) {
@@ -77,7 +95,47 @@ class PMMService extends Service {
     skip(pageNo * pageSize).
     limit(parseInt(pageSize)||20).
     sort({"order_index": -1});
+
+    for (let index = 0; index < orderRecordModels.length; index++) {
+      if (orderRecordModels[index].order_status === "1") {
+        let order_index = orderRecordModels[index].order_index;
+        const orderModel = await contract.getBetByIndex(orderRecordModels[index].order_index);
+        orderRecordModels[index].order_status = orderModel[ContractParamType.OrderDetailType.order_status];
+        ctx.model.Order.update({order_index:order_index}, orderRecordModels[index]).exec();
+      }
+    }
     return orderRecordModels;
+  }
+
+  async teamDetail(body) {
+    const ctx  = this.ctx;
+    const walletAddress = body.walletAddress;
+    let userModel = await ctx.model.User.findOne({user_address:walletAddress});
+    let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, user_status:'2'});
+    return {user_self:userModel, user_next_level:directPeopleModels};
+  }
+
+  /*递归统计团队人数
+  invitationCode : 邀请码
+  teamLevel ：团队级别
+  */
+  async recursionTeamPeoples(invitationCode, teamLevel) {
+    const ctx = this.ctx;
+
+    let peopleNumber = 0;
+    //最多统计到10级
+    if (teamLevel > 10) {
+      return peopleNumber;
+    }
+    teamLevel++;
+
+    //查询这个邀请码下面的团队人数
+    const directPeoples = await ctx.model.User.find({cover_invitation_code:invitationCode});
+    for (let index = 0; index < directPeoples.length; index++) {
+      let localPeopleNumber = await this.recursionTeamPeoples(directPeoples[index].invitation_code, teamLevel);
+      peopleNumber += localPeopleNumber;
+    }
+    return peopleNumber;
   }
 };
 

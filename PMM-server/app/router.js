@@ -12,8 +12,10 @@ module.exports = app => {
   //同步链上订单
   app.runSchedule('order');
 
+  router.get("/test",controller.pmm.test);
   router.post("/api/v1/game/pmm/invitationCode",controller.pmm.invitationCode);
   router.post("/api/v1/game/pmm/betSuccess",controller.pmm.betSuccess);
   router.post("/api/v1/game/pmm/dataStatistics",controller.pmm.dataStatistics);
   router.post("/api/v1/game/pmm/betRecord",controller.pmm.betRecord);
+  router.post("/api/v1/game/pmm/teamDetail",controller.pmm.teamDetail);
 };

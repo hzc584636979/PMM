@@ -3,6 +3,11 @@
 const Controller = require('egg').Controller;
 
 class PMMController extends Controller {
+  async test() {
+    const ctx = this.ctx;
+    ctx.body = "hi, egg";
+  }
+
   async invitationCode() {
     const { ctx } = this;
     try {
@@ -66,6 +71,25 @@ class PMMController extends Controller {
     const body = ctx.request.body;
     try {
       const result = await ctx.service.pmm.betRecord(body);
+      ctx.body = {
+        status: 1,
+        data: result,
+        msg: 'success'
+      };
+    } catch (e) {
+      ctx.body = {
+        status: 0,
+        data: JSON.stringify(e),
+        msg: 'fail'
+      }
+    }
+  }
+
+  async teamDetail() {
+    const { ctx } = this;
+    const body = ctx.request.body;
+    try {
+      const result = await ctx.service.pmm.teamDetail(body);
       ctx.body = {
         status: 1,
         data: result,
