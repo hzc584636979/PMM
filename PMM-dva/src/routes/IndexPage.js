@@ -27,13 +27,22 @@ class IndexPage extends React.Component {
   componentDidMount() {
     // 实例化web3
     this.myContract = myContract('https://kovan.infura.io/v3/58f018284cce4c9599a447f698df4496');
-    if(window.ethereum || window.ethereum.isMetaMask || window.ethereum.isImToken){
+    /*if(window.ethereum || window.ethereum.isMetaMask || window.ethereum.isImToken){
       this.getUserInfo();
     }else{
       this.showModal('noWallet');
       this.setState({
         betLoading: true,
       })
+    }*/
+
+    if(!window.ethereum){
+      this.showModal('noWallet');
+      this.setState({
+        betLoading: true,
+      })
+    }else{
+      this.getUserInfo();
     }
   }
 

@@ -6,7 +6,7 @@ let apiAddress = '';
 if(process.env.NODE_ENV == 'development') {
 	apiAddress = '/api/v1';
 }else {
-	apiAddress = 'http://localhost:7001/api/v1';
+	apiAddress = 'http://47.75.161.29:7001/api/v1';
 }
 
 export async function getAllTransactionList() {
