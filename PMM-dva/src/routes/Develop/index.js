@@ -93,7 +93,7 @@ class Develop extends React.Component {
 		console.log('投注')
 	    const { betState, betValue, best } = this.state;
 	    const { userByContract, address, banlance, beInvitedCode } = window.getUserInfo(this.props.app);
-	    if(userByContract['状态'] != 2){
+	    if(userByContract['状态'] == 1){
 	    	this.showModal('yxz');
 	      	return;
 	    }
@@ -153,7 +153,7 @@ class Develop extends React.Component {
 		console.log('再次投注')
 	    const { betState, betValue, best } = this.state;
 	    const { userByContract, address, banlance } = window.getUserInfo(this.props.app);
-	    if(userByContract['状态'] != 2){
+	    if(userByContract['状态'] == 1){
 	    	this.showModal('yxz');
 	      	return;
 	    }
@@ -684,7 +684,7 @@ class Develop extends React.Component {
 			                <p className={styles.txt}>军衔</p>
 			              </div>
 			              <ul>
-			                <li className={`${styles.developIcon} ${userByContract['状态'] == 2 && banlance*best > 0 && betState ? null : styles.gray}`} onClick={ () => { userByContract['状态'] == 2 ? this.showModal('zcqr') : (banlance*best < 1 ? this.showModal('zjbz') : this.showModal('yxz'))} }></li>
+			                <li className={`${styles.developIcon} ${userByContract['状态'] != 1 && banlance*best > 0 && betState ? null : styles.gray}`} onClick={ () => { userByContract['状态'] != 1 ? this.showModal('zcqr') : (banlance*best < 1 ? this.showModal('zjbz') : this.showModal('yxz'))} }></li>
 			                <li className={styles.etherIcon} onClick={ () => this.showModal('ether') }></li>
 			              </ul>
 			              <div className={styles.invitationIcon}>

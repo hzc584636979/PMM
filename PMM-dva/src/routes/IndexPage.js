@@ -431,7 +431,7 @@ class IndexPage extends React.Component {
           <div className={styles.bottom}>
             <div className={styles.timeBox}>
               <div className={styles.t}>重新注入星痕</div>
-              <div className={styles.b}>{ userByContract['状态'] == 2 ? '游戏结束' : '游戏中' }</div>
+              <div className={styles.b}>{ userByContract['状态'] != 1 ? '游戏结束' : '游戏中' }</div>
             </div>
             <div className={styles.buttons}>
               <div className={styles.recordIcon}>
