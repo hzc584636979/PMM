@@ -50,7 +50,8 @@ class Admin extends React.Component {
 		})
 	}
 
-	toggleSubItem = () => {
+	toggleSubItem = (user_next_level) => {
+		if(user_next_level.length <= 0) return;
 		this.setState({
 			subItem: !this.state.subItem,
 			subClass: this.state.subItem ? '' : styles.on
@@ -59,7 +60,7 @@ class Admin extends React.Component {
 
 	render() {
 		const { userByContract } = window.getUserInfo(this.props.app);
-		const { admin: {sup, sub}, loading } = this.props;
+		const { admin: { user_next_level, user_self }, loading } = this.props;
 		const { supClass, supItem, subClass, subItem } = this.state;
 		return (
 			<Spin spinning={ loading } size="large">
@@ -74,33 +75,29 @@ class Admin extends React.Component {
 							<span className={styles.l}>工资</span>
 							<span className={styles.r}>0</span>
 						</li>
-						<li className={`${styles.li} ${styles.liff5dc4} ${supClass}`} style={sup.length > 0 ? {cursor: 'pointer'} : {}} onClick={ this.toggleSupItem }>
+						<li className={`${styles.li} ${styles.liff5dc4} ${supClass}`} style={{cursor: 'pointer'}} onClick={ this.toggleSupItem }>
 							<span className={styles.l}>上级长官</span>
-							<span className={styles.r}>{ sup.length }{sup.length > 0 && <b className={styles.arrow}></b>}</span>
+							<span className={styles.r}>1<b className={styles.arrow}></b></span>
 						</li>
 						{
 							supItem && 
 							(
 								<li className={styles.itemList}>
-									{
-										sup.map((v, i) => (
-											<p key={i}><span>{ v.name }</span><span>LV.{ v.lv }</span></p>
-										))
-									}
+									<p><span>{ user_self.cover_invitation_code }</span></p>
 								</li>
 							)
 						}
-						<li className={`${styles.li} ${styles.li5ce37c} ${subClass}`} style={sup.length > 0 ? {cursor: 'pointer'} : {}} onClick={ this.toggleSubItem }>
+						<li className={`${styles.li} ${styles.li5ce37c} ${subClass}`} style={user_next_level.length > 0 ? {cursor: 'pointer'} : {}} onClick={ () => this.toggleSubItem(user_next_level) }>
 							<span className={styles.l}>下级</span>
-							<span className={styles.r}>{ sub.length }{sub.length > 0 && <b className={styles.arrow}></b>}</span>
+							<span className={styles.r}>{ user_next_level.length }{user_next_level.length > 0 && <b className={styles.arrow}></b>}</span>
 						</li>
 						{
 							subItem && 
 							(
 								<li className={styles.itemList}>
 									{
-										sub.map((v, i) => (
-											<p key={i}><span>{ v.name }</span><span>LV.{ v.lv }</span></p>
+										user_next_level.map((v, i) => (
+											<p key={i}><span>{ v.invitation_code }</span></p>
 										))
 									}
 								</li>

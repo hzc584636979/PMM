@@ -30,7 +30,7 @@ class Record extends React.Component {
 			this.props.dispatch(routerRedux.push('/indexPage'))
 		}
 		window.addEventListener('scroll', this.getMore);
-        this.getData();
+        this.getData(0, true);
     }
 
     componentWillUnmount() {
@@ -49,12 +49,13 @@ class Record extends React.Component {
     	}
     }
 
-    getData = (page=0) => {
+    getData = (page=0, init) => {
     	this.props.dispatch({
 			type: 'record/getMy',
 			payload: {
 				pageSize: this.state.pageSize,
 				page,
+				init,
 			}
 		}).then(data => {
 			this.timeout = null;

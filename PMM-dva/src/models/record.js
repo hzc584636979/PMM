@@ -24,6 +24,7 @@ export default {
 		        type: 'saveMy',
         		payload: {
         			my: data.data || [],
+        			init: payload.init
         		},
 		    });
 		    return data.data || [];
@@ -40,13 +41,25 @@ export default {
 			};
 		},
 		saveMy(state, action) {
-			return {
-				...state,
-				my: [
-					...state.my,
-					...action.payload.my,
-				]
-			};
-		}
+			let data;
+			action.payload.init ? 
+				data = { 
+					...state, 
+					all: [],
+					my: [
+						...action.payload.my
+					], 
+				}
+			:
+				data = {
+					...state,
+					my: [
+						...state.my,
+						...action.payload.my,
+					]
+				}
+
+			return data;
+		},
 	},
 };

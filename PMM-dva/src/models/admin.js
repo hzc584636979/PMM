@@ -3,16 +3,17 @@ import { getAdminList } from '../services/serverapi';
 export default {
 	namespace: 'admin',
 	state: {
-		sup: [],
-		sub: [],
+		user_self: {},
+		user_next_level: [],
 	},
     effects: {
     	*item({ payload }, { select, call, put }) {
-    		const list = yield call(getAdminList, payload);
+    		const walletAddress = yield select(({ index }) => window.getUserInfo(index).address);
+    		const data = yield call(getAdminList, { walletAddress });
     		yield put({
 		        type: 'save',
         		payload: {
-        			...list,
+        			data: data.data || {},
         		},
 		    });
 	    },
@@ -21,7 +22,7 @@ export default {
 		save(state, action) {
 			return {
 				...state,
-				...action.payload
+				...action.payload.data
 			};
 		}
 	},

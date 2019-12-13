@@ -46,16 +46,16 @@ class Statistics extends React.Component {
 					</div>
 					<div className={styles.item}>
 						<div className={styles.l}>团队人数</div>
-						<div className={styles.r}></div>
+						<div className={styles.r}>{ statistics.user_status || 0 }</div>
 					</div>
 					<div className={styles.item}>
 						<div className={styles.l}>直属人数</div>
-						<div className={styles.r}></div>
+						<div className={styles.r}>{ statistics.team_peoples || 0 }</div>
 					</div>
-					<div className={styles.item}>
+					{/*<div className={styles.item}>
 						<div className={styles.l}>军职福利<span className={styles.time}>【01:07:05】</span></div>
 						<div className={styles.r}></div>
-					</div>
+					</div>*/}
 				</SubLayout>
 			</Spin>
 		);

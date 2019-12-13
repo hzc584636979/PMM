@@ -27,23 +27,10 @@ export async function getStaticticsList(params) {
 }
 
 export async function getAdminList(params) {
-	const data = {
-		sup: [
-			{ name: 'Mydva', lv: 1 },
-		],
-		sub: [
-			{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-	   		{ name: 'Mydva', lv: 1 },
-		],
-	}
-	return data;
+	return request(`${apiAddress}/game/pmm/teamDetail`, {
+	    method: 'POST',
+	    body: params,
+	});
 }
 
 export async function getIC(params) {
