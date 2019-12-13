@@ -3,11 +3,6 @@ html, body {
 	height: auto;
 }
 
-body {
-	background: url('/src/assets/sub_bg.png') center center no-repeat;
-	background-size: 100% 100%;
-}
-
 @baseFontSize: 75;//基于视觉稿横屏尺寸/10得出的基准font-size
 @baseMix: @baseFontSize * 1rem;
 .px2rem(@name, @px){
@@ -46,6 +41,11 @@ body {
 
 	.ant-spin {
 		//color: #fff;
+	}
+
+	body {
+	  background: url('./assets/sub_bg.png') center center no-repeat;
+	  background-size: 100% 100%;
 	}
 }
 

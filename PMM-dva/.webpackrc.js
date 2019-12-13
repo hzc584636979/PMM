@@ -18,10 +18,9 @@ export default {
 	   "node_modules/ethereum-bloom-filters"
 	],
 	"proxy": {
-    "/api": {
+    "/api/v1": {
       "target": "http://47.75.161.29:7001",
       "changeOrigin":true,
-      "pathRewrite": { "^/api" : "" }
     }
   },
   "browserslist": [
