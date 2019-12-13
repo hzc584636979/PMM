@@ -114,12 +114,11 @@ class Develop extends React.Component {
 	    let inviteCode = await this.getIC();
 
 	    this.myContract.bet(address, betValue/best, inviteCode, userByContract['被邀请码'] || beInvitedCode)
-	    .then(res => {
+	    .then(transactionHash => {
 	      this.setState({
 	        betLoadingText: '正在查询投注状态...',
 	      })
-	      const transactionHash = res.result;
-	      //0xb3b78836cce7c4cd00521a82bef47d7157a3522b7b8ed910df4d95d27a5027f4
+	      console.log('handleBet', transactionHash)
 	      return this.myContract.getTransactionReceipt(transactionHash);
 	    })
 	    .then(receipt => {
@@ -208,7 +207,7 @@ class Develop extends React.Component {
 	}
 
 	handleClipBoard = (userByContract) => {
-	    if(copy(`http://xx.xx?beInvitedCode=${userByContract["邀请码"]}`)){
+	    if(copy(`http://47.75.161.29/#/?beInvitedCode=${userByContract["邀请码"]}`)){
 	      notification.success({
 	        message: '复制成功',
 	        description: '',

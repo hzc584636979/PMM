@@ -27,14 +27,6 @@ class IndexPage extends React.Component {
   componentDidMount() {
     // 实例化web3
     this.myContract = myContract('https://kovan.infura.io/v3/58f018284cce4c9599a447f698df4496');
-    /*if(window.ethereum || window.ethereum.isMetaMask || window.ethereum.isImToken){
-      this.getUserInfo();
-    }else{
-      this.showModal('noWallet');
-      this.setState({
-        betLoading: true,
-      })
-    }*/
 
     if(!window.ethereum){
       this.showModal('noWallet');
@@ -383,7 +375,7 @@ class IndexPage extends React.Component {
   }
 
   handleClipBoard = () => {
-    if(copy(`http://xx.xx?beInvitedCode=${this.state.userByContract["邀请码"]}`)){
+    if(copy(`http://47.75.161.29/#/?beInvitedCode=${this.state.userByContract["邀请码"]}`)){
       notification.success({
         message: '复制成功',
         description: '',

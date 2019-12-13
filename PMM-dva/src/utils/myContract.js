@@ -2,6 +2,7 @@ import Web3 from 'web3';
 import contractConfig from '../utils/contractConfig';
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
+import tp from 'tp-js-sdk';
 
 export function createWeb3(HttpProvider) {
 	let web3 = new Web3(new Web3.providers.HttpProvider(HttpProvider));
@@ -33,6 +34,12 @@ export default function myContract(HttpProvider) {
 		})
 	}
 
+	//通过tockenpocket获取用户地址
+	async function _getTockenpocketAddress() {
+		const accounts = await tp.getCurrentWallet().then(data => data.data.address);
+		return accounts;
+	}
+
 	//通过web3获取用户地址
 	async function _getWeb3Address() {
 		const accounts = await web3.eth.getAccounts().then(address => address);
@@ -43,12 +50,20 @@ export default function myContract(HttpProvider) {
 		try {
 			let address = '';
 			if(window.ethereum.isMetaMask){
+				console.log('getUserInfo-isMetaMask')
 				address = await _getMetaMaskAddress();
 			}else if(window.ethereum.isImToken){
+				console.log('getUserInfo-isImToken')
 				address = await _getImTokenAddress();
 			}else if(_getWeb3Address()){
+				console.log('getUserInfo-isWeb3')
 				address = await _getWeb3Address();
+			}else if(tp.isConnected()){
+				console.log('getUserInfo-tockenpocket')
+				address = await _getTockenpocketAddress();
+				console.log(address)
 			}else{
+				console.log('getUserInfo-无钱包')
 				window.g_app._store.dispatch(routerRedux.push('/'))
 				return {
 					address: "",
@@ -57,11 +72,14 @@ export default function myContract(HttpProvider) {
 			}
 			
 			let banlance = await web3.eth.getBalance(address);
+
+			console.log(address, 'end')
 			return {
 				address,
 			  	banlance: web3.utils.fromWei(banlance, 'ether'),
 			}
 		} catch(error) {
+			console.log('getUserInfo-error')
 			message.error('同步信息出错');
 			return {
 				address: "",
@@ -137,10 +155,12 @@ export default function myContract(HttpProvider) {
 
 	//查询交易hash状态
 	async function getTransactionReceipt(hash) {
+		console.log('getTransactionReceipt', hash)
 		let data = await web3.eth.getTransactionReceipt(hash).then(receipt => {
 			console.log(receipt)
 			return (receipt ? receipt : getTransactionReceipt(hash));
 		})
+		console.log('getTransactionReceipt', data)
 		return data;
 	}
 
@@ -166,7 +186,20 @@ export default function myContract(HttpProvider) {
 
 	//发起交易
 	function _sendSignTransactionPromise(params) {
-		if(window.ethereum.isMetaMask){
+		if(tp.isConnected()) {
+			console.log('send-tockenpocket')
+			return new Promise((reslove, reject) => {
+				tp.sendEthTransaction(params).then(data => {
+					console.log(data)
+					if(data) {
+						reslove(data.data);
+					}else{
+						reject(data);
+					}
+				})
+			})
+		}else if(window.ethereum.isMetaMask){
+			console.log('send-isMetaMask')
 			//调用metaMask钱包交易API
 			return new Promise((reslove, reject) => {
 				window.ethereum.sendAsync({
@@ -174,17 +207,20 @@ export default function myContract(HttpProvider) {
 				  params: [params],
 				  from: params.from,
 				},(err, result) => {
+					console.log(err, result)
 					if(err){
 						reject(err);
 					}else{
-						reslove(result);
+						reslove(result.result);
 					}
 				})
 			})
 		}else if(window.ethereum.isImToken){
+			console.log('send-isImToken',params)
 			//调用imToken钱包交易API
 			return new Promise((reslove, reject) => {
 				window.imToken.callAPI('transaction.tokenPay', params, function (err, signature) {
+					console.log(err, signature)
 				  	if(err){
 						reject(err);
 					}else{
@@ -193,6 +229,7 @@ export default function myContract(HttpProvider) {
 				})
 			})
 		}else {
+			console.log('send-isWeb3',params)
 			return new Promise((reslove, reject) => {
 				web3.eth.sendTransaction(params, function (err, hash) {
 				  	if(err){
