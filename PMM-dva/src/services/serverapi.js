@@ -2,7 +2,12 @@ import stringify from 'qs-stringify';
 import request from '../utils/request';
 import * as moment from 'moment';
 
-const apiAddress = '/api/v1'
+let apiAddress = '';
+if(process.env.NODE_ENV == 'development') {
+	apiAddress = '/api/v1';
+}else {
+	apiAddress = 'http://localhost:7001/api/v1';
+}
 
 export async function getAllTransactionList() {
 	const data = [

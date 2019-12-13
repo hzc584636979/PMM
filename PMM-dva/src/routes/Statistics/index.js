@@ -34,7 +34,7 @@ class Statistics extends React.Component {
 				<SubLayout title="统计室"> 
 					<div className={styles.item}>
 						<div className={styles.l}>总注入（ETH）</div>
-						<div className={styles.r}>{ statistics.total_recharge ? this.web3.utils.fromWei(statistics.total_static_profit, 'ether') : 0 }</div>
+						<div className={styles.r}>{ statistics.total_recharge ? this.web3.utils.fromWei(statistics.total_recharge, 'ether') : 0 }</div>
 					</div>
 					<div className={styles.item}>
 						<div className={styles.l}>注入收益（ETH）</div>

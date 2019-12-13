@@ -17,11 +17,15 @@ export default {
 	   "node_modules/scryptsy",
 	   "node_modules/ethereum-bloom-filters"
 	],
-	"proxy": {
-    "/api/v1": {
-      "target": "http://47.75.161.29:7001",
-      "changeOrigin":true,
-    }
+  env: {
+    development: {
+      "proxy": {
+        "/api/v1": {
+          "target": "http://47.75.161.29:7001",
+          "changeOrigin":true,
+        }
+      },
+    },
   },
   "browserslist": [
     ">0.2%",

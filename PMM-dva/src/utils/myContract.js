@@ -33,6 +33,12 @@ export default function myContract(HttpProvider) {
 		})
 	}
 
+	//通过web3获取用户地址
+	async function _getWeb3Address() {
+		const accounts = await web3.eth.getAccounts().then(address => address);
+		return accounts[0];
+	}
+
 	async function getUserInfo() {
 		try {
 			let address = '';
@@ -40,7 +46,9 @@ export default function myContract(HttpProvider) {
 				address = await _getMetaMaskAddress();
 			}else if(window.ethereum.isImToken){
 				address = await _getImTokenAddress();
-			}else {
+			}else if(_getWeb3Address()){
+				address = await _getWeb3Address();
+			}else{
 				window.g_app._store.dispatch(routerRedux.push('/'))
 				return {
 					address: "",
@@ -181,6 +189,16 @@ export default function myContract(HttpProvider) {
 						reject(err);
 					}else{
 						reslove(signature);
+					}
+				})
+			})
+		}else {
+			return new Promise((reslove, reject) => {
+				web3.eth.sendTransaction(params, function (err, hash) {
+				  	if(err){
+						reject(err);
+					}else{
+						reslove(hash);
 					}
 				})
 			})
