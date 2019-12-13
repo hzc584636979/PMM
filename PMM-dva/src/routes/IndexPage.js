@@ -27,7 +27,14 @@ class IndexPage extends React.Component {
   componentDidMount() {
     // 实例化web3
     this.myContract = myContract('https://kovan.infura.io/v3/58f018284cce4c9599a447f698df4496');
-    this.getUserInfo();
+    if(window.ethereum.isMetaMask || window.ethereum.isImToken){
+      this.getUserInfo();
+    }else{
+      this.showModal('noWallet');
+      this.setState({
+        betLoading: true,
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -49,6 +56,7 @@ class IndexPage extends React.Component {
 
     //获取用户信息
     this.myContract.getUserInfo().then(({ address, banlance }) => {
+      if(!address) return;
       //获取用户在合约上的信息
       this.myContract.getContractUserInfo(address)
       .then(res => {
@@ -146,6 +154,8 @@ class IndexPage extends React.Component {
       modalBoxBg = styles.walletModalBg;
     }else if(modalType == 'message') {
       modalBoxBg = styles.messageModalBg;
+    }else if(modalType == 'noWallet') {
+      modalBoxBg = styles.noWalletModalBg;
     }
 
     this.setState({
@@ -247,6 +257,18 @@ class IndexPage extends React.Component {
               <Scrollbars>
                 <p>balabalabala....</p>
               </Scrollbars>
+            </div>
+          </div>
+        ),
+      };
+    }else if(modalType == 'noWallet') {
+      other = {
+        modalTitle: "错误",
+        modalDesc: (
+          <div className={styles.messageModal}>
+            <div className={styles.t}>来自副舰长</div>
+            <div className={styles.c}>
+              没有钱包环境无法运行此项目
             </div>
           </div>
         ),

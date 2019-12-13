@@ -40,9 +40,6 @@ class FAQ extends React.Component {
 		if(window.getUserInfo(this.props.app).address == "") {
 			this.props.dispatch(routerRedux.push('/indexPage'))
 		}
-		this.props.dispatch({
-			type: 'faq/item'
-		})
 	}
 
 	toggleItem = itemKey => {
@@ -56,7 +53,7 @@ class FAQ extends React.Component {
 		const { faq, loading } = this.props;
 		const { itemKey, list } = this.state;
 		return (
-			<Spin spinning={ loading }>
+			<Spin spinning={ false } size="large">
 				<SubLayout title="助理室">
 					<ul className={styles.list}>
 						{ 

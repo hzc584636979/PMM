@@ -8,6 +8,9 @@ export default {
   "extraPostCSSPlugins": [
     pxtorem2({ rootValue: 75, propWhiteList: [], })
   ],
+  "theme": {
+    "font-size-base": "22px",
+  },
   "es5ImcompatibleVersions": true,
 	"extraBabelIncludes":[
 	   "node_modules/web3-core-method",
@@ -16,7 +19,7 @@ export default {
 	],
 	"proxy": {
     "/api": {
-      "target": "http://192.168.1.20:7001",
+      "target": "http://47.75.161.29:7001",
       "changeOrigin":true,
       "pathRewrite": { "^/api" : "" }
     }

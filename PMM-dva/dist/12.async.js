@@ -1,1 +1,1 @@
-webpackJsonp([12],{lpGL:function(e,a,t){"use strict";var u=t("ouCL");Object.defineProperty(a,"__esModule",{value:!0}),a.default=void 0;var d=u(t("+TWC")),n={namespace:"index",state:{},effects:{},reducers:{save:function(e,a){return(0,d.default)({},e,a.payload)}}};a.default=n}});
+webpackJsonp([12],{EF6q:function(e,t,a){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var s={namespace:"faq",state:{},effects:{},reducers:{}};t.default=s}});

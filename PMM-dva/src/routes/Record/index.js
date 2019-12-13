@@ -149,9 +149,8 @@ class Record extends React.Component {
 	render() {
 		const { tabKey } = this.state;
 		const { record, loading } = this.props;
-		console.log(record)
 		return (
-			<Spin spinning={ loading }>
+			<Spin spinning={ loading } size="large">
 				<SubLayout title="财务室">
 					<div className={styles.tabBox}>
 						<div className={ tabKey == 'in' ? styles.tabOn : styles.tab } style={{textAlign: 'left'}} onClick={ () => this.handleTab('in') }>我的注入</div>

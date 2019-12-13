@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import contractConfig from '../utils/contractConfig';
+import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 
 export function createWeb3(HttpProvider) {
@@ -16,15 +17,14 @@ export default function myContract(HttpProvider) {
 	}
 
 	//通过metaMask钱包API获取用户地址
-	async function _getAddress() {
+	async function _getMetaMaskAddress() {
 		const accounts = await window.ethereum.enable().then(address => address);
 		return accounts[0];
 	}
 
-	/*
 	//通过imToken获取用户地址
-	async _getAddress() {
-		const accounts = await imToken.callAPI('user.showAccountSwitch', { chainType: null }, function(err, address){
+	async function _getImTokenAddress() {
+		const accounts = await window.imToken.callAPI('user.showAccountSwitch', { chainType: null }, function(err, address){
 		  if(err) {
 		    alert(err.message)
 		  } else {
@@ -32,11 +32,22 @@ export default function myContract(HttpProvider) {
 		  }
 		})
 	}
-	*/
 
 	async function getUserInfo() {
 		try {
-			let address = await _getAddress();
+			let address = '';
+			if(window.ethereum.isMetaMask){
+				address = await _getMetaMaskAddress();
+			}else if(window.ethereum.isImToken){
+				address = await _getImTokenAddress();
+			}else {
+				window.g_app._store.dispatch(routerRedux.push('/'))
+				return {
+					address: "",
+				  	banlance: "",
+				}
+			}
+			
 			let banlance = await web3.eth.getBalance(address);
 			return {
 				address,
@@ -173,7 +184,6 @@ export default function myContract(HttpProvider) {
 					}
 				})
 			})
-			
 		}
 	}
 

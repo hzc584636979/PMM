@@ -62,7 +62,7 @@ class Admin extends React.Component {
 		const { admin: {sup, sub}, loading } = this.props;
 		const { supClass, supItem, subClass, subItem } = this.state;
 		return (
-			<Spin spinning={ loading }>
+			<Spin spinning={ loading } size="large">
 				<SubLayout title="行政室">
 					<div className={styles.level}>LV.{ this.getLv(userByContract) }</div>
 					<ul className={styles.list}>

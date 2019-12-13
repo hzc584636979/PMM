@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Spin } from 'antd';
 import { routerRedux } from 'dva/router';
 import SubLayout from '../../components/SubLayout';
+import { createWeb3 } from '../../utils/myContract';
 import styles from './index.less';
 
 class Statistics extends React.Component {
@@ -10,6 +11,10 @@ class Statistics extends React.Component {
 	  super(props);
 	
 	  this.state = {};
+	}
+
+	componentWillMount() {
+		this.web3 = createWeb3('https://kovan.infura.io/v3/58f018284cce4c9599a447f698df4496');
 	}
 
 	componentDidMount() {
@@ -25,7 +30,7 @@ class Statistics extends React.Component {
 		const { userByContract } = window.getUserInfo(this.props.app);
 		const { statistics, loading } = this.props;
 		return (
-			<Spin spinning={ loading }>
+			<Spin spinning={ loading } size="large">
 				<SubLayout title="统计室"> 
 					<div className={styles.item}>
 						<div className={styles.l}>总注入（ETH）</div>
@@ -33,11 +38,11 @@ class Statistics extends React.Component {
 					</div>
 					<div className={styles.item}>
 						<div className={styles.l}>注入收益（ETH）</div>
-						<div className={styles.r}></div>
+						<div className={styles.r}>{ statistics.total_static_profit ? this.web3.utils.fromWei(statistics.total_static_profit, 'ether') : 0 }</div>
 					</div>
 					<div className={styles.item}>
 						<div className={styles.l}>团队收益</div>
-						<div className={styles.r}></div>
+						<div className={styles.r}>{ statistics.total_team_profit ? this.web3.utils.fromWei(statistics.total_team_profit, 'ether') : 0 }</div>
 					</div>
 					<div className={styles.item}>
 						<div className={styles.l}>团队奖励</div>
