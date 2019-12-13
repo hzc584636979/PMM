@@ -152,7 +152,7 @@ class IndexPage extends React.Component {
       modalBoxBg = styles.walletModalBg;
     }else if(modalType == 'invitation') {
       modalBoxBg = styles.walletModalBg;
-    }else if(modalType == 'message') {
+    }else if(modalType == 'message' || modalType == 'rule' || modalType == 'about') {
       modalBoxBg = styles.messageModalBg;
     }else if(modalType == 'noWallet') {
       modalBoxBg = styles.noWalletModalBg;
@@ -269,6 +269,73 @@ class IndexPage extends React.Component {
             <div className={styles.t}>来自副舰长</div>
             <div className={styles.c}>
               没有钱包环境无法运行此项目
+            </div>
+          </div>
+        ),
+      };
+    }else if(modalType == 'rule') {
+      other = {
+        modalTitle: "规则",
+        modalDesc: (
+          <div className={styles.messageModal}>
+            <div className={styles.t}>来自副舰长</div>
+            <div className={styles.c}>
+              <Scrollbars>
+                <p>
+                  静态收益：<br/>
+                  L1投资1-5个ETH，得到日收益0.6%<br/>
+                  L2投资6-10个ETH，得到日收益0.8%<br/>
+                  L3投资11-15个ETH，得到日收益1.2%<br/>
+                </p>
+                <p>
+                  动态奖励：<br/>
+                  L1拿一级收益的50%，<br/>
+                  L2拿一级收益的50%，二级收益的50%三级收益的30%<br/>
+                  L3拿一级收益的50%，二级收益的50%三级收益的30%，四级～十级收益的10%<br/>
+                  （24小时自动结算，下级满24小时结算收益同时，领导人得到领导奖励）<br/>
+                </p>
+                <p>
+                  导师祝福奖励：<br/>
+                  每日10：00可点击领取，直推可以拿到上级领导投资收益的50%<br/>
+                </p>
+                <p>
+                  初级导师：<br/>
+                  直推达到5人，团队业绩100ETH，拿新增业绩1%<br/>
+                  （这1%领导人拿0.4%，剩下的0.6%平均奖励给伞下有效会员）<br/>
+                </p>
+                <p>
+                  中级导师：<br/>
+                  直推达到15人，团队业绩200ETH，拿新增业绩2%<br/>
+                  （这2%领导人拿0.8%，剩下的1.2%平均奖励给伞下有效会员）<br/>
+                </p>
+                <p>
+                  高级导师：<br/>
+                  直推达到30人，团队业绩500ETH，拿新增业绩3%<br/>
+                  （这3%领导人拿1.2%，剩下的1.8%平均奖励给伞下有效会员）<br/>
+                </p>
+                <p>
+                  烧伤：例如A投了1个ETH，B投了5个ETH，那么A只能拿到B1一个ETH的收益<br/>
+                  平台每月收取新增业绩3%作为手续费<br/>
+                  5天一轮，到时间暂停收益，强制出局，必须重新复投，否则不在计算奖励<br/>
+                </p>
+              </Scrollbars>
+            </div>
+          </div>
+        ),
+      };
+    }
+    else if(modalType == 'about') {
+      other = {
+        modalTitle: "关于我们",
+        modalDesc: (
+          <div className={styles.messageModal}>
+            <div className={styles.t}>来自副舰长</div>
+            <div className={styles.c}>
+              <Scrollbars>
+                <p className={styles.indent}>很高兴！我们有共同的爱好和理想，一群集合了智慧和技术的深网极客，我们放弃掉不公平的规则约束。基于智能合约的条件触发性，执行命令，使得所有的捣乱者没有机会作弊，它公平，公开，透明，安全，不可篡改的特性更适合于Ethereum的生态环境。为了助力Ethereum社区共识，EthereumPark诞生了。</p>
+                <p className={styles.indent}>现在共识经济处于野蛮混乱的状态，非共识自治是规则不公平的主要原因。使得参与者无法保护自己的权益，大量的参与者因失落，无奈退出了这个行业。因此受到PMM（Perpetual motion machine ）的启发，EthereumPark布局的第一个生态PMC应用由此而生，PMC宗旨就是打造一个生生不息的共识经济dapp。</p>
+                <p className={styles.indent}>PMC5天一个周期，反向收益的设计体现了公平共赢，使Ethereum生态做的更具凝聚力！我们要做一件伟大的事情！让智能合约真正为混乱的共识经济提供持续良性发展的动力。</p>
+              </Scrollbars>
             </div>
           </div>
         ),

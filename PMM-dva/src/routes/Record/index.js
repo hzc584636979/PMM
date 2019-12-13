@@ -74,13 +74,6 @@ class Record extends React.Component {
 		this.setState({
 			tabKey,
 		})
-		if(tabKey == 'in'){
-			this.props.dispatch({
-				type: 'record/getMy'
-			})
-		}else{
-
-		}
 	}
 
 	getSelectDesc = ether => {
