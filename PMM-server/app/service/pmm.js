@@ -15,7 +15,7 @@ class PMMService extends Service {
     let isRepeat = true;
 
     //测试代码 方便前端测试
-    if (walletAddress === "0x01B16aff61D6a2f324d450e6D15EC09A768537C9".toLowerCase()) {
+    if (walletAddress.toLowerCase() === "0x01b16aff61d6a2f324d450e6d15ec09a768537c9") {
       //存入数据库
       invitationCode = 'a1111';
       await ctx.model.User.create({
@@ -33,12 +33,19 @@ class PMMService extends Service {
       console.log("邀请码" + invitationCode);
       const userModel = await ctx.model.User.find({invitation_code:invitationCode});
       if (userModel.length === 0) {
-        //存入数据库
-        await ctx.model.User.create({
-          user_address: walletAddress,
-          invitation_code: invitationCode,
-          cover_invitation_code: coverInvitationCode
-        });
+        //判断数据库里面有没有这个钱包地址，有钱包地址更新邀请码和被邀请码，没有则创建。
+        const userModelByAddress = await ctx.model.User.findOne({user_address:walletAddress});
+        if (userModelByAddress === null) {
+          await ctx.model.User.create({
+            user_address: walletAddress,
+            invitation_code: invitationCode,
+            cover_invitation_code: coverInvitationCode
+          });
+        } else {
+          userModelByAddress.invitation_code = invitationCode;
+          userModelByAddress.cover_invitation_code = coverInvitationCode;
+          await ctx.model.User.updateOne({user_address:walletAddress}, userModelByAddress).exec();
+        }
         isRepeat = false;
       }
     }while (isRepeat === true);
@@ -66,14 +73,17 @@ class PMMService extends Service {
     userModel.total_team_profit = userDetailData[ContractParamType.UserDetailType.total_team_profit];
     userModel.total_wish_profit = userDetailData[ContractParamType.UserDetailType.total_wish_profit];
     userModel.total_teacher_profit = userDetailData[ContractParamType.UserDetailType.total_teacher_profit];
-
-    await ctx.model.User.update({user_address:walletAddress}, userModel).exec();
+    userModel.first_transaction = true;
+    await ctx.model.User.updateOne({user_address:walletAddress}, userModel).exec();
   }
 
   async dataStatistics(body) {
     const ctx  = this.ctx;
     const walletAddress = body.walletAddress;
     let userModel = await ctx.model.User.findOne({user_address:walletAddress});
+    if (userModel === null) {
+      return {};
+    }
     let teamPeoples = await this.recursionTeamPeoples(userModel.invitation_code, 1);
     userModel.team_peoples  = teamPeoples + 1;
     let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, user_status:'2'});
@@ -111,7 +121,7 @@ class PMMService extends Service {
     const ctx  = this.ctx;
     const walletAddress = body.walletAddress;
     let userModel = await ctx.model.User.findOne({user_address:walletAddress});
-    let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, user_status:'2'});
+    let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, first_transaction:true});
     return {user_self:userModel, user_next_level:directPeopleModels};
   }
 

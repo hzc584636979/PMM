@@ -36,7 +36,7 @@ module.exports = appInfo => {
       ignoreJSON: true, // 默认为 false，当设置为 true 时，将会放过所有 content-type 为 `application/json` 的请求
     },
 
-    domainWhiteList: ['http://192.168.1.15:8000']
+    domainWhiteList: ['http://192.168.1.15:8000', 'http://47.75.161.29']
 
   };
 
