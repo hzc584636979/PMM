@@ -14,18 +14,6 @@ class PMMService extends Service {
     let invitationCode = "";
     let isRepeat = true;
 
-    //测试代码 方便前端测试
-    if (walletAddress.toLowerCase() === "0x01b16aff61d6a2f324d450e6d15ec09a768537c9") {
-      //存入数据库
-      invitationCode = 'a1111';
-      await ctx.model.User.create({
-        user_address: walletAddress,
-        invitation_code: invitationCode,
-        cover_invitation_code: coverInvitationCode
-      });
-      return {invitationCode:invitationCode};
-    }
-
     do{
       //生成邀请码
       const codeLength = 6;
@@ -62,7 +50,8 @@ class PMMService extends Service {
     const userDetailData = await contract.getUserByAddress(walletAddress);
 
     // //更新用户信息
-    const userModel = await ctx.model.User.findOne({user_address: walletAddress});
+    let regex = new RegExp(["^", walletAddress, "$"].join(""), "i");
+    const userModel = await ctx.model.User.findOne({user_address: regex});
     userModel.available_balance = userDetailData[ContractParamType.UserDetailType.available_balance];
     userModel.blocked_balances = userDetailData[ContractParamType.UserDetailType.blocked_balances];
     userModel.total_recharge = userDetailData[ContractParamType.UserDetailType.total_recharge];
@@ -80,13 +69,14 @@ class PMMService extends Service {
   async dataStatistics(body) {
     const ctx  = this.ctx;
     const walletAddress = body.walletAddress;
-    let userModel = await ctx.model.User.findOne({user_address:walletAddress});
+    let regex = new RegExp(["^", walletAddress, "$"].join(""), "i");
+    let userModel = await ctx.model.User.findOne({user_address:regex});
     if (userModel === null) {
       return {};
     }
     let teamPeoples = await this.recursionTeamPeoples(userModel.invitation_code, 1);
     userModel.team_peoples  = teamPeoples + 1;
-    let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, user_status:'2'});
+    let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, first_transaction:true});
     userModel.direct_push_peoples = directPeopleModels.length;
     return userModel;
   }
@@ -120,7 +110,8 @@ class PMMService extends Service {
   async teamDetail(body) {
     const ctx  = this.ctx;
     const walletAddress = body.walletAddress;
-    let userModel = await ctx.model.User.findOne({user_address:walletAddress});
+    let regex = new RegExp(["^", walletAddress, "$"].join(""), "i");
+    let userModel = await ctx.model.User.findOne({user_address:regex});
     let directPeopleModels = await ctx.model.User.find({cover_invitation_code:userModel.invitation_code, first_transaction:true});
     return {user_self:userModel, user_next_level:directPeopleModels};
   }
@@ -141,6 +132,7 @@ class PMMService extends Service {
 
     //查询这个邀请码下面的团队人数
     const directPeoples = await ctx.model.User.find({cover_invitation_code:invitationCode});
+    peopleNumber += directPeoples.length;
     for (let index = 0; index < directPeoples.length; index++) {
       let localPeopleNumber = await this.recursionTeamPeoples(directPeoples[index].invitation_code, teamLevel);
       peopleNumber += localPeopleNumber;

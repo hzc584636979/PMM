@@ -35,13 +35,38 @@ class order extends Subscription {
       await this.app.redis.set("order_number", endIndex);
       for (let index = startIndex; index < endIndex; index++) {
         const orderModel = await contract.getBetByIndex(index);
+        const walletAddress = orderModel[ContractParamType.OrderDetailType.user_address];
         await this.ctx.model.Order.create({
           order_index: index,
           order_amount: orderModel[ContractParamType.OrderDetailType.order_amount],
-          user_address: orderModel[ContractParamType.OrderDetailType.user_address],
+          user_address: walletAddress,
           order_time: orderModel[ContractParamType.OrderDetailType.order_time],
           order_status: orderModel[ContractParamType.OrderDetailType.order_status]
         });
+
+        //同步用户账户
+        let regex = new RegExp(["^", walletAddress, "$"].join(""), "i");
+        let userModel = await ctx.model.User.findOne({user_address:regex});
+        if (userModel == null) {
+          //合约获取账户信息插入数据库
+          const userDetailData = await contract.getUserByAddress(walletAddress);
+          userModel = {};
+          userModel.user_address = walletAddress;
+          userModel.available_balance = userDetailData[ContractParamType.UserDetailType.available_balance];
+          userModel.blocked_balances = userDetailData[ContractParamType.UserDetailType.blocked_balances];
+          userModel.total_recharge = userDetailData[ContractParamType.UserDetailType.total_recharge];
+          userModel.total_cash_out = userDetailData[ContractParamType.UserDetailType.total_cash_out];
+          userModel.today_wish_reward = userDetailData[ContractParamType.UserDetailType.today_wish_reward];
+          userModel.user_status = userDetailData[ContractParamType.UserDetailType.user_status];
+          userModel.total_static_profit = userDetailData[ContractParamType.UserDetailType.total_static_profit];
+          userModel.total_team_profit = userDetailData[ContractParamType.UserDetailType.total_team_profit];
+          userModel.total_wish_profit = userDetailData[ContractParamType.UserDetailType.total_wish_profit];
+          userModel.total_teacher_profit = userDetailData[ContractParamType.UserDetailType.total_teacher_profit];
+          userModel.invitation_code = userDetailData[ContractParamType.UserDetailType.invitation_code];
+          userModel.cover_invitation_code = userDetailData[ContractParamType.UserDetailType.cover_invitation_code];
+          userModel.first_transaction = true;
+          await ctx.model.User.create(userModel);
+        }
       }
     }
   }
