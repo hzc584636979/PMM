@@ -7,8 +7,10 @@ import tp from 'tp-js-sdk';
 export function createWeb3(HttpProvider) {
 	let web3 = '';
 	if(window.web3.currentProvider){
+		console.log(1111)
 		web3 = window.web3.currentProvider;
 	}else{
+		console.log(2222)
 		web3 = new Web3.providers.HttpProvider(HttpProvider);
 	}
 	/*web3 = new Web3.providers.HttpProvider(HttpProvider);*/
