@@ -43,15 +43,13 @@ class IndexPage extends React.Component {
   }
 
   getUserInfo = () => {
-    console.log(getUrlOptions().beInvitedCode)
     this.setState({
       betLoadingText: '同步用户信息中...',
       betLoading: true,
     })
-    let beInvitedCode='';
+    let beInvitedCode = '';
     if(!window.getUserInfo(this.props.app).beInvitedCode){
       beInvitedCode = getUrlOptions().beInvitedCode || 'first';
-      console.log(beInvitedCode)
     }else{
       beInvitedCode = window.getUserInfo(this.props.app).beInvitedCode;
     }
