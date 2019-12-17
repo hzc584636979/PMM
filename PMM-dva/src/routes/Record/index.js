@@ -50,6 +50,7 @@ class Record extends React.Component {
     }
 
     getData = (page=0, init) => {
+    	if(this.state.tabKey != 'in') return;
     	this.props.dispatch({
 			type: 'record/getMy',
 			payload: {
@@ -59,7 +60,7 @@ class Record extends React.Component {
 			}
 		}).then(data => {
 			this.timeout = null;
-			if(data.length > 0){
+			if(data.length >= this.state.pageSize){
 				this.setState({
 					page,
 				})

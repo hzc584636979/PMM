@@ -165,12 +165,10 @@ class Develop extends React.Component {
 	        betLoadingText: '投注中...',
 	    })
 	    this.myContract.againBet(address, betValue)
-	    .then(res => {
+	    .then(transactionHash => {
 	      this.setState({
 	        betLoadingText: '正在查询投注状态...',
 	      })
-	      const transactionHash = res.result;
-	      //0xb3b78836cce7c4cd00521a82bef47d7157a3522b7b8ed910df4d95d27a5027f4
 	      return this.myContract.getTransactionReceipt(transactionHash);
 	    })
 	    .then(receipt => {
@@ -292,12 +290,10 @@ class Develop extends React.Component {
 	        betLoadingText: '提取中...',
 	    })
 	    this.myContract.drawBalance(address)
-	    .then(res => {
+	    .then(transactionHash => {
 	      this.setState({
 	        betLoadingText: '正在查询提取状态...',
 	      })
-	      const transactionHash = res.result;
-	      //0xb3b78836cce7c4cd00521a82bef47d7157a3522b7b8ed910df4d95d27a5027f4
 	      return this.myContract.getTransactionReceipt(transactionHash);
 	    })
 	    .then(receipt => {

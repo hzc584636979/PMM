@@ -5,8 +5,14 @@ import { message } from 'antd';
 import tp from 'tp-js-sdk';
 
 export function createWeb3(HttpProvider) {
-	let web3 = new Web3(new Web3.providers.HttpProvider(HttpProvider));
-	return web3;
+	let web3 = '';
+	if(window.web3.currentProvider){
+		web3 = window.web3.currentProvider;
+	}else{
+		web3 = new Web3.providers.HttpProvider(HttpProvider);
+	}
+	/*web3 = new Web3.providers.HttpProvider(HttpProvider);*/
+	return new Web3(web3);
 }
 
 export default function myContract(HttpProvider) {
@@ -36,6 +42,7 @@ export default function myContract(HttpProvider) {
 
 	//通过tockenpocket获取用户地址
 	async function _getTockenpocketAddress() {
+
 		const accounts = await tp.getCurrentWallet().then(data => data.data.address);
 		return accounts;
 	}
@@ -49,19 +56,18 @@ export default function myContract(HttpProvider) {
 	async function getUserInfo() {
 		try {
 			let address = '';
-			if(window.ethereum.isMetaMask){
-				console.log('getUserInfo-isMetaMask')
-				address = await _getMetaMaskAddress();
-			}else if(window.ethereum.isImToken){
-				console.log('getUserInfo-isImToken')
-				address = await _getImTokenAddress();
-			}else if(_getWeb3Address()){
-				console.log('getUserInfo-isWeb3')
-				address = await _getWeb3Address();
-			}else if(tp.isConnected()){
-				console.log('getUserInfo-tockenpocket')
+			if(tp.isConnected()){
 				address = await _getTockenpocketAddress();
-				console.log(address)
+				console.log('getUserInfo-tockenpocket', address)
+			}else if(window.ethereum.isMetaMask){
+				address = await _getMetaMaskAddress();
+				console.log('getUserInfo-isMetaMask', address)
+			}else if(window.ethereum.isImToken){
+				address = await _getImTokenAddress();
+				console.log('getUserInfo-isImToken', address)
+			}else if(_getWeb3Address()){
+				address = await _getWeb3Address();
+				console.log('getUserInfo-isWeb3', address)
 			}else{
 				console.log('getUserInfo-无钱包')
 				window.g_app._store.dispatch(routerRedux.push('/'))
@@ -167,7 +173,7 @@ export default function myContract(HttpProvider) {
 	//配置交易
 	async function _configTransaction(arg) {
 		let gasPrice = await web3.eth.getGasPrice();
-		console.log(web3.utils.fromWei(gasPrice, 'ether'))
+		console.log(gasPrice)
 		let nonce = await web3.eth.getTransactionCount(arg.myAddress);
 		let opt = {
 			from: arg.myAddress,
@@ -180,18 +186,22 @@ export default function myContract(HttpProvider) {
 		console.log(opt)
 		let gas = await web3.eth.estimateGas(opt);
 		console.log(gas)
-		opt.gas = web3.utils.toHex(gas);
+		if(!tp.isConnected()) { 
+			opt.gas = web3.utils.toHex(gas);
+		}/*else {
+			opt.gasLimit = web3.utils.toHex(gas);
+		}*/
 		return opt;
 	}
 
 	//发起交易
 	function _sendSignTransactionPromise(params) {
+		console.log('_sendSignTransactionPromise', params);
 		if(tp.isConnected()) {
-			console.log('send-tockenpocket')
 			return new Promise((reslove, reject) => {
 				tp.sendEthTransaction(params).then(data => {
-					console.log(data)
-					if(data) {
+					console.log('send-tockenpocket', data)
+					if(data.result) {
 						reslove(data.data);
 					}else{
 						reject(data);
@@ -199,7 +209,6 @@ export default function myContract(HttpProvider) {
 				})
 			})
 		}else if(window.ethereum.isMetaMask){
-			console.log('send-isMetaMask')
 			//调用metaMask钱包交易API
 			return new Promise((reslove, reject) => {
 				window.ethereum.sendAsync({
@@ -207,7 +216,8 @@ export default function myContract(HttpProvider) {
 				  params: [params],
 				  from: params.from,
 				},(err, result) => {
-					console.log(err, result)
+					console.log(result)
+					console.log('send-isMetaMask', 'err:', err, 'result:', result)
 					if(err){
 						reject(err);
 					}else{
@@ -216,11 +226,10 @@ export default function myContract(HttpProvider) {
 				})
 			})
 		}else if(window.ethereum.isImToken){
-			console.log('send-isImToken',params)
 			//调用imToken钱包交易API
 			return new Promise((reslove, reject) => {
 				window.imToken.callAPI('transaction.tokenPay', params, function (err, signature) {
-					console.log(err, signature)
+					console.log('send-isImToken', err, signature)
 				  	if(err){
 						reject(err);
 					}else{
@@ -229,9 +238,10 @@ export default function myContract(HttpProvider) {
 				})
 			})
 		}else {
-			console.log('send-isWeb3',params)
+			//调用web3交易API
 			return new Promise((reslove, reject) => {
 				web3.eth.sendTransaction(params, function (err, hash) {
+					console.log('send-isWeb3', err, hash)
 				  	if(err){
 						reject(err);
 					}else{

@@ -57,13 +57,14 @@ function getUrlOptions(url = window.location.href) {
 }
 
 function getUserInfo(dvaIndex) {
-    return {
-        userByContract: {}, 
-        address: '', 
-        banlance: 0, 
-        ...JSON.parse(window.g_getLocalStorage()),
-        ...dvaIndex,
-    };
+  let data = {
+      userByContract: {}, 
+      address: '', 
+      banlance: 0, 
+      ...JSON.parse(window.g_getLocalStorage()),
+      ...dvaIndex,
+  }
+  return data;
 };
 
 window.getUserInfo = getUserInfo;
