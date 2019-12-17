@@ -29,9 +29,11 @@ class App extends React.Component {
 
   setTitle = () => {
       let pathName = this.props.location.pathname;
+      console.log(this.props)
       routesConfig.map((v) => {
           if(pathName == v.path){
-              document.title = `${v.name} - 永动机 - Perpetual motion machine`;
+            console.log(v)
+            document.title = `${v.name} - 永动机 - Perpetual motion machine`;
           }
       })
   }

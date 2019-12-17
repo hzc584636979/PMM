@@ -162,13 +162,28 @@ export default function myContract(HttpProvider) {
 	//查询交易hash状态
 	async function getTransactionReceipt(hash) {
 		console.log('getTransactionReceipt', hash)
+		return new Promise((reslove, reject) => {
+			let timer = setInterval(async () => {
+				let data = await web3.eth.getTransactionReceipt(hash).then(receipt => {
+					console.log(receipt)
+					if(receipt){
+						clearInterval(timer);
+						reslove(receipt);
+					}
+				})
+			}, 500)
+		})
+	}
+
+	/*async function getTransactionReceipt(hash) {
+		console.log('getTransactionReceipt', hash)
 		let data = await web3.eth.getTransactionReceipt(hash).then(receipt => {
 			console.log(receipt)
 			return (receipt ? receipt : getTransactionReceipt(hash));
 		})
 		console.log('getTransactionReceipt', data)
 		return data;
-	}
+	}*/
 
 	//配置交易
 	async function _configTransaction(arg) {

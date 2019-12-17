@@ -12,15 +12,18 @@ module.exports = (function(win, lib) {
     metaEl.setAttribute('content', 'target-densitydpi=device-dpi, initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
     document.documentElement.firstElementChild.appendChild(metaEl);
     document.documentElement.firstElementChild.appendChild(style);
-    if (980 === document.documentElement.clientWidth) {
-      metaEl.setAttribute('content', 'target-densitydpi=device-dpi,width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1');
-    }
+
 
     function refreshRem () {
       var width = document.documentElement.clientWidth;
-      var isPhone = window.navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+      var isMac = /macintosh|mac os x/i.test(navigator.userAgent);
+      var isPhone = window.navigator.userAgent.match(/Android|SymbianOS|Windows Phone|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
       if (!isPhone && width > 1024) {
-        window.rem = rem = 75;
+        if(isMac){
+          window.rem = rem = width * dpr * 0.8 / 10;
+        }else{
+          window.rem = rem = 75;
+        }
       }else {
         window.rem = rem = width / 10;
       }

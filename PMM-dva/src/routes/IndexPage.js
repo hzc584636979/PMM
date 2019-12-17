@@ -47,13 +47,8 @@ class IndexPage extends React.Component {
       betLoadingText: '同步用户信息中...',
       betLoading: true,
     })
-    let beInvitedCode = '';
-    if(!window.getUserInfo(this.props.app).beInvitedCode){
-      beInvitedCode = getUrlOptions().beInvitedCode || 'first';
-    }else{
-      beInvitedCode = window.getUserInfo(this.props.app).beInvitedCode;
-    }
-
+    let beInvitedCode = getUrlOptions().beInvitedCode || 'first';
+    console.log(beInvitedCode)
     //获取用户信息
     this.myContract.getUserInfo().then(({ address, banlance }) => {
       if(!address) return;
@@ -69,6 +64,7 @@ class IndexPage extends React.Component {
           }
         })
         console.log('格式化合约信息', userByContract)
+        console.log(beInvitedCode)
         this.props.dispatch({
           type: 'app/saveUserInfo',
           payload: {

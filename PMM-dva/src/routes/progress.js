@@ -57,6 +57,7 @@ class Progress extends React.Component {
 
 	render() {
 		const beInvitedCode = getUrlOptions().beInvitedCode;
+		console.log(beInvitedCode)
 		return (
 			<div className={styles.wrap}>
 				<div className={styles.title}>
