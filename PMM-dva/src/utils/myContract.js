@@ -188,9 +188,6 @@ export default function myContract(HttpProvider) {
 	//配置交易
 	async function _configTransaction(arg) {
 		let gasPrice = await web3.eth.getGasPrice();
-		console.log(gasPrice)
-		gasPrice = gasPrice*10;
-		console.log(gasPrice, '*')
 		let nonce = await web3.eth.getTransactionCount(arg.myAddress);
 		let opt = {
 			from: arg.myAddress,
