@@ -7,10 +7,8 @@ import tp from 'tp-js-sdk';
 export function createWeb3(HttpProvider) {
 	let web3 = '';
 	if(window.web3.currentProvider){
-		console.log(1111)
 		web3 = window.web3.currentProvider;
 	}else{
-		console.log(2222)
 		web3 = new Web3.providers.HttpProvider(HttpProvider);
 	}
 	/*web3 = new Web3.providers.HttpProvider(HttpProvider);*/
@@ -191,6 +189,8 @@ export default function myContract(HttpProvider) {
 	async function _configTransaction(arg) {
 		let gasPrice = await web3.eth.getGasPrice();
 		console.log(gasPrice)
+		gasPrice = gasPrice*10;
+		console.log(gasPrice, '*')
 		let nonce = await web3.eth.getTransactionCount(arg.myAddress);
 		let opt = {
 			from: arg.myAddress,
@@ -205,9 +205,9 @@ export default function myContract(HttpProvider) {
 		console.log(gas)
 		if(!tp.isConnected()) { 
 			opt.gas = web3.utils.toHex(gas);
-		}/*else {
+		}else {
 			opt.gasLimit = web3.utils.toHex(gas);
-		}*/
+		}
 		return opt;
 	}
 
@@ -215,6 +215,7 @@ export default function myContract(HttpProvider) {
 	function _sendSignTransactionPromise(params) {
 		console.log('_sendSignTransactionPromise', params);
 		if(tp.isConnected()) {
+			//调用tokenpocket钱包交易API
 			return new Promise((reslove, reject) => {
 				tp.sendEthTransaction(params).then(data => {
 					console.log('send-tockenpocket', data)
