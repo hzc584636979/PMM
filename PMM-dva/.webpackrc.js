@@ -22,10 +22,12 @@ export default {
       "proxy": {
         "/api/v1": {
           "target": "http://47.75.161.29:7001",
-          "changeOrigin":true,
+          "changeOrigin": true,
+          "secure": false,
         }
       },
     },
+    "production": {}
   },
   "browserslist": [
     ">0.2%",

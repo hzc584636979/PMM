@@ -31,18 +31,15 @@ export default function myContract(HttpProvider) {
 
 	//通过imToken获取用户地址
 	async function _getImTokenAddress() {
-		const accounts = await window.imToken.callAPI('user.showAccountSwitch', { chainType: null }, function(err, address){
-		  if(err) {
-		    alert(err.message)
-		  } else {
-		    return address;
-		  }
+		const accounts = await window.imToken.callAPI('user.showAccountSwitch', { chainType: null }).then(data => {
+			console.log(data)
+			return data;
 		})
+		return accounts;
 	}
 
 	//通过tockenpocket获取用户地址
 	async function _getTockenpocketAddress() {
-
 		const accounts = await tp.getCurrentWallet().then(data => data.data.address);
 		return accounts;
 	}
@@ -243,13 +240,29 @@ export default function myContract(HttpProvider) {
 			})
 		}else if(window.ethereum.isImToken){
 			//调用imToken钱包交易API
-			return new Promise((reslove, reject) => {
+			/*return new Promise((reslove, reject) => {
 				window.imToken.callAPI('transaction.tokenPay', params, function (err, signature) {
 					console.log('send-isImToken', err, signature)
 				  	if(err){
 						reject(err);
 					}else{
 						reslove(signature);
+					}
+				})
+			})*/
+			//调用metaMask钱包交易API
+			return new Promise((reslove, reject) => {
+				window.ethereum.sendAsync({
+				  method: 'eth_sendTransaction',
+				  params: [params],
+				  from: params.from,
+				},(err, result) => {
+					console.log(result)
+					console.log('send-isMetaMask', 'err:', err, 'result:', result)
+					if(err){
+						reject(err);
+					}else{
+						reslove(result.result);
 					}
 				})
 			})
