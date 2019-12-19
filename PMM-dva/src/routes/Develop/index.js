@@ -44,6 +44,7 @@ class Develop extends React.Component {
 	    })
 	    //获取用户信息
 	    this.myContract.getUserInfo().then(({ address, banlance }) => {
+	      if(!address) return;
 	      //获取用户在合约上的信息
 	      this.myContract.getContractUserInfo(address)
 	      .then(res => {
@@ -55,6 +56,7 @@ class Develop extends React.Component {
 	            userByContract[v] = this.myContract.fromWei(res[i]);
 	          }
 	        })
+	        console.log('格式化合约信息', userByContract)
 	        this.props.dispatch({
 	          type: 'app/saveUserInfo',
 	          payload: {
@@ -650,7 +652,7 @@ class Develop extends React.Component {
 					<div className={styles.top}>
 						<Link to="/indexPage"><div className={styles.back}></div></Link>
 						<div className={styles.txt}>研发室</div>
-						<div className={styles.FAQ}><Link to="/faq" style={{color: '#f9dd6e'}}>FAQ</Link></div>
+						{/*<div className={styles.FAQ}><Link to="/faq" style={{color: '#f9dd6e'}}>FAQ</Link></div>*/}
 					</div>
 					<div className={styles.level}>LV.{ this.getLv(userByContract) }</div>
 					{ selectInfo }

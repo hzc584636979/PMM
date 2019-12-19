@@ -74,7 +74,11 @@ function formatDuring(mss,type = ['天','小时','分钟','秒']) {
     var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) < 10 ? '0' + parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) : parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60)) < 10 ? '0' + parseInt((mss % (1000 * 60 * 60)) / (1000 * 60)) : parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = parseInt((mss % (1000 * 60)) / 1000) < 10 ? '0' + parseInt((mss % (1000 * 60)) / 1000) : parseInt((mss % (1000 * 60)) / 1000);
-    return days + type[0] + hours + type[1] + minutes + type[2] + seconds + type[3];
+    if(type.length < 4){
+      return hours + type[0] + minutes + type[1] + seconds + type[2];
+    }else{
+      return days + type[0] + hours + type[1] + minutes + type[2] + seconds + type[3];
+    }
 }
 
 function lessDate(startTime, day) {
@@ -92,9 +96,8 @@ function changeTime(time, type) {
        var date = {
               "M+": this.getMonth() + 1,
               "d+": this.getDate(),
-//                "h+": this.getHours(),
-              "h+": this.getHours()+1 >= 10 ? this.getHours(): '0'+(this.getHours()),
-              "m+": this.getMinutes()+1 >= 10 ? this.getMinutes(): '0'+(this.getMinutes()),
+              "h+": this.getHours(),
+              "m+": this.getMinutes(),
               "s+": this.getSeconds(),
               "q+": Math.floor((this.getMonth() + 3) / 3),
               "S+": this.getMilliseconds()

@@ -6,7 +6,7 @@ import { Spin, Drawer, Button, Icon, message, notification, Modal } from 'antd';
 import { getUrlOptions } from '../utils/utils';
 import myContract from '../utils/myContract';
 import copy from 'copy-to-clipboard';
-import { langConfig } from '../utils/utils';
+import { langConfig, formatDuring } from '../utils/utils';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 class IndexPage extends React.Component {
@@ -39,7 +39,7 @@ class IndexPage extends React.Component {
   }
 
   componentWillUnmount() {
-
+    this.timer && clearInterval(this.timer);
   }
 
   getUserInfo = () => {
@@ -65,6 +65,9 @@ class IndexPage extends React.Component {
         })
         console.log('格式化合约信息', userByContract)
         console.log(beInvitedCode)
+        if(userByContract['今日导师祝福奖励'] > 0) {
+          this.clearDrawTutorBless()
+        }
         this.props.dispatch({
           type: 'app/saveUserInfo',
           payload: {
@@ -126,6 +129,61 @@ class IndexPage extends React.Component {
       })
       console.log(err)
     })
+  }
+
+  getDrawTutorBless = () => {
+    this.setState({
+        betLoading: true,
+        betLoadingText: '领取中...',
+        spinZindex: 1001,
+    })
+    this.myContract.drawTutorBless(this.state.address)
+    .then(transactionHash => {
+      this.setState({
+        betLoadingText: '正在查询领取状态...',
+      })
+      return this.myContract.getTransactionReceipt(transactionHash);
+    })
+    .then(receipt => {
+      this.getUserInfo();
+      if(receipt.status){
+        clearInterval(this.timer);
+        notification.success({
+          message: '领取成功',
+          description: '',
+        }) 
+      }else{
+        notification.error({
+          message: '领取失败',
+          description: '',
+        })
+      } 
+    })
+    .catch(err => {
+      this.setState({
+        betLoading: false,
+      })
+      console.log(err)
+    })
+  }
+
+  clearDrawTutorBless = () => {
+    const nowStart = new Date(new Date().toLocaleDateString()).getTime();//当天0点的时间戳
+    const nowStart10 = nowStart + 10 * 60 * 60 * 1000;//当天10点的时间戳
+    const netStart = nowStart + 24 * 60 * 60 * 1000;//下一天0点的时间戳
+    const netStart10 = netStart + 10 * 60 * 60 * 1000;//下一天10点的时间戳
+    this.timer = setInterval(() => {
+      const initTime = new Date().getTime();//当前时间
+      let startTime = initTime >= nowStart10 ? netStart10 : nowStart10;
+      if(startTime - initTime <= 0){
+        clearInterval(this.timer);
+        this.getUserInfo();
+      }else {
+        this.setState({
+          drawTutorBlessTime: formatDuring(startTime - initTime, [':',':',''])
+        })
+      }
+    }, 1000);
   }
 
   showMoveDrawer = () => {
@@ -400,7 +458,7 @@ class IndexPage extends React.Component {
 
   render() {
     const Lang = this.props.app.lang;
-    const { userByContract, modalBoxBg, address } = this.state;
+    const { userByContract, modalBoxBg, address, drawTutorBlessTime } = this.state;
     return (
       <Spin wrapperClassName={`spinZindex ${this.state.betLoading ? `on` : ``}`} size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
         <div className={styles.wrap}>
@@ -429,11 +487,21 @@ class IndexPage extends React.Component {
             <dl>
               <dt>副舰长：</dt>
               <dd>
-                <p style={{color: '#ece05c'}}>{ address.slice(address.length-4,address.length) }列兵</p>
-                <p className={styles.desc}>你从冬眠中苏醒了啊？了解下战舰的变化吧...</p>
+                { userByContract['今日导师祝福奖励'] > 0 ? 
+                  <p>可领取福利：<span style={{color: '#ece05c'}}>{ userByContract['今日导师祝福奖励'] }</span><br/>清空倒计时：{ drawTutorBlessTime }</p>
+                  :
+                  <Fragment>
+                    <p style={{color: '#ece05c'}}>{ address.slice(address.length-4,address.length) }列兵</p>
+                    <p className={styles.desc}>你从冬眠中苏醒了啊？了解下战舰的变化吧...</p>
+                  </Fragment>
+                }
               </dd>
             </dl>
-            <a className={styles.move} onClick={ () => this.showModal('message') }>详情</a>
+            { userByContract['今日导师祝福奖励'] > 0 ? 
+              <a className={styles.move} onClick={ this.getDrawTutorBless }>领取</a>
+              :
+              <a className={styles.move} onClick={ () => this.showModal('message') }>详情</a>
+            } 
           </div>
           <div className={styles.bottom}>
             <div className={styles.timeBox}>

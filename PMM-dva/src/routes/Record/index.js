@@ -142,8 +142,9 @@ class Record extends React.Component {
 	}
 
 	render() {
+		const { userByContract } = window.getUserInfo(this.props.app);
 		const { tabKey } = this.state;
-		const { record, loading } = this.props;
+		const { app, record, loading } = this.props;
 		return (
 			<Spin spinning={ loading } size="large">
 				<SubLayout title="财务室">
@@ -163,55 +164,47 @@ class Record extends React.Component {
 						:
 							<div className={styles.outTable}>
 								<div className={styles.item}>
-									<div className={styles.tag}>研发收益</div>
+									{/*<div className={styles.tag}>研发收益</div>*/}
 									<div className={styles.c}>
 										<div className={styles.icon1}></div>
-										<div className={styles.num}>总收益<span className={styles.bigNum}>28.5073</span>ETH</div>
+										<div className={styles.num}>总收益<span className={styles.bigNum}>{ Number(userByContract['总静态收益']) + Number(userByContract["总导师祝福收益"]) + Number(userByContract["总导师收益"]) }</span>ETH</div>
 										<ul className={styles.list}>
 											<li className={styles.li52f8fe}>
-												<span className={styles.l}>进行中的项目收益</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
+												<span className={styles.l}>项目收益</span>
+												<span className={styles.r}>{ userByContract['总静态收益'] }</span>
 											</li>
-											<li className={styles.lif7910c}>
+											{/*<li className={styles.lif7910c}>
 												<span className={styles.l}>上个项目收益</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
-											</li>
+												<span className={styles.r}>1.5037</span>
+											</li>*/}
 											<li className={styles.liff5dc4}>
-												<span className={styles.l}>上周项目收益</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
+												<span className={styles.l}>军职福利</span>
+												<span className={styles.r}>{ userByContract["总导师祝福收益"] }</span>
 											</li>
 											<li className={styles.li5ce37c}>
-												<span className={styles.l}>上月项目收益</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
+												<span className={styles.l}>军职工资</span>
+												<span className={styles.r}>{ userByContract["总导师收益"] }</span>
 											</li>
 										</ul>
 									</div>
 								</div>
-								<div className={styles.item}>
+								{/*<div className={styles.item}>
 									<div className={styles.tag}>奖励收益</div>
 									<div className={styles.c}>
 										<div className={styles.icon2}></div>
-										<div className={styles.num}>总收益<span className={styles.bigNum}>28.5073</span>ETH</div>
+										<div className={styles.num}>总收益<span className={styles.bigNum}>{ Number(userByContract["总导师祝福收益"]) + Number(userByContract["总导师收益"]) }</span>ETH</div>
 										<ul className={styles.list}>
 											<li className={styles.li52f8fe}>
 												<span className={styles.l}>军职福利</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
+												<span className={styles.r}>{ userByContract["总导师祝福收益"] }<b className={styles.arrowUp}></b></span>
 											</li>
 											<li className={styles.lif7910c}>
 												<span className={styles.l}>军职工资</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
-											</li>
-											<li className={styles.liff5dc4}>
-												<span className={styles.l}>团队收益</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
-											</li>
-											<li className={styles.li5ce37c}>
-												<span className={styles.l}>团队奖励</span>
-												<span className={styles.r}>1.5037<b className={styles.arrowUp}></b></span>
+												<span className={styles.r}>{ userByContract["总导师收益"] }<b className={styles.arrowUp}></b></span>
 											</li>
 										</ul>
 									</div>
-								</div>
+								</div>*/}
 							</div>
 					}
 				</SubLayout>

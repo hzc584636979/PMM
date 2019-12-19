@@ -69,11 +69,11 @@ class Admin extends React.Component {
 					<ul className={styles.list}>
 						<li className={styles.li52f8fe}>
 							<span className={styles.l}>福利</span>
-							<span className={styles.r}>0</span>
+							<span className={styles.r}>{ userByContract["总导师祝福收益"] }</span>
 						</li>
 						<li className={styles.lif7910c}>
 							<span className={styles.l}>工资</span>
-							<span className={styles.r}>0</span>
+							<span className={styles.r}>{ userByContract["总导师收益"] }</span>
 						</li>
 						<li className={`${styles.li} ${styles.liff5dc4} ${supClass}`} style={{cursor: 'pointer'}} onClick={ this.toggleSupItem }>
 							<span className={styles.l}>上级长官</span>
