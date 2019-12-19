@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>永动机</title>
   <link rel="stylesheet" href="index.css" />
-  <script src="http://192.168.1.15:8081/target/target-script-min.js#anonymous"></script>
+  <!-- <script src="http://192.168.1.15:8081/target/target-script-min.js#anonymous"></script> -->
   <script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js" type="text/javascript"></script>
   <script>
       function getUrlOptions(url = window.location.href) {
@@ -50,16 +50,18 @@
 
         return urlEle(url);
       }
-
+      
       /*if(getUrlOptions().debug){
         var vConsole = new VConsole();
       }*/
-      var vConsole = new VConsole();
+      /*var vConsole = new VConsole();*/
+
+      console.log('version:0.1')
   </script>
 </head>
 <body>
 
   <div id="root"></div>
-  <script src="index.js"></script>
+
 </body>
 </html>

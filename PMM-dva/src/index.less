@@ -26,6 +26,16 @@ html, body {
     margin: @top / @baseFontSize * 1rem @right / @baseFontSize * 1rem @bottom / @baseFontSize * 1rem @left / @baseFontSize * 1rem;
 }
 
+.line-clamp(@line-clamp){
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: @line-clamp;
+	/* autoprefixer: off */
+	-webkit-box-orient: vertical;
+	/* autoprefixer: on */
+}
+
 :global {
 	.spinZindex {
 		z-index: 1000,

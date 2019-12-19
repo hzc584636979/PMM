@@ -4,9 +4,9 @@ import * as moment from 'moment';
 
 let apiAddress = '';
 if(process.env.NODE_ENV == 'development') {
-	apiAddress = '/api/v1';
+	apiAddress = '/api/api/v1';
 }else {
-	apiAddress = 'http://47.75.161.29:7001/api/v1';//192.168.1.20:7001
+	apiAddress = 'https://www.boq.hk/api/api/v1';//192.168.1.20:7001
 }
 
 export async function getAllTransactionList() {

@@ -1,18 +1,3 @@
-const langConfig = {
-	en: {
-        home: 'Home',
-        transactionList: 'TransactionList',
-		rule: 'Rule',
-		about: 'About',
-	},
-	cn: {
-        home: '返回首页',
-        transactionList: '投注记录',
-		rule: '平台规则',
-		about: '关于我们',
-	}
-}
-
 function getUrlOptions(url = window.location.href) {
 
     var 
@@ -117,7 +102,6 @@ function changeTime(time, type) {
 };
 
 export { 
-    langConfig, 
     getUrlOptions, 
     formatDuring, 
     lessDate,

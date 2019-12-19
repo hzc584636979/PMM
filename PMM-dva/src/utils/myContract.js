@@ -7,8 +7,10 @@ import tp from 'tp-js-sdk';
 export function createWeb3(HttpProvider) {
 	let web3 = '';
 	if(window.web3.currentProvider){
+		console.log('createWeb3',1)
 		web3 = window.web3.currentProvider;
 	}else{
+		console.log('createWeb3',2)
 		web3 = new Web3.providers.HttpProvider(HttpProvider);
 	}
 	/*web3 = new Web3.providers.HttpProvider(HttpProvider);*/
@@ -31,7 +33,8 @@ export default function myContract(HttpProvider) {
 
 	//通过imToken获取用户地址
 	async function _getImTokenAddress() {
-		const accounts = await window.imToken.callAPI('user.showAccountSwitch', { chainType: null }).then(data => {
+		console.log('111111')
+		const accounts = await window.imToken.callPromisifyAPI('user.showAccountSwitch', { chainType: 'ETHEREUM' }).then(data => {
 			console.log(data)
 			return data;
 		})
@@ -221,7 +224,7 @@ export default function myContract(HttpProvider) {
 					}
 				})
 			})
-		}else if(window.ethereum.isMetaMask){
+		}else if(window.ethereum.isMetaMask || window.ethereum.isImToken){
 			//调用metaMask钱包交易API
 			return new Promise((reslove, reject) => {
 				window.ethereum.sendAsync({
@@ -230,35 +233,7 @@ export default function myContract(HttpProvider) {
 				  from: params.from,
 				},(err, result) => {
 					console.log(result)
-					console.log('send-isMetaMask', 'err:', err, 'result:', result)
-					if(err){
-						reject(err);
-					}else{
-						reslove(result.result);
-					}
-				})
-			})
-		}else if(window.ethereum.isImToken){
-			//调用imToken钱包交易API
-			/*return new Promise((reslove, reject) => {
-				window.imToken.callAPI('transaction.tokenPay', params, function (err, signature) {
-					console.log('send-isImToken', err, signature)
-				  	if(err){
-						reject(err);
-					}else{
-						reslove(signature);
-					}
-				})
-			})*/
-			//调用metaMask钱包交易API
-			return new Promise((reslove, reject) => {
-				window.ethereum.sendAsync({
-				  method: 'eth_sendTransaction',
-				  params: [params],
-				  from: params.from,
-				},(err, result) => {
-					console.log(result)
-					console.log('send-isMetaMask', 'err:', err, 'result:', result)
+					console.log('send-isMetaMask || window.ethereum.isImToken', 'err:', err, 'result:', result)
 					if(err){
 						reject(err);
 					}else{

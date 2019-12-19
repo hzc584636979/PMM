@@ -2,6 +2,10 @@ const pxtorem = require('postcss-pxtorem');
 const pxtorem2 = _interopRequireDefault(pxtorem).default;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 export default {
+  "hash": true,
+  "html": {
+    "template": "./src/index.ejs",
+  },
   "extraBabelPlugins": [
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
   ],
@@ -20,8 +24,8 @@ export default {
   env: {
     development: {
       "proxy": {
-        "/api/v1": {
-          "target": "http://47.75.161.29:7001",
+        "/api/api/v1": {
+          "target": "https://www.boq.hk",
           "changeOrigin": true,
           "secure": false,
         }

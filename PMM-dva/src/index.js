@@ -5,6 +5,7 @@ import createLoading from 'dva-loading';
 import { createBrowserHistory as createHistory } from 'history';
 import './index.less';
 import './utils/flexible';
+import { getUrlOptions } from './utils/utils';
 
 // 1. Initialize
 
@@ -17,6 +18,16 @@ import './utils/flexible';
 const app = dva();
 
 window.g_app = app;
+
+//默认语言为中文
+window.Lang = 'cn';
+
+//获取地址栏语言参数
+let href = window.location.href;
+href = href.substring(window.location.origin.length + 1, href.indexOf('#/'));
+if(getUrlOptions(href).locale && getUrlOptions(href).locale != 'zh-CN'){
+	window.Lang = 'en';
+}
 
 window.g_getLocalStorage = () => {
   return localStorage.getItem('PMM-dva');

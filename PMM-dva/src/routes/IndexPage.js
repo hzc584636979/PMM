@@ -6,7 +6,7 @@ import { Spin, Drawer, Button, Icon, message, notification, Modal } from 'antd';
 import { getUrlOptions } from '../utils/utils';
 import myContract from '../utils/myContract';
 import copy from 'copy-to-clipboard';
-import { langConfig, formatDuring } from '../utils/utils';
+import { formatDuring } from '../utils/utils';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 class IndexPage extends React.Component {
@@ -15,7 +15,7 @@ class IndexPage extends React.Component {
   
     this.state = {
       betLoading: false,
-      betLoadingText: '同步用户信息中...',
+      betLoadingText: window.langConfig[window.Lang]['同步用户信息中...'],
       address: '',
       best: 1000, //测试数据为1000倍，正式改为1
       banlance: 0,
@@ -44,10 +44,10 @@ class IndexPage extends React.Component {
 
   getUserInfo = () => {
     this.setState({
-      betLoadingText: '同步用户信息中...',
+      betLoadingText: window.langConfig[window.Lang]['同步用户信息中...'],
       betLoading: true,
     })
-    let beInvitedCode = getUrlOptions().beInvitedCode || 'first';
+    let beInvitedCode = getUrlOptions(this.props.location.search).beInvitedCode || 'first';
     console.log(beInvitedCode)
     //获取用户信息
     this.myContract.getUserInfo().then(({ address, banlance }) => {
@@ -100,13 +100,13 @@ class IndexPage extends React.Component {
   getDrawBalance = () => {
     this.setState({
         betLoading: true,
-        betLoadingText: '提取中...',
+        betLoadingText: window.langConfig[window.Lang]['提取中...'],
         spinZindex: 1001,
     })
     this.myContract.drawBalance(this.state.address)
     .then(transactionHash => {
       this.setState({
-        betLoadingText: '正在查询提取状态...',
+        betLoadingText: window.langConfig[window.Lang]['正在查询提取状态...'],
       })
       return this.myContract.getTransactionReceipt(transactionHash);
     })
@@ -114,12 +114,12 @@ class IndexPage extends React.Component {
       this.getUserInfo();
       receipt.status ? 
         notification.success({
-          message: '提取成功',
+          message: window.langConfig[window.Lang]['提取成功'],
           description: '',
         }) 
         : 
         notification.error({
-          message: '提取失败',
+          message: window.langConfig[window.Lang]['提取失败'],
           description: '',
         })
     })
@@ -134,13 +134,13 @@ class IndexPage extends React.Component {
   getDrawTutorBless = () => {
     this.setState({
         betLoading: true,
-        betLoadingText: '领取中...',
+        betLoadingText: window.langConfig[window.Lang]['领取中...'],
         spinZindex: 1001,
     })
     this.myContract.drawTutorBless(this.state.address)
     .then(transactionHash => {
       this.setState({
-        betLoadingText: '正在查询领取状态...',
+        betLoadingText: window.langConfig[window.Lang]['正在查询领取状态...'],
       })
       return this.myContract.getTransactionReceipt(transactionHash);
     })
@@ -149,12 +149,12 @@ class IndexPage extends React.Component {
       if(receipt.status){
         clearInterval(this.timer);
         notification.success({
-          message: '领取成功',
+          message: window.langConfig[window.Lang]['领取成功'],
           description: '',
         }) 
       }else{
         notification.error({
-          message: '领取失败',
+          message: window.langConfig[window.Lang]['领取失败'],
           description: '',
         })
       } 
@@ -232,8 +232,8 @@ class IndexPage extends React.Component {
       other = {
         modalTitle: (
           <div>
-            钱包
-            {userByContract['可用余额'] > 0 && <div className={styles.btn} onClick={ this.getDrawBalance }>提取</div>}
+            { window.langConfig[window.Lang]['钱包'] }
+            {userByContract['可用余额'] > 0 && <div className={styles.btn} onClick={ this.getDrawBalance }>{ window.langConfig[window.Lang]['提取'] }</div>}
           </div>
         ),
         modalDesc: (
@@ -242,33 +242,33 @@ class IndexPage extends React.Component {
               <ul>
                 <li className={styles.icon}></li>
                 <li className={styles.num}>{ banlance }</li>
-                <li className={styles.txt}>当前拥有的星痕能量（ETH）</li>
+                <li className={styles.txt}>{ window.langConfig[window.Lang]['当前拥有的星痕能量'] }（ETH）</li>
               </ul>
             </div>
             <div className={styles.contractInfo}>
               <div className={styles.item} style={{borderLeft: '0.12rem solid #52f8fe'}}>
-                冻结中：{ userByContract['冻结余额'] }
+                { window.langConfig[window.Lang]['冻结中'] }：{ userByContract['冻结余额'] }
               </div>
               <div className={styles.item} style={{borderLeft: '0.12rem solid #9635c8'}}>
-                可提现：{ userByContract['可用余额'] }
+                { window.langConfig[window.Lang]['可提现'] }：{ userByContract['可用余额'] }
               </div>
               <div className={styles.item} style={{borderLeft: '0.12rem solid #5ce37c'}}>
-                已提现：{ userByContract['提现总额'] }
+                { window.langConfig[window.Lang]['已提现'] }：{ userByContract['提现总额'] }
               </div>
               <div className={styles.item} style={{borderLeft: '0.12rem solid #c8aa35'}}>
-                总充值：{ userByContract['充值总额'] }
+                { window.langConfig[window.Lang]['总充值'] }：{ userByContract['充值总额'] }
               </div>
             </div>
             <div className={styles.desc}>
-              <p>星痕水晶是一种晶体物质，可以存储和释放能量，由于战舰上资源有限，个人所拥有的的星痕水晶成为了研究新型引擎所需能源的重要来源，单个星痕水晶可以存储的能量大小至今仍未探明。</p>
-              <p style={{color: '#f9dd6e'}}>【注:1星痕能量=1ETH】</p>
+              <p className={styles.lineClamp}>{ window.langConfig[window.Lang]['星痕水晶是一种晶体物质，可以存储和释放能量，由于战舰上资源有限，个人所拥有的的星痕水晶成为了研究新型引擎所需能源的重要来源，单个星痕水晶可以存储的能量大小至今仍未探明。'] }</p>
+              <p style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['【注:1星痕能量=1ETH】'] }</p>
             </div>
           </div>
         ),
       };
     }else if(modalType == 'invitation') {
       other = {
-        modalTitle: "邀请",
+        modalTitle: window.langConfig[window.Lang]['邀请'],
         modalDesc: (
           <div className={styles.invitationModal}>
             <div className={styles.topBox}>
@@ -278,18 +278,16 @@ class IndexPage extends React.Component {
                   userByContract['邀请码'] ?
                   <Fragment>
                     <li className={styles.num}>{ userByContract['邀请码'] }</li>
-                    <li className={styles.txt}>邀请链接</li>
+                    <li className={styles.txt}>{ window.langConfig[window.Lang]['邀请链接'] }</li>
                   </Fragment>
                   :
-                  <li className={styles.none}>请先注入能量获取邀请码</li>
+                  <li className={styles.none}>{ window.langConfig[window.Lang]['请先注入能量获取邀请码'] }</li>
                 }
               </ul>
             </div>
             <div className={styles.desc}>
-              <p><span style={{color: '#f9dd6e'}}>士官长</span>以现在星痕水晶所提供的能量，远远
-              无法满足您所倾向的引擎的研发需求，不如
-              试试发展更多的支持者吧！</p>
-              <p style={{color: '#f9dd6e'}}>【注:邀请码包含在链接里】</p>
+              <p><span style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['士官长'] }</span>{ window.langConfig[window.Lang]['以现在星痕水晶所提供的能量，远远无法满足您所倾向的引擎的研发需求，不如试试发展更多的支持者吧！'] }</p>
+              <p style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['【注:邀请码包含在链接里】'] }</p>
             </div>
             {
               userByContract['邀请码'] ?
@@ -302,25 +300,13 @@ class IndexPage extends React.Component {
       };
     }else if(modalType == 'message') {
       other = {
-        modalTitle: "消息详情",
+        modalTitle: window.langConfig[window.Lang]['消息详情'],
         modalDesc: (
           <div className={styles.messageModal}>
-            <div className={styles.t}>来自副舰长</div>
+            <div className={styles.t}>{ window.langConfig[window.Lang]['来自副舰长'] }</div>
             <div className={styles.c}>
               <Scrollbars>
-                <p>你好士官长，你刚刚从冬眠中苏醒，应该还不太了解战舰上发生的变化吧！那么，我就诶讲述一下吧！</p>
-
-                <p>星历536年，隶属于地球国际的无限深空号恒星级战舰前往外太空执行任务的过程中，战舰的引擎发生故障，战舰无法减速转弯并返回地球，在漫长的时间里，无限深空号将会一直以光速的1/100朝漆黑的宇宙深处航行。</p>
-
-                <p>为了重返太阳系，船员们必须修好发动机，但发动机损坏严重，根据推算，以当前的速度，在修好发动机后，飞船内剩余的燃料已经不足以支撑飞船减速、转弯、加速再减速的过程。</p>
-
-                <p>即使将燃料主要用于两次减速阶段，只以最低燃料供给于加速阶段也是不可行的，根据推算，去除两次减速的燃料，剩余的燃料只能够将飞船加速至光速的1/10000，以这样的速度返回太阳系，几乎是不可能的，因为战舰的冬眠和生态维持系统无法坚持那么久的时间。</p>
-
-                <p>最终，经过全体舰员的投票，决定放弃修复现有发动机的决定，并将资源投入到研发新型星舰发动机的研发上。</p>
-
-                <p>但是，在新型发动机的研究方向上，战舰上却产生了相当大的分歧，有的舰员倾向于将研究方向朝有一定理论基础的电磁驱动引擎或中微子引擎发展，也有些极端的舰员建议将研究方向朝连可行性都没有确定的曲率驱动引擎或无限非概率引擎发展。</p>
-
-                <p>这样的分歧最终导致战舰不得不同时将研究方向朝几个方向发展，但是战舰的资源有限，这样每个方向得研究都变的很不顺利。</p>
+                { window.langConfig[window.Lang]['首页消息详情正文'] }
               </Scrollbars>
             </div>
           </div>
@@ -328,61 +314,25 @@ class IndexPage extends React.Component {
       };
     }else if(modalType == 'noWallet') {
       other = {
-        modalTitle: "错误",
+        modalTitle: window.langConfig[window.Lang]['错误'],
         modalDesc: (
           <div className={styles.messageModal}>
-            <div className={styles.t}>来自副舰长</div>
+            <div className={styles.t}>{ window.langConfig[window.Lang]['来自副舰长'] }</div>
             <div className={styles.c}>
-              没有钱包环境无法运行此项目
+              { window.langConfig[window.Lang]['没有钱包环境无法运行此项目'] }
             </div>
           </div>
         ),
       };
     }else if(modalType == 'rule') {
       other = {
-        modalTitle: "规则",
+        modalTitle: window.langConfig[window.Lang]['平台规则'],
         modalDesc: (
           <div className={styles.messageModal}>
-            <div className={styles.t}>来自副舰长</div>
+            <div className={styles.t}>{ window.langConfig[window.Lang]['来自副舰长'] }</div>
             <div className={styles.c}>
               <Scrollbars>
-                <p>
-                  静态收益：<br/>
-                  L1投资1-5个ETH，得到日收益0.6%<br/>
-                  L2投资6-10个ETH，得到日收益0.8%<br/>
-                  L3投资11-15个ETH，得到日收益1.2%<br/>
-                </p>
-                <p>
-                  动态奖励：<br/>
-                  L1拿一级收益的50%，<br/>
-                  L2拿一级收益的50%，二级收益的50%三级收益的30%<br/>
-                  L3拿一级收益的50%，二级收益的50%三级收益的30%，四级～十级收益的10%<br/>
-                  （24小时自动结算，下级满24小时结算收益同时，领导人得到领导奖励）<br/>
-                </p>
-                <p>
-                  导师祝福奖励：<br/>
-                  每日10：00可点击领取，直推可以拿到上级领导投资收益的50%<br/>
-                </p>
-                <p>
-                  初级导师：<br/>
-                  直推达到5人，团队业绩100ETH，拿新增业绩1%<br/>
-                  （这1%领导人拿0.4%，剩下的0.6%平均奖励给伞下有效会员）<br/>
-                </p>
-                <p>
-                  中级导师：<br/>
-                  直推达到15人，团队业绩200ETH，拿新增业绩2%<br/>
-                  （这2%领导人拿0.8%，剩下的1.2%平均奖励给伞下有效会员）<br/>
-                </p>
-                <p>
-                  高级导师：<br/>
-                  直推达到30人，团队业绩500ETH，拿新增业绩3%<br/>
-                  （这3%领导人拿1.2%，剩下的1.8%平均奖励给伞下有效会员）<br/>
-                </p>
-                <p>
-                  烧伤：例如A投了1个ETH，B投了5个ETH，那么A只能拿到B1一个ETH的收益<br/>
-                  平台每月收取新增业绩3%作为手续费<br/>
-                  5天一轮，到时间暂停收益，强制出局，必须重新复投，否则不在计算奖励<br/>
-                </p>
+                { window.langConfig[window.Lang]['首页平台规则正文'] }
               </Scrollbars>
             </div>
           </div>
@@ -391,15 +341,13 @@ class IndexPage extends React.Component {
     }
     else if(modalType == 'about') {
       other = {
-        modalTitle: "关于我们",
+        modalTitle: window.langConfig[window.Lang]['关于我们'],
         modalDesc: (
           <div className={styles.messageModal}>
-            <div className={styles.t}>来自副舰长</div>
+            <div className={styles.t}>{ window.langConfig[window.Lang]['来自副舰长'] }</div>
             <div className={styles.c}>
               <Scrollbars>
-                <p className={styles.indent}>很高兴！我们有共同的爱好和理想，一群集合了智慧和技术的深网极客，我们放弃掉不公平的规则约束。基于智能合约的条件触发性，执行命令，使得所有的捣乱者没有机会作弊，它公平，公开，透明，安全，不可篡改的特性更适合于Ethereum的生态环境。为了助力Ethereum社区共识，EthereumPark诞生了。</p>
-                <p className={styles.indent}>现在共识经济处于野蛮混乱的状态，非共识自治是规则不公平的主要原因。使得参与者无法保护自己的权益，大量的参与者因失落，无奈退出了这个行业。因此受到PMM（Perpetual motion machine ）的启发，EthereumPark布局的第一个生态PMC应用由此而生，PMC宗旨就是打造一个生生不息的共识经济dapp。</p>
-                <p className={styles.indent}>PMC5天一个周期，反向收益的设计体现了公平共赢，使Ethereum生态做的更具凝聚力！我们要做一件伟大的事情！让智能合约真正为混乱的共识经济提供持续良性发展的动力。</p>
+                { window.langConfig[window.Lang]['首页关于我们正文'] }
               </Scrollbars>
             </div>
           </div>
@@ -441,12 +389,12 @@ class IndexPage extends React.Component {
   handleClipBoard = () => {
     if(copy(`http://47.75.161.29/#/?beInvitedCode=${this.state.userByContract["邀请码"]}`)){
       notification.success({
-        message: '复制成功',
+        message: window.langConfig[window.Lang]['复制成功'],
         description: '',
       }) 
     }else{
       notification.success({
-        message: '复制失败，请重试',
+        message: window.langConfig[window.Lang]['复制失败，请重试'],
         description: '',
       }) 
     }
@@ -457,14 +405,13 @@ class IndexPage extends React.Component {
   }
 
   render() {
-    const Lang = this.props.app.lang;
     const { userByContract, modalBoxBg, address, drawTutorBlessTime } = this.state;
     return (
       <Spin wrapperClassName={`spinZindex ${this.state.betLoading ? `on` : ``}`} size="large" spinning={ this.state.betLoading } tip={ <div style={{fontSize: '0.38rem'}}>{ this.state.betLoadingText }</div> }>
         <div className={styles.wrap}>
           <div className={styles.top}>
-            <div className={styles.lang} onClick={ this.handleLanguageChange }>{ Lang == 'cn' ? '中' : 'En' }</div>
-            <div className={styles.txt}>无限深空号</div>
+            <div className={styles.lang} onClick={ this.handleLanguageChange }>{ window.Lang == 'cn' ? '中' : 'En' }</div>
+            <div className={styles.txt}>{ window.langConfig[window.Lang]['无限深空号'] }</div>
             <Icon className={styles.move} type="unordered-list" onClick={this.showMoveDrawer}/>
           </div>
           <div className={styles.info}>
@@ -472,12 +419,12 @@ class IndexPage extends React.Component {
             <div className={styles.box}>
               <dl className={styles.txt}>
                 <dt>{ userByContract['充值总额'] }ETH</dt>
-                <dd>投入</dd>
+                <dd>{ window.langConfig[window.Lang]['投入'] }</dd>
               </dl>
               <div className={styles.icon} onClick={ () => { this.toLink('/statistics') }}></div>
               <dl className={styles.txt}>
                 <dt>{ userByContract['总静态收益'] }ETH</dt>
-                <dd>收益</dd>
+                <dd>{ window.langConfig[window.Lang]['收益'] }</dd>
               </dl>
             </div>
           </div>
@@ -485,33 +432,33 @@ class IndexPage extends React.Component {
             <div className={styles.man}></div>
             <div className={styles.bg}></div>
             <dl>
-              <dt>副舰长：</dt>
+              <dt>{ window.langConfig[window.Lang]['副舰长'] }：</dt>
               <dd>
                 { userByContract['今日导师祝福奖励'] > 0 ? 
-                  <p>可领取福利：<span style={{color: '#ece05c'}}>{ userByContract['今日导师祝福奖励'] }</span><br/>清空倒计时：{ drawTutorBlessTime }</p>
+                  <p>{ window.langConfig[window.Lang]['可领取福利'] }：<span style={{color: '#ece05c'}}>{ userByContract['今日导师祝福奖励'] }</span><br/>{ window.langConfig[window.Lang]['清空倒计时'] }：{ drawTutorBlessTime }</p>
                   :
                   <Fragment>
-                    <p style={{color: '#ece05c'}}>{ address.slice(address.length-4,address.length) }列兵</p>
-                    <p className={styles.desc}>你从冬眠中苏醒了啊？了解下战舰的变化吧...</p>
+                    <p style={{color: '#ece05c'}}>{ address.slice(address.length-4,address.length) }{ window.langConfig[window.Lang]['列兵'] }</p>
+                    <p className={styles.desc}>{ window.langConfig[window.Lang]['你从冬眠中苏醒了啊？了解下战舰的变化吧...'] }</p>
                   </Fragment>
                 }
               </dd>
             </dl>
             { userByContract['今日导师祝福奖励'] > 0 ? 
-              <a className={styles.move} onClick={ this.getDrawTutorBless }>领取</a>
+              <a className={styles.move} onClick={ this.getDrawTutorBless }>{ window.langConfig[window.Lang]['领取'] }</a>
               :
-              <a className={styles.move} onClick={ () => this.showModal('message') }>详情</a>
+              <a className={styles.move} onClick={ () => this.showModal('message') }>{ window.langConfig[window.Lang]['详情'] }</a>
             } 
           </div>
           <div className={styles.bottom}>
             <div className={styles.timeBox}>
-              <div className={styles.t}>重新注入星痕</div>
-              <div className={styles.b}>{ userByContract['状态'] != 1 ? '可注入' : '已注入' }</div>
+              <div className={styles.t}>{ window.langConfig[window.Lang]['重新注入星痕'] }</div>
+              <div className={styles.b}>{ userByContract['状态'] != 1 ? window.langConfig[window.Lang]['可注入'] : window.langConfig[window.Lang]['已注入'] }</div>
             </div>
             <div className={styles.buttons}>
               <div className={styles.recordIcon}>
                 <p className={styles.icon} onClick={ () => { this.toLink('/record') }}></p>
-                <p className={styles.txt}>记录</p>
+                <p className={styles.txt}>{ window.langConfig[window.Lang]['记录'] }</p>
               </div>
               <ul>
                 <li className={styles.developIcon} onClick={ () => { this.toLink('/develop') }}></li>
@@ -519,7 +466,7 @@ class IndexPage extends React.Component {
               </ul>
               <div className={styles.invitationIcon}>
                 <p className={styles.icon} onClick={ () => this.showModal('invitation') }></p>
-                <p className={styles.txt}>邀请</p>
+                <p className={styles.txt}>{ window.langConfig[window.Lang]['邀请'] }</p>
               </div>
             </div>
           </div>
@@ -543,13 +490,13 @@ class IndexPage extends React.Component {
             <li>
               <Button type="link" onClick={ () => this.showModal('rule') }>
                 <Icon type="file-done" />
-                {langConfig[Lang].rule}
+                { window.langConfig[window.Lang]['平台规则'] }
               </Button>
             </li>
             <li>
               <Button type="link" onClick={ () => this.showModal('about') }>
                 <Icon type="alert" />
-                {langConfig[Lang].about}
+                { window.langConfig[window.Lang]['关于我们'] }
               </Button>
             </li>
           </ul>

@@ -18,6 +18,7 @@ export default {
       })
     },
     *lang({ payload }, { call, put }) { 
+      window.Lang = payload.lang;
       yield put({ 
         type: 'save', 
         payload: {
