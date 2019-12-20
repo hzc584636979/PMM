@@ -14,8 +14,7 @@
 		}
 
 		.ant-modal-body {
-			.px2rem(height, 950);
-			.padding2rem(24, 24, 0, 24);
+			padding: 0;
 		}
 	}
 
@@ -51,7 +50,8 @@
 		}
 
 		.inner {
-			.px2rem(height, 926);		
+			.px2rem(min-height, 950);	
+			.padding2rem(24, 24, 50, 24);
 		}
 
 		.cont {
@@ -100,10 +100,6 @@
 		.desc {
 			.px2rem(font-size, 28);
 			color: #fff;
-
-			.lineClamp {
-				.line-clamp(5);
-			}
 		}
 	}
 
@@ -146,12 +142,13 @@
 		}
 
 		.copy {
-			background: url('../assets/index_icon9.png') no-repeat;
+			background: url('../assets/gradientTextBg.png') no-repeat;
 			.px2rem(width, 462);
 			.px2rem(height, 163);
 			background-size: 100% 100%;
 			margin: 0 auto;
 			@pointer();
+			.iconFont();
 		}
 	}
 
@@ -181,28 +178,22 @@
 }
 
 .walletModalBg {
-		
-	:global {
-		.ant-modal-content {
-			background: url('../assets/modal_bg.png') no-repeat;
-			background-size: 100% 100%;
-		}
+	.modalWrap .inner {
+		background: url('../assets/modal_bg.png') no-repeat;
+		background-size: 100% 100%;	
 	}
 }
 
 .messageModalBg {
-		
-	:global {
-		.ant-modal-content {
-			background: url('../assets/message_bg.png') no-repeat;
-			background-size: 100% 100%;
-		}
-	}
-
 	.modalWrap {
 		z-index: 1002;
 		.cont {
 			.padding2rem(0, 45, 0, 45);
+		}
+
+		.inner {
+			background: url('../assets/message_bg.png') no-repeat;
+			background-size: 100% 100%;	
 		}
 	}
 }
@@ -390,9 +381,10 @@
 			}
 
 			.developIcon {
-				.background(462, 163, 'index_icon5.png');
+				.background(462, 163, 'gradientTextBg.png');
 				margin: 0 auto;
 				@pointer();
+				.iconFont()
 			}
 
 			.etherIcon {

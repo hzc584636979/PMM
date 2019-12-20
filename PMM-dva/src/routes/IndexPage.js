@@ -26,7 +26,7 @@ class IndexPage extends React.Component {
 
   componentDidMount() {
     // 实例化web3
-    this.myContract = myContract('https://kovan.infura.io/v3/58f018284cce4c9599a447f698df4496');
+    this.myContract = myContract('https://kovan.infura.io');
 
     if(!window.ethereum){
       this.showModal('noWallet');
@@ -291,9 +291,9 @@ class IndexPage extends React.Component {
             </div>
             {
               userByContract['邀请码'] ?
-              <div className={styles.copy} onClick={ this.handleClipBoard }></div>
+              <div className={styles.copy} onClick={ this.handleClipBoard }><span className={styles.gradientText}>{ window.langConfig[window.Lang]['复制并分享'] }</span></div>
               :
-              <div className={`${styles.copy} ${styles.gray}`}></div>
+              <div className={`${styles.copy} ${styles.gray}`}><span className={styles.gradientText}>{ window.langConfig[window.Lang]['复制并分享'] }</span></div>
             }
           </div>
         ),
@@ -387,7 +387,7 @@ class IndexPage extends React.Component {
   }
 
   handleClipBoard = () => {
-    if(copy(`http://47.75.161.29/#/?beInvitedCode=${this.state.userByContract["邀请码"]}`)){
+    if(copy(`https://www.boq.hk/#/?beInvitedCode=${this.state.userByContract["邀请码"]}`)){
       notification.success({
         message: window.langConfig[window.Lang]['复制成功'],
         description: '',
@@ -461,7 +461,7 @@ class IndexPage extends React.Component {
                 <p className={styles.txt}>{ window.langConfig[window.Lang]['记录'] }</p>
               </div>
               <ul>
-                <li className={styles.developIcon} onClick={ () => { this.toLink('/develop') }}></li>
+                <li className={styles.developIcon} onClick={ () => { this.toLink('/develop') }}><span className={styles.gradientText}>{ window.langConfig[window.Lang]['研发室'] }</span></li>
                 <li className={styles.etherIcon} onClick={ () => this.showModal('ether') }></li>
               </ul>
               <div className={styles.invitationIcon}>

@@ -13,7 +13,6 @@ export function createWeb3(HttpProvider) {
 		console.log('createWeb3',2)
 		web3 = new Web3.providers.HttpProvider(HttpProvider);
 	}
-	/*web3 = new Web3.providers.HttpProvider(HttpProvider);*/
 	return new Web3(web3);
 }
 

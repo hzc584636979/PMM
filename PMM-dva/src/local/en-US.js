@@ -1,4 +1,5 @@
 export default {
+	/*loading页*/
 	'事件': 'Event',
 	'跳过': 'skip',
 	'loading事件正文': (
@@ -13,6 +14,7 @@ export default {
 				),
 	'加载中...': 'Loading...',
 	'加载完成': 'Load complete',
+	/*首页*/
 	'平台规则': 'Rule',
 	'关于我们': 'About',
 	'投入': 'Input',
@@ -122,4 +124,76 @@ export default {
 	'领取失败': 'Fail to receive',
 	'复制成功': 'Replication success',
 	'复制失败，请重试': 'Replication failed, please try again',
+	'研发室': 'R & D room',
+	'复制并分享': 'Copy & share',
+	/*统计室*/
+	'统计室': 'Statistics Office',
+	'总注入': 'Total injection',
+	'注入收益': 'Injection yield',
+	'团队收益': 'Team profit',
+	'团队人数': 'Team size',
+	'直属人数': 'Direct population',
+	/*财务室*/
+	'财务室': 'Finance Office',
+	'我的注入': 'My injection',
+	'我的收益': 'My income',
+	'总收益': 'Total revenue',
+	'项目收益': 'Project revenue',
+	'军职福利': 'Military welfare',
+	'军职工资': 'Military wage',
+	'您向': 'Your direction',
+	'曲率驱动引擎': ' Curvature driven engine ',
+	'项目注入了': 'Project injected',
+	'星痕': ' Star Mark',
+	'项目研发周期为': 'The R &amp; D cycle of the project is ',
+	'天': ' day',
+	'于': 'to ',
+	'结束': ' end',
+	'每日收益为': 'Daily income is ',
+	'总收益为': 'Total revenue is ',
+	'您当前已经向': 'You currently have ',
+	'剩余': 'Surplus ',
+	/*行政室*/
+	'行政室': 'Administration room',
+	'福利': 'welfare',
+	'工资': 'wages',
+	'上级长官': 'Superior officer',
+	'下级': 'subordinate',
+	/*研发室*/
+	'研发室': 'R &amp; D room',
+	'请输入1~25之间的整数': 'Please enter an integer between 1 and 25',
+	'投注中...': 'Betting...',
+	'正在查询投注状态...': 'Querying betting status...',
+	'交易失败': 'Transaction failure',
+	'研发室交易失败正文': (
+					<dl>
+						<dt>Reasons for the failure:</dt>
+						<dd> 1: the invited code does not exist. (the first invitation code of test network is first) </dd>
+						<dd> 2: your invitation code cannot be empty. </dd>
+						<dd> 3: the bet amount must be 1-25. (test network reduced by 1000 times) </dd>
+						<dd> 4: the account is still in the game. (an hour is taken as a day in the test network) </dd>
+						<dd> 5: the invitation code used by the new account already exists and needs to be replaced with a new invitation code </dd>
+						<dd> 6: insufficient available balance for betting </dd>
+					</dl>),
+	'警告': 'warning',
+	'您正在向': ' You are moving towards ',
+	'曲率驱动引擎项目': 'Curvature driven engine project ',
+	'发起能量注入的申请,注入值为': 'Initiate the application of energy injection, the injection value is',
+	'您的能量余额为': 'Your energy balance is ',
+	'不满足您申请注入能量的最低值': 'Does not meet the minimum value of energy you apply for injection',
+	'发起能量注入的申请，此次申请失败。': 'The application for energy injection was initiated, and this application failed.',
+	'原因是您已经有正在支持的项目，为了舰上资源的合理利用，请不要在同一时间段向多个项目注入星痕能量。请在您当前支持的项目研发周期结束后再来申请吧！': 'The reason is that you have supported projects. In order to make rational use of the resources on board, please do not inject star trace energy into multiple projects at the same time. Please apply after the end of the R &amp; D cycle of the project you currently support!',
+	'注入后，项目研发周期结束前无法退出，本次注入的能量将于': 'After injection, the project cannot be withdrawn before the end of the R &amp; D cycle. The energy injected this time will be ',
+	'日后返还，确定注入吗？': ' Return in the future. Are you sure to inject?',
+	'提醒': 'remind',
+	'您的能量不足，无法直接向跃迁引擎项目注入星痕能量。': " You don't have enough energy to directly inject star trace energy into the transition engine project.",
+	'您已成功向': ' You have successfully ',
+	'注入能量,注入值为': 'Injection energy, injection value is',
+	'项目周期为': 'The project period is ',
+	'天，日收益为': ' Day, daily income is ',
+	'该项目结束前，您不能再次向其他项目注入能量。': '.You cannot inject energy into another project until the project is completed.',
+	'日收益': 'Daily Profit',
+	'军衔': 'Military',
+	'注入能量': 'Injection energy',
+	'确认注入': 'Injection',
 }

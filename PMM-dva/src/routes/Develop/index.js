@@ -30,7 +30,7 @@ class Develop extends React.Component {
 	}
 
 	componentDidMount() {
-		this.myContract = myContract('https://kovan.infura.io/v3/58f018284cce4c9599a447f698df4496');
+		this.myContract = myContract('https://kovan.infura.io');
 		if(window.getUserInfo(this.props.app).address == "") {
 			this.props.dispatch(routerRedux.push('/indexPage'))
 		}
@@ -39,7 +39,7 @@ class Develop extends React.Component {
 
 	upUserInfo = () => {
 	    this.setState({
-	      betLoadingText: '更新用户信息中...',
+	      betLoadingText: window.langConfig[window.Lang]['同步用户信息中...'],
 	      betLoading: true,
 	    })
 	    //获取用户信息
@@ -100,7 +100,7 @@ class Develop extends React.Component {
 	      	return;
 	    }
 	    if(!betState){
-	      message.error('请输入1~25之间的整数');
+	      message.error(window.langConfig[window.Lang]['请输入1~25之间的整数']);
 	      return;
 	    }
 	    if(betValue/best > banlance){
@@ -110,7 +110,7 @@ class Develop extends React.Component {
 	    
 	    this.setState({
 	        betLoading: true,
-	        betLoadingText: '投注中...',
+	        betLoadingText: window.langConfig[window.Lang]['投注中...'],
 	    })
 
 	    let inviteCode = await this.getIC();
@@ -118,7 +118,7 @@ class Develop extends React.Component {
 	    this.myContract.bet(address, betValue/best, inviteCode, userByContract['被邀请码'] || beInvitedCode)
 	    .then(transactionHash => {
 	      this.setState({
-	        betLoadingText: '正在查询投注状态...',
+	        betLoadingText: window.langConfig[window.Lang]['正在查询投注状态...'],
 	      })
 	      console.log('handleBet', transactionHash)
 	      return this.myContract.getTransactionReceipt(transactionHash);
@@ -129,18 +129,8 @@ class Develop extends React.Component {
 	        this.showModal('tzcg', receipt) 
 	        : 
 	        notification.error({
-	          message: '交易失败',
-	          description: (
-	            <dl>
-	              <dt>投注失败的原因：</dt>
-	              <dd>1：被邀请码不存在。（测试网络的第一个邀请码是first）</dd>
-	              <dd>2：自己的邀请码不能为空。</dd>
-	              <dd>3：投注额必须是1～25。（测试网络缩减了1000倍）</dd>
-	              <dd>4：该账号还在游戏中未结束。（测试网络中以1小时当作了一天）</dd>
-	              <dd>5：新账号所使用的邀请码已经存在了，需要更换为新的邀请码</dd>
-	              <dd>6：投注的可用余额不足</dd>
-	            </dl>
-	          ),
+	          message: window.langConfig[window.Lang]['交易失败'],
+	          description: window.langConfig[window.Lang]['研发室交易失败正文'],
 	        })
 	    }).catch(err => {
 	      this.setState({
@@ -159,17 +149,17 @@ class Develop extends React.Component {
 	      	return;
 	    }
 	    if(!betState){
-	      message.error('请输入1~25之间的整数');
+	      message.error(window.langConfig[window.Lang]['请输入1~25之间的整数']);
 	      return;
 	    }
 	    this.setState({
 	        betLoading: true,
-	        betLoadingText: '投注中...',
+	        betLoadingText: window.langConfig[window.Lang]['投注中...'],
 	    })
 	    this.myContract.againBet(address, betValue)
 	    .then(transactionHash => {
 	      this.setState({
-	        betLoadingText: '正在查询投注状态...',
+	        betLoadingText: window.langConfig[window.Lang]['正在查询投注状态...'],
 	      })
 	      return this.myContract.getTransactionReceipt(transactionHash);
 	    })
@@ -179,7 +169,7 @@ class Develop extends React.Component {
 	        this.showModal('tzcg', receipt)
 	        : 
 	        notification.error({
-	          message: '交易失败',
+	          message: window.langConfig[window.Lang]['交易失败'],
 	          description: '',
 	        })
 	    }).catch(err => {
@@ -207,14 +197,14 @@ class Develop extends React.Component {
 	}
 
 	handleClipBoard = (userByContract) => {
-	    if(copy(`http://47.75.161.29/#/?beInvitedCode=${userByContract["邀请码"]}`)){
+	    if(copy(`https://www.boq.hk/#/?beInvitedCode=${userByContract["邀请码"]}`)){
 	      notification.success({
-	        message: '复制成功',
+	        message: window.langConfig[window.Lang]['复制成功'],
 	        description: '',
 	      }) 
 	    }else{
 	      notification.success({
-	        message: '复制失败，请重试',
+	        message: window.langConfig[window.Lang]['复制失败，请重试'],
 	        description: '',
 	      }) 
 	    }
@@ -262,7 +252,7 @@ class Develop extends React.Component {
 	    	betValue = banlance*best >= value ? (value > 25 ? 25 : value) : parseInt(banlance*best);
 	    	betState = true;
 	    }else{
-			message.error('请输入1~25之间的整数');
+			message.error(window.langConfig[window.Lang]['请输入1~25之间的整数']);
 			betValue = this.state.betValue;
 	    	betState = false;
 	    }
@@ -289,12 +279,12 @@ class Develop extends React.Component {
 		const { address } = window.getUserInfo(this.props.app);
 	    this.setState({
 	        betLoading: true,
-	        betLoadingText: '提取中...',
+	        betLoadingText: window.langConfig[window.Lang]['提取中...'],
 	    })
 	    this.myContract.drawBalance(address)
 	    .then(transactionHash => {
 	      this.setState({
-	        betLoadingText: '正在查询提取状态...',
+	        betLoadingText: window.langConfig[window.Lang]['正在查询提取状态...'],
 	      })
 	      return this.myContract.getTransactionReceipt(transactionHash);
 	    })
@@ -302,12 +292,12 @@ class Develop extends React.Component {
 	      this.upUserInfo();
 	      receipt.status ? 
 	        notification.success({
-	          message: '提取成功',
+	          message: window.langConfig[window.Lang]['提取成功'],
 	          description: '',
 	        }) 
 	        : 
 	        notification.error({
-	          message: '提取失败',
+	          message: window.langConfig[window.Lang]['提取失败'],
 	          description: '',
 	        })
 	    })
@@ -370,8 +360,8 @@ class Develop extends React.Component {
 	      other = {
 	        modalTitle: (
 	          <div>
-	            钱包
-	            {userByContract['可用余额'] > 0 && <div className={styles.btn} onClick={ this.getDrawBalance }>提取</div>}
+	            { window.langConfig[window.Lang]['钱包'] }
+	            {userByContract['可用余额'] > 0 && <div className={styles.btn} onClick={ this.getDrawBalance }>{ window.langConfig[window.Lang]['提取'] }</div>}
 	          </div>
 	        ),
 	        modalDesc: (
@@ -380,87 +370,85 @@ class Develop extends React.Component {
 	              <ul>
 	                <li className={styles.icon}></li>
 	                <li className={styles.num}>{ banlance }</li>
-	                <li className={styles.txt}>当前拥有的星痕能量（ETH）</li>
+	                <li className={styles.txt}>{ window.langConfig[window.Lang]['当前拥有的星痕能量'] }（ETH）</li>
 	              </ul>
 	            </div>
 	            <div className={styles.contractInfo}>
-	              <div className={styles.item} style={{borderLeft: '0.12rem solid #52f8fe'}}>
-	                冻结中：{ userByContract['冻结余额'] }
-	              </div>
-	              <div className={styles.item} style={{borderLeft: '0.12rem solid #9635c8'}}>
-	                可提现：{ userByContract['可用余额'] }
-	              </div>
-	              <div className={styles.item} style={{borderLeft: '0.12rem solid #5ce37c'}}>
-	                已提现：{ userByContract['提现总额'] }
-	              </div>
-	              <div className={styles.item} style={{borderLeft: '0.12rem solid #c8aa35'}}>
-	                总充值：{ userByContract['充值总额'] }
-	              </div>
+					<div className={styles.item} style={{borderLeft: '0.12rem solid #52f8fe'}}>
+						{ window.langConfig[window.Lang]['冻结中'] }：{ userByContract['冻结余额'] }
+					</div>
+					<div className={styles.item} style={{borderLeft: '0.12rem solid #9635c8'}}>
+						{ window.langConfig[window.Lang]['可提现'] }：{ userByContract['可用余额'] }
+					</div>
+					<div className={styles.item} style={{borderLeft: '0.12rem solid #5ce37c'}}>
+						{ window.langConfig[window.Lang]['已提现'] }：{ userByContract['提现总额'] }
+					</div>
+					<div className={styles.item} style={{borderLeft: '0.12rem solid #c8aa35'}}>
+						{ window.langConfig[window.Lang]['总充值'] }：{ userByContract['充值总额'] }
+					</div>
 	            </div>
 	            <div className={styles.desc}>
-	              <p>星痕水晶是一种晶体物质，可以存储和释放能量，由于战舰上资源有限，个人所拥有的的星痕水晶成为了研究新型引擎所需能源的重要来源，单个星痕水晶可以存储的能量大小至今仍未探明。</p>
-	              <p style={{color: '#f9dd6e'}}>【注:1星痕能量=1ETH】</p>
+					<p className={styles.lineClamp}>{ window.langConfig[window.Lang]['星痕水晶是一种晶体物质，可以存储和释放能量，由于战舰上资源有限，个人所拥有的的星痕水晶成为了研究新型引擎所需能源的重要来源，单个星痕水晶可以存储的能量大小至今仍未探明。'] }</p>
+					<p style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['【注:1星痕能量=1ETH】'] }</p>
 	            </div>
 	          </div>
 	        ),
 	      };
 	    }else if(modalType == 'invitation') {
 	      other = {
-	        modalTitle: "邀请",
+	        modalTitle: window.langConfig[window.Lang]['邀请'],
 	        modalDesc: (
 	          <div className={styles.invitationModal}>
 	            <div className={styles.topBox}>
-	              <ul>
-	                <li className={styles.icon}></li>
-	                { 
-	                	userByContract['邀请码'] ?
-	                	<Fragment>
-	                		<li className={styles.num}>{ userByContract['邀请码'] }</li>
-	                		<li className={styles.txt}>邀请链接</li>
-	                	</Fragment>
-	                	:
-	                	<li className={styles.none}>请先注入能量获取邀请码</li>
-	                }
-	              </ul>
-	            </div>
-	            <div className={styles.desc}>
-	              <p><span style={{color: '#f9dd6e'}}>士官长</span>以现在星痕水晶所提供的能量，远远
-	              无法满足您所倾向的引擎的研发需求，不如
-	              试试发展更多的支持者吧！</p>
-	              <p style={{color: '#f9dd6e'}}>【注:邀请码包含在链接里】</p>
-	            </div>
+					<ul>
+						<li className={styles.icon}></li>
+						{ 
+							userByContract['邀请码'] ?
+							<Fragment>
+								<li className={styles.num}>{ userByContract['邀请码'] }</li>
+								<li className={styles.txt}>{ window.langConfig[window.Lang]['邀请链接'] }</li>
+							</Fragment>
+							:
+							<li className={styles.none}>{ window.langConfig[window.Lang]['请先注入能量获取邀请码'] }</li>
+						}
+					</ul>
+				</div>
+				<div className={styles.desc}>
+					<p><span style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['士官长'] }</span>{ window.langConfig[window.Lang]['以现在星痕水晶所提供的能量，远远无法满足您所倾向的引擎的研发需求，不如试试发展更多的支持者吧！'] }</p>
+					<p style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['【注:邀请码包含在链接里】'] }</p>
+				</div>
 	            {
 	            	userByContract['邀请码'] ?
-	            	<div className={styles.copy} onClick={ () => this.handleClipBoard(userByContract) }></div>
+	            	<div className={styles.copy} onClick={ () => this.handleClipBoard(userByContract) }><span className={styles.gradientText}>{ window.langConfig[window.Lang]['复制并分享'] }</span></div>
 	            	:
-	            	<div className={`${styles.copy} ${styles.gray}`}></div>
+	            	<div className={`${styles.copy} ${styles.gray}`}><span className={styles.gradientText}>{ window.langConfig[window.Lang]['复制并分享'] }</span></div>
 	            }
 	          </div>
 	        ),
 	      };
 	    }else if(modalType == 'yebz'){
 	    	other = {
-		        modalTitle: "警告",
+		        modalTitle: window.langConfig[window.Lang]['警告'],
 		        modalDesc: (
 		          <div className={styles.yebzModal}>
 		        	<div className={styles.icon}></div>
 		            <div className={styles.desc}>
-		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>士官长</span>您正在向<span style={{color: '#00ffff'}}>曲率驱动引擎项目</span>发起能量注入的申请,注入值为：</p>
-		              <p style={{textAlign: 'center'}}><span className={styles.num}>{ betValue }</span>ETH</p>
-		              <p>您的能量余额为<span style={{color: '#f9dd6e'}}>{ banlance*best }</span>，不满足您申请注入能量的最低值</p>
+		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['士官长'] }</span>{ window.langConfig[window.Lang]['您正在向'] }<span style={{color: '#00ffff'}}>{ window.langConfig[window.Lang]['曲率驱动引擎项目'] }</span>{ window.langConfig[window.Lang]['发起能量注入的申请,注入值为'] }：</p>
+		              <p style={{textAlign: 'center'}}><span className={styles.num}>{ betValue / best }</span>ETH</p>
+		              <p>{ window.langConfig[window.Lang]['您的能量余额为'] }<span style={{color: '#f9dd6e'}}>{ banlance }</span>，{ window.langConfig[window.Lang]['不满足您申请注入能量的最低值'] }</p>
 		            </div>
 		          </div>
 		        ),
 		    };
 	    }else if(modalType == 'yxz'){
 	    	other = {
-		        modalTitle: "警告",
+		        modalTitle: window.langConfig[window.Lang]['警告'],
 		        modalDesc: (
 		          <div className={styles.yebzModal}>
 		        	<div className={styles.icon}></div>
 		            <div className={styles.desc}>
-		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>士官长</span>您正在向<span style={{color: '#00ffff'}}>曲率驱动引擎项目</span>发起能量注入的申请，此次申请失败。</p>
-		              <p>原因是您已经有正在支持的项目，为了舰上资源的合理利用，请不要在同一时间段向多个项目注入星痕能量。请在您当前支持的项目研发周期结束后再来申请吧！</p>
+		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['士官长'] }</span>{ window.langConfig[window.Lang]['您正在向'] }<span style={{color: '#00ffff'}}>{ window.langConfig[window.Lang]['曲率驱动引擎项目'] }</span>{ window.langConfig[window.Lang]['发起能量注入的申请，此次申请失败。'] }</p>
+		              <p>{ window.langConfig[window.Lang]['原因是您已经有正在支持的项目，为了舰上资源的合理利用，请不要在同一时间段向多个项目注入星痕能量。请在您当前支持的项目研发周期结束后再来申请吧！'] }</p>
 		            </div>
 		          </div>
 		        ),
@@ -475,27 +463,27 @@ class Develop extends React.Component {
 				}
 			});
 	    	other = {
-		        modalTitle: "提醒",
+		        modalTitle: window.langConfig[window.Lang]['提醒'],
 		        modalDesc: (
 		          <div className={styles.zcqrModal}>
 		        	<div className={styles.icon}></div>
 		            <div className={styles.desc}>
-		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>士官长</span>您正在向<span style={{color: '#00ffff'}}>曲率驱动引擎项目</span>发起能量注入的申请,注入值为：</p>
+		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['士官长'] }</span>{ window.langConfig[window.Lang]['您正在向'] }<span style={{color: '#00ffff'}}>{ window.langConfig[window.Lang]['曲率驱动引擎项目'] }</span>{ window.langConfig[window.Lang]['发起能量注入的申请,注入值为'] }：</p>
 		              <p style={{textAlign: 'center'}}><span className={styles.num}>{ betValue }</span>ETH</p>
-		              <p>注入后，项目研发周期结束前无法退出，本次注入的能量将于<span style={{color: '#f9dd6e'}}>{ d.day }</span>日后返还，确定注入吗？</p>
+		              <p>{ window.langConfig[window.Lang]['注入后，项目研发周期结束前无法退出，本次注入的能量将于'] }<span style={{color: '#f9dd6e'}}>{ d.day }</span>{ window.langConfig[window.Lang]['日后返还，确定注入吗？'] }</p>
 		            </div>
-		            <div className={styles.but} onClick={ userByContract['可用余额'] > betValue/best ? this.handleAgainBet : this.handleBet }></div>
+		            <div className={styles.but} onClick={ userByContract['可用余额'] > betValue/best ? this.handleAgainBet : this.handleBet }><span className={styles.gradientText}>{ window.langConfig[window.Lang]['确认注入'] }</span></div>
 		          </div>
 		        ),
 		    };
 	    }else if(modalType == 'zjbz'){
 	    	other = {
-		        modalTitle: "提醒",
+		        modalTitle: window.langConfig[window.Lang]['提醒'],
 		        modalDesc: (
 		          <div className={styles.zcqrModal}>
 		        	<div className={styles.icon}></div>
 		            <div className={styles.desc}>
-		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>士官长</span>您的能量不足，无法直接向跃迁引擎项目注入星痕能量。</p>
+		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['士官长'] }</span>{ window.langConfig[window.Lang]['您的能量不足，无法直接向跃迁引擎项目注入星痕能量。'] }</p>
 		            </div>
 		          </div>
 		        ),
@@ -510,14 +498,14 @@ class Develop extends React.Component {
 				}
 			});
 	    	other = {
-		        modalTitle: "提醒",
+		        modalTitle: window.langConfig[window.Lang]['提醒'],
 		        modalDesc: (
 		          <div className={styles.tzcgModal}>
 		        	<div className={styles.icon}></div>
 		            <div className={styles.desc}>
-		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>士官长</span>您已成功向<span style={{color: '#00ffff'}}>曲率驱动引擎项目</span>注入能量,注入值为：</p>
+		              <p style={{textAlign: 'center'}}><span style={{color: '#f9dd6e'}}>{ window.langConfig[window.Lang]['士官长'] }</span>{ window.langConfig[window.Lang]['您已成功向'] }<span style={{color: '#00ffff'}}>{ window.langConfig[window.Lang]['曲率驱动引擎项目'] }</span>{ window.langConfig[window.Lang]['注入能量,注入值为'] }：</p>
 		              <p style={{textAlign: 'center'}}><span className={styles.num}>{ betValue }</span>ETH</p>
-		              <p>项目周期为<span style={{color: '#f9dd6e'}}>{ d.day }</span>天，日收益为<span style={{color: '#f9dd6e'}}>{ d.profit }</span>。该项目结束前，您不能再次向其他项目注入能量。</p>
+		              <p>{ window.langConfig[window.Lang]['项目周期为'] }<span style={{color: '#f9dd6e'}}>{ d.day }</span>{ window.langConfig[window.Lang]['天，日收益为'] }<span style={{color: '#f9dd6e'}}>{ d.profit }</span>{ window.langConfig[window.Lang]['该项目结束前，您不能再次向其他项目注入能量。'] }</p>
 		            </div>
 		          </div>
 		        ),
@@ -571,11 +559,11 @@ class Develop extends React.Component {
 					</dl>
 					<dl>
 						<dt>{ desc.profit }</dt>
-						<dd>日收益</dd>
+						<dd>{ window.langConfig[window.Lang]['日收益'] }</dd>
 					</dl>
 					<dl>
 						<dt>{ desc.day }</dt>
-						<dd>天</dd>
+						<dd>{ window.langConfig[window.Lang]['天'] }</dd>
 					</dl>
 				</div>
 			)
@@ -651,7 +639,7 @@ class Develop extends React.Component {
 				<div className={styles.wrap}>
 					<div className={styles.top}>
 						<Link to="/indexPage"><div className={styles.back}></div></Link>
-						<div className={styles.txt}>研发室</div>
+						<div className={styles.txt}>{ window.langConfig[window.Lang]['研发室'] }</div>
 						{/*<div className={styles.FAQ}><Link to="/faq" style={{color: '#f9dd6e'}}>FAQ</Link></div>*/}
 					</div>
 					<div className={styles.level}>LV.{ this.getLv(userByContract) }</div>
@@ -678,15 +666,15 @@ class Develop extends React.Component {
 			            <div className={styles.buttons}>
 			              <div className={styles.recordIcon}>
 			                <p className={styles.icon} onClick={ () => { this.toLink('/admin') }}></p>
-			                <p className={styles.txt}>军衔</p>
+			                <p className={styles.txt}>{ window.langConfig[window.Lang]['军衔'] }</p>
 			              </div>
 			              <ul>
-			                <li className={`${styles.developIcon} ${userByContract['状态'] != 1 && banlance*best > 0 && betState ? null : styles.gray}`} onClick={ () => { userByContract['状态'] != 1 ? this.showModal('zcqr') : (banlance*best < 1 ? this.showModal('zjbz') : this.showModal('yxz'))} }></li>
+			                <li className={`${styles.developIcon} ${userByContract['状态'] != 1 && banlance*best > 0 && betState ? null : styles.gray}`} onClick={ () => { userByContract['状态'] != 1 ? this.showModal('zcqr') : (banlance*best < 1 ? this.showModal('zjbz') : this.showModal('yxz'))} }><span className={styles.gradientText}>{ window.langConfig[window.Lang]['注入能量'] }</span></li>
 			                <li className={styles.etherIcon} onClick={ () => this.showModal('ether') }></li>
 			              </ul>
 			              <div className={styles.invitationIcon}>
 			                <p className={styles.icon} onClick={ () => this.showModal('invitation') }></p>
-			                <p className={styles.txt}>邀请</p>
+			                <p className={styles.txt}>{ window.langConfig[window.Lang]['邀请'] }</p>
 			              </div>
 			            </div>
 			        </div>

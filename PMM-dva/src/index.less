@@ -11,6 +11,18 @@ html, body {
 
 @pointer: {cursor: pointer;};
 
+.iconFont(@fontSize: 38px, @lineHeight: 162px, @shadowColor: #1d4fa4){
+	font-size: @fontSize;
+	text-align: center;
+	line-height: @lineHeight;
+	font-weight: bold;
+	.gradientText {
+		background-image:-webkit-linear-gradient(bottom, #a4ffff, #ffffff); 
+	    -webkit-background-clip:text; 
+	    -webkit-text-fill-color:transparent;
+	}
+}
+
 .background(@width, @height, @url){
     .px2rem(width, @width);
 	.px2rem(height, @height);
@@ -37,6 +49,10 @@ html, body {
 }
 
 :global {
+	body{
+		overflow: visible!important;
+	}
+	
 	.spinZindex {
 		z-index: 1000,
 	}

@@ -27,7 +27,7 @@ fieldset, img {
 /** 设置默认字体 **/
 body,button, input, select, textarea /* for ie */ {
 	/* 宋体垫底，不使用sans-serif,simsun字体，避免GB编码请求编码设置为utf-8时，非中文操作系统下IE以 sans-serif字体显示中文*/
-    font: 12px/1.5  \5FAE\8F6F\96C5\9ED1,arial,\5b8b\4f53;
+    font: 12px/1.5  Microsoft YaHei,微软雅黑,\5FAE\8F6F\96C5\9ED1,arial,\5b8b\4f53;
     color:#000;
 }
 button, input, select, textarea /* for ie */ {

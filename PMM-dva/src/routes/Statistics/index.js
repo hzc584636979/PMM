@@ -31,31 +31,27 @@ class Statistics extends React.Component {
 		const { statistics, loading } = this.props;
 		return (
 			<Spin spinning={ loading } size="large">
-				<SubLayout title="统计室"> 
+				<SubLayout title={ window.langConfig[window.Lang]['统计室'] }> 
 					<div className={styles.item}>
-						<div className={styles.l}>总注入（ETH）</div>
+						<div className={styles.l}>{ window.langConfig[window.Lang]['总注入'] }（ETH）</div>
 						<div className={styles.r}>{ statistics.total_recharge ? this.web3.utils.fromWei(statistics.total_recharge, 'ether') : 0 }</div>
 					</div>
 					<div className={styles.item}>
-						<div className={styles.l}>注入收益（ETH）</div>
+						<div className={styles.l}>{ window.langConfig[window.Lang]['注入收益'] }（ETH）</div>
 						<div className={styles.r}>{ statistics.total_static_profit ? this.web3.utils.fromWei(statistics.total_static_profit, 'ether') : 0 }</div>
 					</div>
 					<div className={styles.item}>
-						<div className={styles.l}>团队收益</div>
+						<div className={styles.l}>{ window.langConfig[window.Lang]['团队收益'] }</div>
 						<div className={styles.r}>{ statistics.total_team_profit ? this.web3.utils.fromWei(statistics.total_team_profit, 'ether') : 0 }</div>
 					</div>
 					<div className={styles.item}>
-						<div className={styles.l}>团队人数</div>
+						<div className={styles.l}>{ window.langConfig[window.Lang]['团队人数'] }</div>
 						<div className={styles.r}>{ statistics.team_peoples || 0 }</div>
 					</div>
 					<div className={styles.item}>
-						<div className={styles.l}>直属人数</div>
+						<div className={styles.l}>{ window.langConfig[window.Lang]['直属人数'] }</div>
 						<div className={styles.r}>{ statistics.direct_push_peoples || 0 }</div>
 					</div>
-					{/*<div className={styles.item}>
-						<div className={styles.l}>军职福利<span className={styles.time}>【01:07:05】</span></div>
-						<div className={styles.r}></div>
-					</div>*/}
 				</SubLayout>
 			</Spin>
 		);

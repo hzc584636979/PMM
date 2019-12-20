@@ -113,27 +113,27 @@ class Record extends React.Component {
 				{
 					order_status == 2 ?
 					<div className={styles.r}>
-						<p>您向<span className={styles.f9dd6e}>曲率驱动引擎</span>项目注入了</p>
-						<p><span className={styles.bigNum}>{ ether }</span>星痕</p>
+						<p>{ window.langConfig[window.Lang]['您向'] }<span className={styles.f9dd6e}>{ window.langConfig[window.Lang]['曲率驱动引擎'] }</span>{ window.langConfig[window.Lang]['项目注入了'] }</p>
+						<p><span className={styles.bigNum}>{ ether }</span>{ window.langConfig[window.Lang]['星痕'] }</p>
 						<p>
-							项目研发周期为<span className={styles.f9dd6e}>{ desc.day }天</span><br/>
-							于<span className={styles.f9dd6e}>{ changeTime(parseInt(order_time)*1000 + parseInt(desc.day)*24*60*60*1000, 'MM月dd日hh:mm') }结束</span>
+							{ window.langConfig[window.Lang]['项目研发周期为'] }<span className={styles.f9dd6e}>{ desc.day }{ window.langConfig[window.Lang]['天'] }</span><br/>
+							{ window.langConfig[window.Lang]['于'] }<span className={styles.f9dd6e}>{ changeTime(parseInt(order_time)*1000 + parseInt(desc.day)*24*60*60*1000, 'MM月dd日hh:mm') }{ window.langConfig[window.Lang]['结束'] }</span>
 						</p>
 						<p>
-							每日收益为<span className={styles.f9dd6e}>{ desc.profit }</span><br/>
-							总收益为<span className={styles.f9dd6e}>{ profit }</span>星痕
+							{ window.langConfig[window.Lang]['每日收益为'] }<span className={styles.f9dd6e}>{ desc.profit }</span><br/>
+							{ window.langConfig[window.Lang]['总收益为'] }<span className={styles.f9dd6e}>{ profit }</span>{ window.langConfig[window.Lang]['星痕'] }
 						</p>
 					</div>
 					:
 					<div className={styles.r}>
-						<p>您当前已经向<span className={styles.f9dd6e}>曲率驱动引擎</span>项目注入了</p>
-						<p><span className={styles.bigNum}>{ ether }</span>星痕</p>
+						<p>{ window.langConfig[window.Lang]['您当前已经向'] }<span className={styles.f9dd6e}>{ window.langConfig[window.Lang]['曲率驱动引擎'] }</span>{ window.langConfig[window.Lang]['项目注入了'] }</p>
+						<p><span className={styles.bigNum}>{ ether }</span>{ window.langConfig[window.Lang]['星痕'] }</p>
 						<p>
-							项目研发周期为<span className={styles.f9dd6e}>{ desc.day }天</span><br/>
-							剩余<span className={styles.f9dd6e}>{ lessDate(parseInt(order_time)*1000, parseInt(desc.day)) }</span>
+							{ window.langConfig[window.Lang]['项目研发周期为'] }<span className={styles.f9dd6e}>{ desc.day }{ window.langConfig[window.Lang]['天'] }</span><br/>
+							{ window.langConfig[window.Lang]['剩余'] }<span className={styles.f9dd6e}>{ lessDate(parseInt(order_time)*1000, parseInt(desc.day)) }</span>
 						</p>
 						<p>
-							每日收益为<span className={styles.f9dd6e}>{ desc.profit }</span>
+							{ window.langConfig[window.Lang]['每日收益为'] }<span className={styles.f9dd6e}>{ desc.profit }</span>
 						</p>
 					</div>
 				}
@@ -147,10 +147,10 @@ class Record extends React.Component {
 		const { app, record, loading } = this.props;
 		return (
 			<Spin spinning={ loading } size="large">
-				<SubLayout title="财务室">
+				<SubLayout title={ window.langConfig[window.Lang]['财务室'] }>
 					<div className={styles.tabBox}>
-						<div className={ tabKey == 'in' ? styles.tabOn : styles.tab } style={{textAlign: 'left'}} onClick={ () => this.handleTab('in') }>我的注入</div>
-						<div className={ tabKey == 'out' ? styles.tabOn : styles.tab } style={{textAlign: 'right'}} onClick={ () => this.handleTab('out') }>我的收益</div>
+						<div className={ tabKey == 'in' ? styles.tabOn : styles.tab } style={{textAlign: 'left'}} onClick={ () => this.handleTab('in') }>{ window.langConfig[window.Lang]['我的注入'] }</div>
+						<div className={ tabKey == 'out' ? styles.tabOn : styles.tab } style={{textAlign: 'right'}} onClick={ () => this.handleTab('out') }>{ window.langConfig[window.Lang]['我的收益'] }</div>
 					</div>
 					{
 						tabKey == 'in' ?
@@ -167,44 +167,23 @@ class Record extends React.Component {
 									{/*<div className={styles.tag}>研发收益</div>*/}
 									<div className={styles.c}>
 										<div className={styles.icon1}></div>
-										<div className={styles.num}>总收益<span className={styles.bigNum}>{ Number(userByContract['总静态收益']) + Number(userByContract["总导师祝福收益"]) + Number(userByContract["总导师收益"]) }</span>ETH</div>
+										<div className={styles.num}>{ window.langConfig[window.Lang]['总收益'] }<span className={styles.bigNum}>{ Number(userByContract['总静态收益']) + Number(userByContract["总导师祝福收益"]) + Number(userByContract["总导师收益"]) }</span>ETH</div>
 										<ul className={styles.list}>
 											<li className={styles.li52f8fe}>
-												<span className={styles.l}>项目收益</span>
+												<span className={styles.l}>{ window.langConfig[window.Lang]['项目收益'] }</span>
 												<span className={styles.r}>{ userByContract['总静态收益'] }</span>
 											</li>
-											{/*<li className={styles.lif7910c}>
-												<span className={styles.l}>上个项目收益</span>
-												<span className={styles.r}>1.5037</span>
-											</li>*/}
 											<li className={styles.liff5dc4}>
-												<span className={styles.l}>军职福利</span>
+												<span className={styles.l}>{ window.langConfig[window.Lang]['军职福利'] }</span>
 												<span className={styles.r}>{ userByContract["总导师祝福收益"] }</span>
 											</li>
 											<li className={styles.li5ce37c}>
-												<span className={styles.l}>军职工资</span>
+												<span className={styles.l}>{ window.langConfig[window.Lang]['军职工资'] }</span>
 												<span className={styles.r}>{ userByContract["总导师收益"] }</span>
 											</li>
 										</ul>
 									</div>
 								</div>
-								{/*<div className={styles.item}>
-									<div className={styles.tag}>奖励收益</div>
-									<div className={styles.c}>
-										<div className={styles.icon2}></div>
-										<div className={styles.num}>总收益<span className={styles.bigNum}>{ Number(userByContract["总导师祝福收益"]) + Number(userByContract["总导师收益"]) }</span>ETH</div>
-										<ul className={styles.list}>
-											<li className={styles.li52f8fe}>
-												<span className={styles.l}>军职福利</span>
-												<span className={styles.r}>{ userByContract["总导师祝福收益"] }<b className={styles.arrowUp}></b></span>
-											</li>
-											<li className={styles.lif7910c}>
-												<span className={styles.l}>军职工资</span>
-												<span className={styles.r}>{ userByContract["总导师收益"] }<b className={styles.arrowUp}></b></span>
-											</li>
-										</ul>
-									</div>
-								</div>*/}
 							</div>
 					}
 				</SubLayout>

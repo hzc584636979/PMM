@@ -64,19 +64,19 @@ class Admin extends React.Component {
 		const { supClass, supItem, subClass, subItem } = this.state;
 		return (
 			<Spin spinning={ loading } size="large">
-				<SubLayout title="行政室">
+				<SubLayout title={ window.langConfig[window.Lang]['行政室'] }>
 					<div className={styles.level}>LV.{ this.getLv(userByContract) }</div>
 					<ul className={styles.list}>
 						<li className={styles.li52f8fe}>
-							<span className={styles.l}>福利</span>
+							<span className={styles.l}>{ window.langConfig[window.Lang]['福利'] }</span>
 							<span className={styles.r}>{ userByContract["总导师祝福收益"] }</span>
 						</li>
 						<li className={styles.lif7910c}>
-							<span className={styles.l}>工资</span>
+							<span className={styles.l}>{ window.langConfig[window.Lang]['工资'] }</span>
 							<span className={styles.r}>{ userByContract["总导师收益"] }</span>
 						</li>
 						<li className={`${styles.li} ${styles.liff5dc4} ${supClass}`} style={{cursor: 'pointer'}} onClick={ this.toggleSupItem }>
-							<span className={styles.l}>上级长官</span>
+							<span className={styles.l}>{ window.langConfig[window.Lang]['上级长官'] }</span>
 							<span className={styles.r}>1<b className={styles.arrow}></b></span>
 						</li>
 						{
@@ -88,7 +88,7 @@ class Admin extends React.Component {
 							)
 						}
 						<li className={`${styles.li} ${styles.li5ce37c} ${subClass}`} style={user_next_level.length > 0 ? {cursor: 'pointer'} : {}} onClick={ () => this.toggleSubItem(user_next_level) }>
-							<span className={styles.l}>下级</span>
+							<span className={styles.l}>{ window.langConfig[window.Lang]['下级'] }</span>
 							<span className={styles.r}>{ user_next_level.length }{user_next_level.length > 0 && <b className={styles.arrow}></b>}</span>
 						</li>
 						{
