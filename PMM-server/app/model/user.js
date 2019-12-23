@@ -5,7 +5,7 @@ module.exports = app => {
   const Schema = mongoose.Schema;
   const UserSchema = new Schema({
     user_address:   {type:String, unique: true},    //钱包地址
-    invitation_code: {type:String},  //邀请码
+    invitation_code: {type:String, unique: true},  //邀请码
     cover_invitation_code : {type: String}, //被邀请码
     available_balance: {type:String},  //可用余额
     blocked_balances: {type:String},   //冻结余额

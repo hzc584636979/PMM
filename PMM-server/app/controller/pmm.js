@@ -5,6 +5,7 @@ const Controller = require('egg').Controller;
 class PMMController extends Controller {
   async test() {
     const ctx = this.ctx;
+    
     ctx.body = "hi, egg";
   }
 

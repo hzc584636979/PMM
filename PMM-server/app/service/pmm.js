@@ -8,6 +8,7 @@ const ContractParamType = require('../common/contractParamType');
 class PMMService extends Service {
   async invitationCode(body) {
     const ctx = this.ctx;
+
     const walletAddress = body.walletAddress;
     const coverInvitationCode = body.coverInvitatonCode;
 
@@ -22,7 +23,8 @@ class PMMService extends Service {
       const userModel = await ctx.model.User.find({invitation_code:invitationCode});
       if (userModel.length === 0) {
         //判断数据库里面有没有这个钱包地址，有钱包地址更新邀请码和被邀请码，没有则创建。
-        const userModelByAddress = await ctx.model.User.findOne({user_address:walletAddress});
+        let regex = new RegExp(["^", walletAddress, "$"].join(""), "i");
+        const userModelByAddress = await ctx.model.User.findOne({user_address:regex});
         if (userModelByAddress === null) {
           await ctx.model.User.create({
             user_address: walletAddress,
@@ -101,7 +103,7 @@ class PMMService extends Service {
         let order_index = orderRecordModels[index].order_index;
         const orderModel = await contract.getBetByIndex(orderRecordModels[index].order_index);
         orderRecordModels[index].order_status = orderModel[ContractParamType.OrderDetailType.order_status];
-        ctx.model.Order.update({order_index:order_index}, orderRecordModels[index]).exec();
+        ctx.model.Order.updateOne({order_index:order_index}, orderRecordModels[index]).exec();
       }
     }
     return orderRecordModels;
